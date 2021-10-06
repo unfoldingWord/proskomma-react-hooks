@@ -1,17 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import useProskomma from './hooks/useProskomma';
+import useQuery from './hooks/useQuery';
+import usePassageFilter from './hooks/usePassageFilter';
+import randomString from './helpers/randomString';
+import {
+  importDocuments,
+  importDocument
+} from './helpers/proskomma';
+import UWProskomma from './helpers/uwProskomma';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+export {
+  useProskomma,
+  useQuery,
+  usePassageFilter,
+  randomString,
+  importDocuments,
+  importDocument,
+  UWProskomma,
+};
