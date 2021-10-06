@@ -12,7 +12,8 @@ const usfm = `
 \\s5
 \\c 1
 \\p 
-\\v 1 L'ancien au bien-aimé Gaius, que j'aime dans la vérité. 
+\\v 1 L'ancien au bien-aimé Gaius, que j'aime dans la vérité.
+\\v 2 Bien-aimé, je prie que tu pospères en toutes choses et sois en santé, juste comme prospère ton âme.
 `;
 
 const _documents = [
@@ -22,29 +23,34 @@ const _documents = [
       lang: 'fr',
       abbr: 'ulb',
     },
-    bookId: '3jn',
+    bookId: '3JN',
     data: usfm,
   }
 ];
 
-const query = `{  docSets {
-  documents(        withChars: ["Gaius"]
+const query = `{
+  docSets {
+    documents(
+      withChars: ["Gaius"]
       allChars:false
     ) {
-    id
-    bookCode: header(id: "bookCode")
-    title: header(id: "toc1")
-    mainSequence {
-      blocks(
-        withChars: ["Gaius"]
-        allChars:false
-      ) {
-        scopeLabels tokens { payload }
+      id
+      bookCode: header(id: "bookCode")
+      title: header(id: "toc1")
+      mainSequence {
+        blocks(
+          withChars: ["Gaius"]
+          allChars:false
+        ) {
+          scopeLabels tokens { payload }
+        }
       }
     }
-  }
-  matches: enumRegexIndexesForString (enumType:"wordLike" searchRegex:"(^Gaius$)") { matched }
-} }`;
+    matches: enumRegexIndexesForString (
+      enumType:"wordLike" searchRegex:"(^Gaius$)"
+    ) { matched }
+  } 
+}`;
 
 function Component () {
   const {

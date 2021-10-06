@@ -5,19 +5,16 @@ export default function useQuery(props) {
 };
 
 useQuery.propTypes = {
-  /** Books */
-  books: PropTypes.array,
-  /** Resources */
-  resources: PropTypes.array,
-  /** Config */
-  config: PropTypes.object,
-  /** Serialize true/false */
-  serialize: PropTypes.bool,
+  /** Proskomma instance to query */
+  proskomma: PropTypes.object,
+  /** Change Index to synchronize Proskomma updates/imports */
+  changeIndex: PropTypes.string,
+  /** GraphQL Query to run */
+  query: PropTypes.string,
 };
 
 useQuery.defaultProps = {
-  books: [],
-  resources: [],
-  config: {},
-  serialize: false,
+  proskomma: undefined,
+  changeIndex: 0,
+  query: '',
 };

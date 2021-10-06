@@ -8,9 +8,13 @@ module.exports = {
     const name = path.basename(componentPath, '.js')
     return `import { ${name} } from 'proskomma-react-hooks';`
   },
-  handlers: componentPath =>
+  handlers: componentPath => (
     require('react-docgen').defaultHandlers.concat(
-        require('react-docgen-external-proptypes-handler')(componentPath),
-        require('react-docgen-displayname-handler').createDisplayNameHandler(componentPath)
-      )
+      require('react-docgen-external-proptypes-handler')(componentPath),
+      require('react-docgen-displayname-handler').createDisplayNameHandler(componentPath)
+    )
+  ),
+  // styles: {
+  //   stringValue: { whiteSpace: 'pre' },
+  // }
 };

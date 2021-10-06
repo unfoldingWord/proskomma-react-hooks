@@ -1,6 +1,5 @@
 ```js
-import useProskomma from '../hooks/useProskomma';
-import useQuery from '../hooks/useQuery';
+import { useProskomma, useSearch, usePassageFilter } from 'proskomma-react-hooks';
 import ReactJson from 'react-json-view';
 
 const usfm = `
@@ -29,36 +28,49 @@ const _documents = [
   }
 ];
 
-const query = `{
-  processor
-  packageVersion
-  documents(withBook: "3JN") {
-    cv (chapter:"1" verses:["1"]) 
-      { text }
-  }
-}`;
+const searchText = 'vérité';
 
 function Component () {
   const {
-    changeIndex, proskomma, documents, errors: proskommaErrors,
+    changeIndex,
+    proskomma,
+    documents,
+    errors: proskommaErrors,
   } = useProskomma({
-    documents: _documents, serialize: false, verbose: true,
+    documents: _documents,
+    serialize: false,
+    verbose: true,
   });
 
   const {
-    changeIndex: queryChangeIndex, query: queryRun, data, errors: queryErrors, 
-  } = useQuery({
-    proskomma, changeIndex, query,
+    changeIndex: searchChangeIndex,
+    data, 
+    errors: searchErrors, 
+  } = useSearch({
+    proskomma,
+    changeIndex,
+    text: searchText,
   });
 
-  console.log(data);
+  const {
+    changeIndex: passageFilterChangeIndex,
+    passages,
+    errors: passageFilterErrors,
+  } = usePassageFilter({
+    data,
+    changeIndex: searchChangeIndex,
+  });
 
   const json = {
-    queryChangeIndex,
+    changeIndex,
+    searchChangeIndex,
+    passageFilterChangeIndex,
     documents,
-    query: queryRun,
-    data,
-    errors: [ ...proskommaErrors, ...queryErrors ],
+    searchText,
+    passages,
+    proskommaErrors,
+    searchErrors,
+    passageFilterErrors,
   };
 
   return (

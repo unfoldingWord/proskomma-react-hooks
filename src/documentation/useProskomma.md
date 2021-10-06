@@ -12,7 +12,8 @@ const data = `
 \\s5
 \\c 1
 \\p 
-\\v 1 L'ancien au bien-aimé Gaius, que j'aime dans la vérité. 
+\\v 1 L'ancien au bien-aimé Gaius, que j'aime dans la vérité.
+\\v 2 Bien-aimé, je prie que tu pospères en toutes choses et sois en santé, juste comme prospère ton âme.
 `;
 
 const _documents = [

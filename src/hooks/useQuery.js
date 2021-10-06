@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useDeepCompareCallback } from 'use-deep-compare';
 
 export default function useQuery({proskomma, changeIndex, query}) {
@@ -39,4 +40,19 @@ export default function useQuery({proskomma, changeIndex, query}) {
   }, [query, changeIndex, state.changeIndex, state.query, runQuery]);
 
   return state;
+};
+
+useQuery.propTypes = {
+  /** Proskomma instance to query */
+  proskomma: PropTypes.object,
+  /** Change Index to synchronize Proskomma updates/imports */
+  changeIndex: PropTypes.string,
+  /** GraphQL Query to run */
+  query: PropTypes.string,
+};
+
+useQuery.defaultProps = {
+  proskomma: undefined,
+  changeIndex: 0,
+  query: '',
 };
