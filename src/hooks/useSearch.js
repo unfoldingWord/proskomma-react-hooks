@@ -1,8 +1,8 @@
 import { useQuery, searchQuery } from '..';
 
 export default function useSearch ({
-  changeIndex,
   proskomma,
+  changeIndex,
   text,
 }) {
   const query = searchQuery({text});
