@@ -32,7 +32,7 @@ const searchText = 'vérité';
 
 function Component () {
   const {
-    changeIndex,
+    stateId,
     proskomma,
     documents,
     errors: proskommaErrors,
@@ -43,28 +43,28 @@ function Component () {
   });
 
   const {
-    changeIndex: searchChangeIndex,
+    stateId: searchStateId,
     data, 
     errors: searchErrors, 
   } = useSearch({
     proskomma,
-    changeIndex,
+    stateId,
     text: searchText,
   });
 
   const {
-    changeIndex: passageFilterChangeIndex,
+    stateId: passageFilterStateId,
     passages,
     errors: passageFilterErrors,
   } = usePassageFilter({
     data,
-    changeIndex: searchChangeIndex,
+    stateId: searchStateId,
   });
 
   const json = {
-    changeIndex,
-    searchChangeIndex,
-    passageFilterChangeIndex,
+    stateId,
+    searchStateId,
+    passageFilterStateId,
     documents,
     searchText,
     passages,

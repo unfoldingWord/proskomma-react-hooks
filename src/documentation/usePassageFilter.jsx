@@ -8,10 +8,10 @@ usePassageFilter.propTypes = {
   /** Result from Proskomma GraphQL Query */
   data: PropTypes.object,
   /** Change Index to synchronize Proskomma updates/imports */
-  changeIndex: PropTypes.string,
+  stateId: PropTypes.string,
 };
 
 usePassageFilter.defaultProps = {
   data: {},
-  changeIndex: 0,
+  stateId: 0,
 };

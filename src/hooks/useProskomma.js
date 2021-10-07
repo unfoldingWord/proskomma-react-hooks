@@ -14,7 +14,7 @@ export default function useProskomma ({
   verbose,
 }) {
   // manage two states required since they need updating at different times.
-  const [changeIndex, setChangeIndex] = useState(0);
+  const [stateId, setStateId] = useState(0);
   const cleanState = {
     proskomma: {},
     documents: [],
@@ -22,15 +22,15 @@ export default function useProskomma ({
   };
   const [state, setState] = useState(cleanState);
 
-  const incrementChangeIndex = useCallback(() => {
-    const _changeIndex = randomString();
-    console.log('useProskomma.incrementChangeIndex(): ' + _changeIndex);
-    setChangeIndex(_changeIndex);
+  const incrementStateId = useCallback(() => {
+    const _stateId = randomString();
+    console.log('useProskomma.incrementStateId(): ' + _stateId);
+    setStateId(_stateId);
   }, []);
 
   const runImport = useDeepCompareCallback( async () => {
     const proskomma = new UWProskomma();  
-    const onImport = incrementChangeIndex;
+    const onImport = incrementStateId;
     let errors = [];
 
     try {
@@ -52,7 +52,7 @@ export default function useProskomma ({
     };
   }, [documents, state.documents]);
 
-  return { changeIndex, ...state };
+  return { stateId, ...state };
 };
 
 useProskomma.propTypes = {

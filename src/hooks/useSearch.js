@@ -2,22 +2,22 @@ import { useQuery, searchQuery } from '..';
 
 export default function useSearch ({
   proskomma,
-  changeIndex,
+  stateId,
   text,
 }) {
   const query = searchQuery({text});
   const {
-    changeIndex: queryChangeIndex,
+    stateId: queryStateId,
     data, 
     errors, 
   } = useQuery({
     proskomma,
-    changeIndex,
+    stateId,
     query,
   });
 
   const state = {
-    changeIndex: queryChangeIndex,
+    stateId: queryStateId,
     data,
     errors,
   };

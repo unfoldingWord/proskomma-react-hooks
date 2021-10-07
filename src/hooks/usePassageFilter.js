@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { useDeepCompareCallback,  } from 'use-deep-compare';
 import { parseDocSets } from '../helpers/parseDocSets';
 
-export default function usePassageFilter({data, changeIndex}) {
+export default function usePassageFilter({data, stateId}) {
   const cleanState = {
     passages: [],
-    changeIndex: 0,
+    stateId: 0,
     errors: [],
   };
   const [state, setState] = useState({ ...cleanState });
@@ -22,18 +22,18 @@ export default function usePassageFilter({data, changeIndex}) {
     };
 
     setState({
-      changeIndex,
+      stateId,
       passages,
       errors,
     });
-  }, [data, changeIndex]);
+  }, [data, stateId]);
 
   useEffect(() => {
-    if (state.changeIndex !== changeIndex) {
-      console.log('usePassageFilter.useEffect() changeIndex: ' + changeIndex);
+    if (state.stateId !== stateId) {
+      console.log('usePassageFilter.useEffect() stateId: ' + stateId);
       parse();
     };
-  }, [changeIndex, state.changeIndex, parse]);
+  }, [stateId, state.stateId, parse]);
 
   return state;
 };
@@ -42,10 +42,10 @@ usePassageFilter.propTypes = {
   /** Result from Proskomma GraphQL Query */
   data: PropTypes.object,
   /** Change Index to synchronize Proskomma updates/imports */
-  changeIndex: PropTypes.string,
+  stateId: PropTypes.string,
 };
 
 usePassageFilter.defaultProps = {
   data: {},
-  changeIndex: 0,
+  stateId: 0,
 };

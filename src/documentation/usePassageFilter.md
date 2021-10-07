@@ -54,7 +54,7 @@ const query = `{
 
 function Component () {
   const {
-    changeIndex,
+    stateId,
     proskomma,
     documents,
     errors: proskommaErrors,
@@ -65,31 +65,32 @@ function Component () {
   });
 
   const {
-    changeIndex: queryChangeIndex,
+    stateId: queryStateId,
     query: lastQuery, 
     data, 
     errors: queryErrors, 
   } = useQuery({
     proskomma,
-    changeIndex,
+    stateId,
     query,
   });
 
   const {
-    changeIndex: passageFilterChangeIndex,
+    stateId: passageFilterStateId,
     passages,
     errors: passageFilterErrors,
   } = usePassageFilter({
     data,
-    changeIndex: queryChangeIndex,
+    stateId: queryStateId,
   });
 
   const json = {
-    changeIndex,
-    queryChangeIndex,
-    passageFilterChangeIndex,
+    stateId,
+    queryStateId,
+    passageFilterStateId,
     documents,
     query: lastQuery,
+    data,
     passages,
     proskommaErrors,
     queryErrors,
@@ -98,7 +99,7 @@ function Component () {
 
   return (
     <ReactJson
-      style={{ maxHeight: '500px', overflow: 'scroll' }}
+      style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
       src={json}
       theme="monokai"
     />

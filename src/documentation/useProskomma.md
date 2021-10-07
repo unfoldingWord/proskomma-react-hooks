@@ -30,7 +30,7 @@ const _documents = [
 
 function Component() {
   const {
-    changeIndex,
+    stateId,
     documents,
     errors,
     proskomma,
@@ -41,7 +41,7 @@ function Component() {
   });
 
   const json = {
-    changeIndex,
+    stateId,
     documents,
   };
 

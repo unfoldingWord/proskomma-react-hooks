@@ -40,21 +40,21 @@ const query = `{
 
 function Component () {
   const {
-    changeIndex, proskomma, documents, errors: proskommaErrors,
+    stateId, proskomma, documents, errors: proskommaErrors,
   } = useProskomma({
     documents: _documents, serialize: false, verbose: true,
   });
 
   const {
-    changeIndex: queryChangeIndex, query: queryRun, data, errors: queryErrors, 
+    stateId: queryStateId, query: queryRun, data, errors: queryErrors, 
   } = useQuery({
-    proskomma, changeIndex, query,
+    proskomma, stateId, query,
   });
 
   console.log(data);
 
   const json = {
-    queryChangeIndex,
+    queryStateId,
     documents,
     query: queryRun,
     data,

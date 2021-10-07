@@ -2,17 +2,17 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareCallback } from 'use-deep-compare';
 
-export default function useQuery({proskomma, changeIndex, query}) {
+export default function useQuery({proskomma, stateId, query}) {
   const cleanState = {
     query: '',
     data: {},
-    changeIndex: 0,
+    stateId: 0,
     errors: [],
   };
   const [state, setState] = useState({ ...cleanState });
 
   const runQuery = useDeepCompareCallback(async () => {
-    console.log('runQuery() changeIndex: ' + changeIndex);
+    console.log('runQuery() stateId: ' + stateId);
 
     let data;
     let errors = [];
@@ -28,16 +28,16 @@ export default function useQuery({proskomma, changeIndex, query}) {
     setState({
       query,
       data,
-      changeIndex,
+      stateId,
       errors,
     });
-  }, [proskomma, query, changeIndex]);
+  }, [proskomma, query, stateId]);
 
   useEffect(() => {
-    if (state.changeIndex !== changeIndex || query !== state.query) {
+    if (state.stateId !== stateId || query !== state.query) {
       runQuery();
     };
-  }, [query, changeIndex, state.changeIndex, state.query, runQuery]);
+  }, [query, stateId, state.stateId, state.query, runQuery]);
 
   return state;
 };
@@ -46,13 +46,13 @@ useQuery.propTypes = {
   /** Proskomma instance to query */
   proskomma: PropTypes.object,
   /** Change Index to synchronize Proskomma updates/imports */
-  changeIndex: PropTypes.string,
+  stateId: PropTypes.string,
   /** GraphQL Query to run */
   query: PropTypes.string,
 };
 
 useQuery.defaultProps = {
   proskomma: undefined,
-  changeIndex: 0,
+  stateId: 0,
   query: '',
 };
