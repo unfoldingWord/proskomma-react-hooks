@@ -22,15 +22,15 @@ export default function useProskomma ({
   };
   const [state, setState] = useState(cleanState);
 
-  const incrementStateId = useCallback(() => {
+  const newStateId = useCallback(() => {
     const _stateId = randomString();
-    console.log('useProskomma.incrementStateId(): ' + _stateId);
+    console.log('useProskomma.newStateId(): ' + _stateId);
     setStateId(_stateId);
   }, []);
 
   const runImport = useDeepCompareCallback( async () => {
     const proskomma = new UWProskomma();  
-    const onImport = incrementStateId;
+    const onImport = newStateId;
     let errors = [];
 
     try {
