@@ -44,7 +44,8 @@ function Component () {
 
   const {
     stateId: searchStateId,
-    data, 
+    data,
+    passages,
     errors: searchErrors, 
   } = useSearch({
     proskomma,
@@ -52,25 +53,15 @@ function Component () {
     text: searchText,
   });
 
-  const {
-    stateId: passageFilterStateId,
-    passages,
-    errors: passageFilterErrors,
-  } = usePassageFilter({
-    data,
-    stateId: searchStateId,
-  });
-
   const json = {
     stateId,
     searchStateId,
-    passageFilterStateId,
     documents,
-    searchText,
-    passages,
     proskommaErrors,
+    searchText,
     searchErrors,
-    passageFilterErrors,
+    passages,
+    data,
   };
 
   return (
