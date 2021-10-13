@@ -10226,6 +10226,11 @@ prepend-http@^1.0.0:
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-1.0.4.tgz#d4f4562b0ce3696e41ac52d0e002e57a635dc6dc"
   integrity sha1-1PRWKwzjaW5BrFLQ4ALlemNdxtw=
 
+prettier@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.4.1.tgz#671e11c89c14a4cfc876ce564106c4a6726c9f5c"
+  integrity sha512-9fbDAXSBcc6Bs1mZrDYb3XKzDLm4EXXL9sC1LqKP5rZkT6KRr/rf9amVUcODVXgguK/isJz0d0hP72WeaKWsvA==
+
 pretty-bytes@^5.3.0:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-5.6.0.tgz#356256f643804773c82f64723fe78c92c62beaeb"
@@ -10328,10 +10333,10 @@ prop-types@^15.6.2, prop-types@^15.7.2:
     object-assign "^4.1.1"
     react-is "^16.8.1"
 
-proskomma-utils@^0.4.26:
-  version "0.4.26"
-  resolved "https://registry.yarnpkg.com/proskomma-utils/-/proskomma-utils-0.4.26.tgz#88619a8431d9825e1f9186613734d8a7297e6112"
-  integrity sha512-WrECbxCPLGNXP+E57+12YgwFHZjE0SmJN70w5kNzry0V/II5WAXAwB4Qf9iDH8xYM0/1dZw9zpkIG39vq8c+GA==
+proskomma-utils@^0.4.27:
+  version "0.4.27"
+  resolved "https://registry.yarnpkg.com/proskomma-utils/-/proskomma-utils-0.4.27.tgz#6f01cb4f00e2512fe35e91165582179cc83a4080"
+  integrity sha512-Yqa/iAB6qe51tFQAlxg+kWtpWWX9g7F9apmoY0/C6HkZQGOhSb96LDL9wHWN1xcqZ9u4+iBOXySJN9kRcfm/hQ==
   dependencies:
     "@babel/core" "^7.12.9"
     base64-js "^1.5.1"
@@ -10344,10 +10349,10 @@ proskomma-utils@^0.4.26:
     uuid-base64 "^1.0.0"
     xregexp "^4.4.1"
 
-proskomma@0.4.61:
-  version "0.4.61"
-  resolved "https://registry.yarnpkg.com/proskomma/-/proskomma-0.4.61.tgz#9cc6f25f65890b67822cf4d9f0b67084839b409a"
-  integrity sha512-jRwI1klol+kfTn/3ikgEir+avMcfAQaSofaZLdC7CqTAqwovKoEIPxkoHUQn12lorEEUS2hC3Ba2bLv3OoTFeA==
+proskomma@0.4.71:
+  version "0.4.71"
+  resolved "https://registry.yarnpkg.com/proskomma/-/proskomma-0.4.71.tgz#0defc1bc58f3b7dbba0389179c8d4bd368f344ad"
+  integrity sha512-8lQqKD7Xo5JYHMzd2eGjIf2P+M205f7ampVx5F5TStMT+cBkFiFXBerrv9vvxCN7COTZySngXbikjq3k6ltC3A==
   dependencies:
     "@babel/core" "^7.12.9"
     async-mutex "^0.2.6"
@@ -10358,7 +10363,8 @@ proskomma@0.4.61:
     git-diff "^2.0.6"
     graphql "^15.3.0"
     jsonschema "^1.4.0"
-    proskomma-utils "^0.4.26"
+    prettier "^2.4.1"
+    proskomma-utils "^0.4.27"
     sax "^1.2.4"
     utf8-string-bytes "^1.0.3"
     uuid-base64 "^1.0.0"
