@@ -66,7 +66,7 @@ function Component () {
 
   return (
     <ReactJson
-      style={{ maxHeight: '500px', overflow: 'scroll' }}
+      style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
       src={json}
       theme="monokai"
     />
