@@ -3,7 +3,7 @@ import { useDeepCompareCallback } from 'use-deep-compare';
 import PropTypes from 'prop-types';
 
 import { useQuery } from '..';
-import { passageQuery, parsePassageResponse } from '../helpers/passage';
+import { passageQuery, parsePassageResponse, parseReferenceString } from '../helpers/passage';
 
 export default function usePassage ({
   proskomma,
@@ -19,7 +19,7 @@ export default function usePassage ({
   };
   const [state, setState] = useState({ ...cleanState });
 
-  const query = passageQuery(reference);
+  const query = passageQuery({reference});
 
   const {
     stateId: queryStateId, data, errors: queryErrors,
@@ -32,7 +32,8 @@ export default function usePassage ({
     let errors = queryErrors || [];
 
     if (errors.length < 1) try {
-      passages = parsePassageResponse({ bookId: reference.bookId, data });
+      const { bookId } = parseReferenceString(reference);
+      passages = parsePassageResponse({ bookId, data });
       console.log(passages);
     } catch (error) {
       errors = [...errors, error];

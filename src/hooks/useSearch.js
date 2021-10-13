@@ -31,13 +31,17 @@ export default function useSearch ({
 
   const parse = useDeepCompareCallback(() => {
     let passages;
-    let errors = [];
+    let errors = [...queryErrors];
 
-    try {
-      passages = parseSearchResponse({data});
-    } catch (error) {
-      errors = [...queryErrors, error];
-    };
+    if (errors.length < 1) {
+      try {
+        passages = parseSearchResponse({data});
+      } catch (error) {
+        errors = [...errors, error];
+      };
+    } else {
+      debugger
+    }
 
     setState({
       stateId: queryStateId,

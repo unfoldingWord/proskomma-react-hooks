@@ -1,4 +1,23 @@
-export const passageQuery = ({ bookId, chapterVerses, chapter, verse }) => {
+export const passageQuery = ({
+  reference,
+  bookId: _bookId,
+  chapterVerses: _chapterVerses,
+  chapter: _chapter,
+  verse: _verse,
+}) => {
+  let query;
+  let bookId = _bookId;
+  let chapterVerses = _chapterVerses;
+  let chapter = _chapter;
+  let verse = _verse;
+
+  if (reference) {
+    const parsed = parseReferenceString(reference);
+    bookId = parsed.bookId;
+    chapterVerses = parsed.chapterVerses;
+    chapter = parsed.chapter;
+    verse = parsed.verse;
+  };
 
   let _scope = scope({bookId});
 
@@ -6,7 +25,7 @@ export const passageQuery = ({ bookId, chapterVerses, chapter, verse }) => {
     chapterVersesClause({chapterVerses}) : 
     referenceClause({bookId, chapter, verse});
 
-  const query = `{
+  query = `{
     ${_scope} {
       cv ( ${clause} ) { scopeLabels text }
     }
@@ -15,13 +34,28 @@ export const passageQuery = ({ bookId, chapterVerses, chapter, verse }) => {
   return query;
 };
 
-export const chapterVersesQuery = ({bookId, chapterVerses}) => {
+export const parseReferenceString = (reference) => {
+  let response = {};
+  // 3JN 1:1-2 PSA 119:100 MAT 1-2
+  const regex = /(?<bookId>[\d\w]\w{2}) (?<cv>[\d:-]+)/;
+  const {bookId, cv} = reference.match(regex).groups;
+  response.bookId = bookId;
 
+  if (cv.includes('-')) {
+    response.chapterVerses = cv;
+  } else if (cv.includes(':')) {
+    const regex = /(?<chapter>\d+):(?<verse>\d+)/;
+    const { groups } = cv.match(regex);
+    response.chapter = groups.chapter;
+    response.verse = groups.verse;
+  };
+
+  return response;
 };
 
-const scope = ({bookId}) => `documents(withBook: "${bookId}")`;
+const scope = ({bookId}) => `documents ( withBook: "${bookId}" )`;
 
-const chapterVersesClause = ({chapterVerses}) => `chapterVerses:"${chapterVerses}"`;
+const chapterVersesClause = ({chapterVerses}) => `chapterVerses: "${chapterVerses}"`;
 
 const referenceClause = ({chapter, verse}) => `chapter: "${chapter}" verses: ["${verse}"]`;
 
