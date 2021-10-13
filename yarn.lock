@@ -10333,10 +10333,10 @@ prop-types@^15.6.2, prop-types@^15.7.2:
     object-assign "^4.1.1"
     react-is "^16.8.1"
 
-proskomma-utils@^0.4.27:
-  version "0.4.27"
-  resolved "https://registry.yarnpkg.com/proskomma-utils/-/proskomma-utils-0.4.27.tgz#6f01cb4f00e2512fe35e91165582179cc83a4080"
-  integrity sha512-Yqa/iAB6qe51tFQAlxg+kWtpWWX9g7F9apmoY0/C6HkZQGOhSb96LDL9wHWN1xcqZ9u4+iBOXySJN9kRcfm/hQ==
+proskomma-utils@^0.4.28:
+  version "0.4.28"
+  resolved "https://registry.yarnpkg.com/proskomma-utils/-/proskomma-utils-0.4.28.tgz#f4ee3b7109150ea3951f7455445ff3604a824ce4"
+  integrity sha512-ZGNEQuih6uIMoxbT/L0Scl2Q1ljKRWFEbvSEm+a1aRbjcqL137ylvXefVKcP0CfnKi6nf0eLAVpGhTULm4WUhQ==
   dependencies:
     "@babel/core" "^7.12.9"
     base64-js "^1.5.1"
@@ -10349,10 +10349,10 @@ proskomma-utils@^0.4.27:
     uuid-base64 "^1.0.0"
     xregexp "^4.4.1"
 
-proskomma@0.4.71:
-  version "0.4.71"
-  resolved "https://registry.yarnpkg.com/proskomma/-/proskomma-0.4.71.tgz#0defc1bc58f3b7dbba0389179c8d4bd368f344ad"
-  integrity sha512-8lQqKD7Xo5JYHMzd2eGjIf2P+M205f7ampVx5F5TStMT+cBkFiFXBerrv9vvxCN7COTZySngXbikjq3k6ltC3A==
+proskomma@0.4.75:
+  version "0.4.75"
+  resolved "https://registry.yarnpkg.com/proskomma/-/proskomma-0.4.75.tgz#c42e0f2f2b5aa5a611e21f34d793ab23a836a56a"
+  integrity sha512-lfIIJkPL6FcOxaUznTfGCpvFgQKpidLA11ig9TT5lAo2boGxMJV2mY4B1CWki3GdXE9PCzPSdC4EqyUcKRYmug==
   dependencies:
     "@babel/core" "^7.12.9"
     async-mutex "^0.2.6"
@@ -10364,7 +10364,7 @@ proskomma@0.4.71:
     graphql "^15.3.0"
     jsonschema "^1.4.0"
     prettier "^2.4.1"
-    proskomma-utils "^0.4.27"
+    proskomma-utils "^0.4.28"
     sax "^1.2.4"
     utf8-string-bytes "^1.0.3"
     uuid-base64 "^1.0.0"
