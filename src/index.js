@@ -1,6 +1,7 @@
 import useProskomma from './hooks/useProskomma';
 import useQuery from './hooks/useQuery';
 import useSearch from './hooks/useSearch';
+import usePassage from './hooks/usePassage';
 
 import randomString from './helpers/randomString';
 import {
@@ -15,6 +16,7 @@ export {
   useProskomma,
   useQuery,
   useSearch,
+  usePassage,
   randomString,
   importDocuments,
   importDocument,

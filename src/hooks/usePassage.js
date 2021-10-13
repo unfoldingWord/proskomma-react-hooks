@@ -1,56 +1,55 @@
 import { useState, useEffect } from 'react';
-import { useDeepCompareCallback,  } from 'use-deep-compare';
+import { useDeepCompareCallback } from 'use-deep-compare';
 import PropTypes from 'prop-types';
 
-import { searchQuery, parseSearchResponse } from '../helpers/search';
 import { useQuery } from '..';
+import { passageQuery, parsePassageResponse } from '../helpers/passage';
 
-export default function useSearch ({
+export default function usePassage ({
   proskomma,
   stateId,
-  text,
+  reference,
 }) {
   const cleanState = {
-    query: '',
-    passages: [],
     stateId: 0,
+    query: '',
     errors: [],
+    passages: [],
+    data: {},
   };
   const [state, setState] = useState({ ...cleanState });
 
-  const query = searchQuery({text});
+  const query = passageQuery(reference);
+
   const {
-    stateId: queryStateId,
-    data, 
-    errors: queryErrors, 
+    stateId: queryStateId, data, errors: queryErrors,
   } = useQuery({
-    proskomma,
-    stateId,
-    query,
+    proskomma, stateId, query,
   });
 
   const parse = useDeepCompareCallback(() => {
-    let passages;
-    let errors = [];
+    let passages = [];
+    let errors = queryErrors || [];
 
-    try {
-      passages = parseSearchResponse({data});
+    if (errors.length < 1) try {
+      passages = parsePassageResponse({ bookId: reference.bookId, data });
+      console.log(passages);
     } catch (error) {
-      errors = [...queryErrors, error];
+      errors = [...errors, error];
     };
 
     setState({
       stateId: queryStateId,
       query,
+      errors,
       data,
       passages,
-      errors,
     });
   }, [data, queryStateId]);
 
   useEffect(() => {
     if (state.stateId !== queryStateId) {
-      console.log('useSearch.useEffect() stateId: ' + queryStateId);
+      console.log('usePassage.useEffect() stateId: ' + queryStateId);
       parse();
     };
   }, [state.stateId, queryStateId, parse]);
@@ -58,7 +57,7 @@ export default function useSearch ({
   return state;
 };
 
-useSearch.propTypes = {
+usePassage.propTypes = {
   /** Proskomma instance to query */
   proskomma: PropTypes.object,
   /** Change Index to synchronize Proskomma updates/imports */
@@ -67,7 +66,7 @@ useSearch.propTypes = {
   text: PropTypes.string,
 };
 
-useSearch.defaultProps = {
+usePassage.defaultProps = {
   proskomma: undefined,
   stateId: 0,
   text: '',
