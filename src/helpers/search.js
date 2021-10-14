@@ -1,6 +1,6 @@
 export const searchQuery = ({text}) => (`{
   docSets {
-    
+    id
     documents(        withChars: ["${text}"]
         allChars:false
       ) {
@@ -23,38 +23,38 @@ export const searchQuery = ({text}) => (`{
 export const parseSearchResponse = ({data}) => {
   let rows = [];
 
-  data?.docSets?.forEach((docSet, docSetIndex) => {
-    const docSetRows = parseDocSet({docSet, docSetIndex});
+  data?.docSets?.forEach((docSet) => {
+    const docSetRows = parseDocSet({docSet});
     rows = [...rows, ...docSetRows];
   });
 
   return rows;
 };
 
-export const parseDocSet = ({docSet, docSetIndex}) => {
+export const parseDocSet = ({docSet}) => {
   let rows = [];
-
+  const docSetId = docSet?.id;
   docSet?.documents?.forEach((doc) => {
-    const docRows = parseDoc({doc, docSetIndex});
+    const docRows = parseDoc({doc, docSetId});
     rows = [...rows, ...docRows];
   });
 
   return rows;
 };
 
-export const parseDoc = ({doc, docSetIndex}) => {
+export const parseDoc = ({doc, docSetId}) => {
   const rows = [];
   const {bookCode} = doc;
 
   doc?.mainSequence?.blocks?.forEach((block) => {
-    const row = parseBlock({block, bookCode, docSetIndex});
+    const row = parseBlock({block, bookCode, docSetId});
     rows.push(row);
   });
 
   return rows;
 };
 
-export const parseBlock = ({block, bookCode, docSetIndex}) => {
+export const parseBlock = ({block, bookCode, docSetId}) => {
   let row = {};
   const { scopeLabels: labels } = block;
   const chapter = labels?.filter((sl) => sl.startsWith('chapter'))[0].split('/')[1];
@@ -63,6 +63,6 @@ export const parseBlock = ({block, bookCode, docSetIndex}) => {
   const reference = `${bookCode} ${chapter}:${verse}`; // {bookCode, chapter, verse};
   const text = block?.tokens.map((token) => Object.values(token)).join('');
 
-  row = {docSetIndex, reference, text};
+  row = {docSetId, reference, text};
   return row;
 };

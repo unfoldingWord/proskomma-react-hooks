@@ -35,7 +35,7 @@ function Component () {
     documents: _documents, serialize: false, verbose: true,
   });
 
-  const reference = '3JN 1:1-1:2'; // { bookId: '3JN', chapter: 1, verse: 1 };
+  const reference = '3JN 1:1-2'; // { bookId: '3JN', chapter: 1, verse: 1 };
 
   const {
     stateId: passageStateId, query, passages, data, errors: passageErrors, 

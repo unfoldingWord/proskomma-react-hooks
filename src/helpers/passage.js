@@ -27,6 +27,7 @@ export const passageQuery = ({
 
   query = `{
     ${_scope} {
+      docSetId
       cv ( ${clause} ) { scopeLabels text }
     }
   }`;
@@ -65,6 +66,7 @@ export const parsePassageResponse = ({ bookId, data }) => {
     doc.cv.forEach(({scopeLabels, text}) => {
       const {chapter, verse} = parseScopeLabels({scopeLabels});
       const passage = {
+        docSetId: doc.docSetId,
         reference: `${bookId} ${chapter}:${verse}`,
         text,
       };

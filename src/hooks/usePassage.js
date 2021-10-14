@@ -31,13 +31,17 @@ export default function usePassage ({
     let passages = [];
     let errors = queryErrors || [];
 
-    if (errors.length < 1) try {
-      const { bookId } = parseReferenceString(reference);
-      passages = parsePassageResponse({ bookId, data });
-      console.log(passages);
-    } catch (error) {
-      errors = [...errors, error];
-    };
+    if (errors.length < 1) {
+      try {
+        const { bookId } = parseReferenceString(reference);
+        passages = parsePassageResponse({ bookId, data });
+        console.log(passages);
+      } catch (error) {
+        errors = [...errors, error];
+      };
+    } else {
+      debugger
+    }
 
     setState({
       stateId: queryStateId,

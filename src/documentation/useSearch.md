@@ -44,6 +44,7 @@ function Component () {
 
   const {
     stateId: searchStateId,
+    query,
     data,
     passages,
     errors: searchErrors, 
@@ -60,6 +61,7 @@ function Component () {
     proskommaErrors,
     searchText,
     searchErrors,
+    query,
     passages,
     data,
   };
