@@ -1,7 +1,7 @@
 {
   "name": "proskomma-react-hooks",
   "description": "A collection of React Hooks that provide a way to simplify the implementation of Proskomma into your React projects.",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "private": false,
   "homepage": "https://proskomma-react-hooks.netlify.app/",
   "license": "MIT",
@@ -11,7 +11,9 @@
   },
   "scripts": {
     "start": "npx styleguidist server",
-    "build-start": "npx styleguidist build",
+    "build-dev": "npx styleguidist build",
+    "build": "webpack --mode production --config webpack.prod.js",
+    "watch": "webpack --watch --mode development",
     "test": "react-scripts test",
     "prepublishOnly": "rm -fr ./build && yarn build"
   },
