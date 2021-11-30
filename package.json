@@ -10,16 +10,14 @@
     "url": "https://github.com/unfoldingWord/proskomma-react-hooks.git"
   },
   "scripts": {
-    "dev": "npx styleguidist server",
-    "build-dev": "npx styleguidist build",
-    "build": "webpack --mode production --config webpack.prod.js",
-    "watch": "webpack --watch --mode development",
+    "start": "npx styleguidist server",
+    "build-start": "npx styleguidist build",
     "test": "react-scripts test",
     "prepublishOnly": "rm -fr ./build && yarn build"
   },
   "peerDependencies": {
     "prop-types": "^15.7.2",
-    "proskomma": "^0.4.58",
+    "proskomma": "^0.4.92",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
@@ -55,7 +53,7 @@
     "eslint-plugin-react": "^7.25.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prop-types": "^15.7.2",
-    "proskomma": "0.4.77",
+    "proskomma": "^0.4.82",
     "react": "^17.0.2",
     "react-docgen-external-proptypes-handler": "^2.0.0",
     "react-dom": "^17.0.2",

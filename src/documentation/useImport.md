@@ -1,8 +1,8 @@
 ```js
-import { useProskomma, useImport, useQuery, } from 'proskomma-react-hooks';
+import { useProskomma, useImport } from 'proskomma-react-hooks';
 import ReactJson from 'react-json-view';
 
-const usfm = `
+const data = `
 \\id 3JN
 \\ide UTF-8
 \\h 3 Jean
@@ -23,28 +23,19 @@ const documents = [
       lang: 'fr',
       abbr: 'ulb',
     },
-    bookId: '3jn',
-    data: usfm,
+    bookId: 'tit',
+    data,
   }
 ];
 
-const query = `{
-  processor
-  packageVersion
-  documents(withBook: "3JN") {
-    cv (chapter:"1" verses:["1"]) 
-      { text }
-  }
-}`;
-
 const verbose = true;
 
-function Component () {
+function Component() {
   const {
     stateId,
     newStateId,
+    errors,
     proskomma,
-    errors: proskommaErrors,
   } = useProskomma({
     verbose,
   });
@@ -58,23 +49,15 @@ function Component () {
     verbose,
   });
 
-  const {
-    stateId: queryStateId, query: queryRun, data, errors: queryErrors, 
-  } = useQuery({
-    proskomma, stateId, query,
-  });
-
   const json = {
-    queryStateId,
-    documents,
-    query: queryRun,
-    data,
-    errors: [ ...proskommaErrors, ...queryErrors ],
+    stateId,
+    errors,
+    importErrors,
   };
 
   return (
     <ReactJson
-      style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
+      style={{ maxHeight: '500px', overflow: 'scroll' }}
       src={json}
       theme="monokai"
     />

@@ -1,5 +1,5 @@
 ```js
-import { useProskomma, useSearch, usePassageFilter } from 'proskomma-react-hooks';
+import { useProskomma, useImport, useSearch } from 'proskomma-react-hooks';
 import ReactJson from 'react-json-view';
 
 const usfm = `
@@ -16,7 +16,7 @@ const usfm = `
 \\v 2 Bien-aimé, je prie que tu pospères en toutes choses et sois en santé, juste comme prospère ton âme.
 `;
 
-const _documents = [
+const documents = [
   {
     selectors: {
       org: 'unfoldingWord',
@@ -30,16 +30,25 @@ const _documents = [
 
 const searchText = 'vérité';
 
+const verbose = true;
+
 function Component () {
   const {
     stateId,
+    newStateId,
     proskomma,
-    documents,
     errors: proskommaErrors,
   } = useProskomma({
-    documents: _documents,
-    serialize: false,
-    verbose: true,
+    verbose,
+  });
+  const {
+    errors: importErrors,
+  } = useImport({
+    proskomma,
+    stateId,
+    newStateId,
+    documents,
+    verbose,
   });
 
   const {

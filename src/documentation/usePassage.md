@@ -1,5 +1,5 @@
 ```js
-import { useProskomma, usePassage } from 'proskomma-react-hooks';
+import { useProskomma, useImport, usePassage } from 'proskomma-react-hooks';
 import ReactJson from 'react-json-view';
 
 const usfm = `
@@ -16,7 +16,7 @@ const usfm = `
 \\v 2 Bien-aimé, je prie que tu pospères en toutes choses et sois en santé, juste comme prospère ton âme.
 `;
 
-const _documents = [
+const documents = [
   {
     selectors: {
       org: 'unfoldingWord',
@@ -28,11 +28,25 @@ const _documents = [
   }
 ];
 
+const verbose = true;
+
 function Component () {
   const {
-    stateId, proskomma, documents, errors: proskommaErrors,
+    stateId,
+    newStateId,
+    proskomma,
+    errors: proskommaErrors,
   } = useProskomma({
-    documents: _documents, serialize: false, verbose: true,
+    verbose,
+  });
+  const {
+    errors: importErrors,
+  } = useImport({
+    proskomma,
+    stateId,
+    newStateId,
+    documents,
+    verbose,
   });
 
   const reference = '3JN 1:1-2'; // { bookId: '3JN', chapter: 1, verse: 1 };

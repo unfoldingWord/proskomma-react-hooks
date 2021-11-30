@@ -10349,10 +10349,10 @@ proskomma-utils@^0.4.28:
     uuid-base64 "^1.0.0"
     xregexp "^4.4.1"
 
-proskomma@0.4.77:
-  version "0.4.77"
-  resolved "https://registry.yarnpkg.com/proskomma/-/proskomma-0.4.77.tgz#325cde4d83661d15888bfadb2c1ef73665f965fa"
-  integrity sha512-k/xYjLvQ95gUsRWqkfjFvf0bmxLLx3G9jSMB3zdd0O7GuiA4sHRYS4j8KbBcyeNTCd/Y8vFUSGcaGJqQbYhIlA==
+proskomma@^0.4.82:
+  version "0.4.82"
+  resolved "https://registry.yarnpkg.com/proskomma/-/proskomma-0.4.82.tgz#4d628d717311769b0b71966548fc4630341f255e"
+  integrity sha512-/64/+xCjD+R3qMJBV8DokV7GSjOUhv+m9W1YX40IsCNYxeKd4Vn8wwVaCcEkmMlieT9J7wH0gUH4St6UmKnbvQ==
   dependencies:
     "@babel/core" "^7.12.9"
     async-mutex "^0.2.6"
