@@ -25,7 +25,7 @@ const documents = [
       lang: 'fr',
       abbr: 'ulb',
     },
-    bookId: 'tit',
+    bookCode: 'tit',
     data,
   }
 ];

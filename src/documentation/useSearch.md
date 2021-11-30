@@ -25,7 +25,7 @@ const documents = [
       lang: 'fr',
       abbr: 'ulb',
     },
-    bookId: '3jn',
+    bookCode: '3jn',
     data: usfm,
   }
 ];

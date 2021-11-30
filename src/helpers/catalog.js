@@ -4,7 +4,7 @@ export const catalogQuery = `{
     id hasMapping
     documents {
       id
-      bookId: header(id:"bookCode")
+      bookCode: header(id:"bookCode")
       h: header(id:"h")
       toc1: header(id:"toc1")
       toc2: header(id:"toc2")

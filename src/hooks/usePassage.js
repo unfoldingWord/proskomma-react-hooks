@@ -33,8 +33,8 @@ export default function usePassage ({
 
     if (errors.length < 1) {
       try {
-        const { bookId } = parseReferenceString(reference);
-        passages = parsePassageResponse({ bookId, data });
+        const { bookCode } = parseReferenceString(reference);
+        passages = parsePassageResponse({ bookCode, data });
         console.log(passages);
       } catch (error) {
         errors = [...errors, error];
