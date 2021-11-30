@@ -1,9 +1,10 @@
+# useImport
+
 ```js
 import { useProskomma, useImport } from 'proskomma-react-hooks';
 import ReactJson from 'react-json-view';
 
-const data = `
-\\id 3JN
+const data = `\\id 3JN
 \\ide UTF-8
 \\h 3 Jean
 \\toc1 3 Jean
@@ -13,8 +14,7 @@ const data = `
 \\c 1
 \\p 
 \\v 1 L'ancien au bien-aimé Gaius, que j'aime dans la vérité.
-\\v 2 Bien-aimé, je prie que tu pospères en toutes choses et sois en santé, juste comme prospère ton âme.
-`;
+\\v 2 Bien-aimé, je prie que tu pospères en toutes choses et sois en santé, juste comme prospère ton âme.`;
 
 const documents = [
   {
