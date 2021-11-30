@@ -7,7 +7,9 @@ import ReactJson from 'react-json-view';
 const usfm = `\\id 3JN
 \\ide UTF-8
 \\h 3 Jean
-\\toc1 3 Jean
+\\toc1 Troisième épître de Jean
+\\toc2 3 Jean
+\\toc3 3jn
 \\mt 3 Jean
 
 \\s5

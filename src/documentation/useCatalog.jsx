@@ -1,20 +1,17 @@
 import PropTypes from 'prop-types';
 
-export default function useSearch(props) {
+export default function useCatalog(props) {
   return (<></>);
 };
 
-useSearch.propTypes = {
+useCatalog.propTypes = {
   /** Proskomma instance to query */
   proskomma: PropTypes.object,
   /** Change Index to synchronize Proskomma updates/imports */
   stateId: PropTypes.string,
-  /** Text to search for */
-  text: PropTypes.string,
 };
 
-useSearch.defaultProps = {
+useCatalog.defaultProps = {
   proskomma: undefined,
   stateId: 0,
-  text: '',
 };

@@ -1,10 +1,10 @@
-# useImport
+# useCatalog
 
 ```js
-import { useProskomma, useImport } from 'proskomma-react-hooks';
+import { useProskomma, useImport, useCatalog } from 'proskomma-react-hooks';
 import ReactJson from 'react-json-view';
 
-const data = `\\id 3JN
+const usfm = `\\id 3JN
 \\ide UTF-8
 \\h 3 Jean
 \\toc1 Troisième épître de Jean
@@ -25,19 +25,19 @@ const documents = [
       lang: 'fr',
       abbr: 'ulb',
     },
-    bookId: 'tit',
-    data,
+    bookId: '3jn',
+    data: usfm,
   }
 ];
 
 const verbose = true;
 
-function Component() {
+function Component () {
   const {
     stateId,
     newStateId,
-    errors,
     proskomma,
+    errors: proskommaErrors,
   } = useProskomma({
     verbose,
   });
@@ -51,15 +51,27 @@ function Component() {
     verbose,
   });
 
+  const {
+    stateId: catalogStateId,
+    catalog,
+    errors: catalogErrors, 
+  } = useCatalog({
+    proskomma,
+    stateId,
+  });
+
   const json = {
     stateId,
-    errors,
-    importErrors,
+    catalogStateId,
+    catalog,
+    proskommaErrors,
+    catalogErrors,
+    documents,
   };
 
   return (
     <ReactJson
-      style={{ maxHeight: '500px', overflow: 'scroll' }}
+      style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
       src={json}
       theme="monokai"
     />
