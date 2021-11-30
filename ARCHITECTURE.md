@@ -46,6 +46,12 @@ Documentation includes .MD documented examples and wrapper JSX files to enable S
 
 ## Provided Hooks
 
+- `useProskomma`
+- `useImport`
+- `useQuery`
+- `useCatalog`
+- `useSearch`
+
 ### Simple Bootstrapping `useProskomma`
 
 Proskomma is a powerful scripture runtime engine that can be complex to setup. The goal of this custom hook is to provide minimal interface while being scalable for as many use cases as possible.
@@ -71,7 +77,7 @@ Queries can be tedious to construct, parse, and maintain. Instead of expecting e
 
 Custom Query Hooks tightly couple the query generation and the result parsing.
 
-### Simple Status `useImported`
+### Simple Status `useCatalog`
 
-`useImported` is a custom hook that wraps useQuery that runs the query to return what documents are loaded.
+`useCatalog` is a custom hook that wraps useQuery that runs the query to return what documents are loaded.
 The goal is to decouple react state management from duplicating and storing the documents content after import as well as allow each hook to do only one thing.
