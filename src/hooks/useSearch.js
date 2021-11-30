@@ -67,7 +67,7 @@ useSearch.propTypes = {
   proskomma: PropTypes.object,
   /** Change Index to synchronize Proskomma updates/imports */
   stateId: PropTypes.string,
-  /** GraphQL Query to run */
+  /** Text to search for */
   text: PropTypes.string,
 };
 

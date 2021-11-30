@@ -1,7 +1,7 @@
-# useSearch
+# useCatalog
 
 ```js
-import { useProskomma, useImport, useSearch } from 'proskomma-react-hooks';
+import { useProskomma, useImport, useCatalog } from 'proskomma-react-hooks';
 import ReactJson from 'react-json-view';
 
 const usfm = `\\id 3JN
@@ -30,8 +30,6 @@ const documents = [
   }
 ];
 
-const searchText = 'vérité';
-
 const verbose = true;
 
 function Component () {
@@ -54,27 +52,21 @@ function Component () {
   });
 
   const {
-    stateId: searchStateId,
-    query,
-    data,
-    passages,
-    errors: searchErrors, 
-  } = useSearch({
+    stateId: catalogStateId,
+    catalog,
+    errors: catalogErrors, 
+  } = useCatalog({
     proskomma,
     stateId,
-    text: searchText,
   });
 
   const json = {
     stateId,
-    searchStateId,
-    documents,
+    catalogStateId,
+    catalog,
     proskommaErrors,
-    searchText,
-    searchErrors,
-    query,
-    passages,
-    data,
+    catalogErrors,
+    documents,
   };
 
   return (

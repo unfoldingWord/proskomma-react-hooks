@@ -1,29 +1,29 @@
 export const passageQuery = ({
   reference,
-  bookId: _bookId,
+  bookCode: _bookCode,
   chapterVerses: _chapterVerses,
   chapter: _chapter,
   verse: _verse,
 }) => {
   let query;
-  let bookId = _bookId;
+  let bookCode = _bookCode;
   let chapterVerses = _chapterVerses;
   let chapter = _chapter;
   let verse = _verse;
 
   if (reference) {
     const parsed = parseReferenceString(reference);
-    bookId = parsed.bookId;
+    bookCode = parsed.bookCode;
     chapterVerses = parsed.chapterVerses;
     chapter = parsed.chapter;
     verse = parsed.verse;
   };
 
-  let _scope = scope({bookId});
+  let _scope = scope({bookCode});
 
   let clause = (chapterVerses) ? 
     chapterVersesClause({chapterVerses}) : 
-    referenceClause({bookId, chapter, verse});
+    referenceClause({bookCode, chapter, verse});
 
   query = `{
     ${_scope} {
@@ -38,9 +38,9 @@ export const passageQuery = ({
 export const parseReferenceString = (reference) => {
   let response = {};
   // 3JN 1:1-2 PSA 119:100 MAT 1-2
-  const regex = /(?<bookId>[\d\w]\w{2}) (?<cv>[\d:-]+)/;
-  const {bookId, cv} = reference.match(regex).groups;
-  response.bookId = bookId;
+  const regex = /(?<bookCode>[\d\w]\w{2}) (?<cv>[\d:-]+)/;
+  const {bookCode, cv} = reference.match(regex).groups;
+  response.bookCode = bookCode;
 
   if (cv.includes('-')) {
     response.chapterVerses = cv;
@@ -54,20 +54,20 @@ export const parseReferenceString = (reference) => {
   return response;
 };
 
-const scope = ({bookId}) => `documents ( withBook: "${bookId}" )`;
+const scope = ({bookCode}) => `documents ( withBook: "${bookCode}" )`;
 
 const chapterVersesClause = ({chapterVerses}) => `chapterVerses: "${chapterVerses}"`;
 
 const referenceClause = ({chapter, verse}) => `chapter: "${chapter}" verses: ["${verse}"]`;
 
-export const parsePassageResponse = ({ bookId, data }) => {
+export const parsePassageResponse = ({ bookCode, data }) => {
   let passages = [];
   data.documents.forEach((doc) => {
     doc.cv.forEach(({scopeLabels, text}) => {
       const {chapter, verse} = parseScopeLabels({scopeLabels});
       const passage = {
         docSetId: doc.docSetId,
-        reference: `${bookId} ${chapter}:${verse}`,
+        reference: `${bookCode} ${chapter}:${verse}`,
         text,
       };
       passages = [...passages, passage];

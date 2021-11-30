@@ -7,7 +7,9 @@ import ReactJson from 'react-json-view';
 const usfm = `\\id 3JN
 \\ide UTF-8
 \\h 3 Jean
-\\toc1 3 Jean
+\\toc1 Troisième épître de Jean
+\\toc2 3 Jean
+\\toc3 3jn
 \\mt 3 Jean
 
 \\s5
@@ -23,7 +25,7 @@ const documents = [
       lang: 'fr',
       abbr: 'ulb',
     },
-    bookId: '3jn',
+    bookCode: '3jn',
     data: usfm,
   }
 ];
@@ -49,7 +51,7 @@ function Component () {
     verbose,
   });
 
-  const reference = '3JN 1:1-2'; // { bookId: '3JN', chapter: 1, verse: 1 };
+  const reference = '3JN 1:1-2'; // { bookCode: '3JN', chapter: 1, verse: 1 };
 
   const {
     stateId: passageStateId, query, passages, data, errors: passageErrors, 

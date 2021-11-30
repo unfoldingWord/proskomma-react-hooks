@@ -18,7 +18,7 @@ useImport.propTypes = {
         abbr: PropTypes.string.isRequired,
       }),
       /**  */
-      bookId: PropTypes.string,
+      bookCode: PropTypes.string,
       /** USFM string for the book */
       data: PropTypes.string.isRequired,
     })
