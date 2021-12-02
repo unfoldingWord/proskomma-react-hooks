@@ -75,7 +75,7 @@ function Component () {
     query,
     bookCodes,
     searchErrors,
-    documents,
+    // documents,
     data,
   };
 

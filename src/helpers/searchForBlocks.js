@@ -25,7 +25,7 @@ export const searchForBlocksQuery = ({text, docSetId, bookCode, tokens=false, })
   docSet(id:"${docSetId}") {
     id
     document(
-        bookCode:"${bookCode}" 
+        bookCode:"${bookCode.toUpperCase()}" 
       ) {
       id
       bookCode: header(id: "bookCode")

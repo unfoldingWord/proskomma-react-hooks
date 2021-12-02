@@ -77,7 +77,7 @@ function Component () {
     query,
     blocks,
     searchErrors,
-    documents,
+    // documents,
     data,
   };
 
