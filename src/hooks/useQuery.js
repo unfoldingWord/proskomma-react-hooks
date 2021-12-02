@@ -17,12 +17,10 @@ export default function useQuery({proskomma, stateId, query}) {
     let data;
     let errors = [];
 
-    try {
-      const { errors: _errors, data: _data } = await proskomma.gqlQuery(query);
-      errors = _errors || [];
+    const { errors: _errors, data: _data } = await proskomma.gqlQuery(query);
+    errors = _errors || [];
+    if (_data) {
       data = JSON.parse(JSON.stringify(_data)); // graphQL nested object fix
-    } catch (error) {
-      errors = [error];
     };
 
     setState({
