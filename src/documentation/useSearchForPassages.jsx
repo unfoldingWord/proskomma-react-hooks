@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 
-export default function useSearchForBlocks(props) {
+export default function useSearchForPassages(props) {
   return (<></>);
 };
 
-useSearchForBlocks.propTypes = {
+useSearchForPassages.propTypes = {
   /** Proskomma instance to query */
   proskomma: PropTypes.object,
   /** Change Index to synchronize Proskomma updates/imports */
@@ -17,11 +17,14 @@ useSearchForBlocks.propTypes = {
   tokens: PropTypes.bool,
   /** Text to search for */
   text: PropTypes.string,
+  /** Search in blocks not verses */
+  blocks: PropTypes.bool,
 };
 
-useSearchForBlocks.defaultProps = {
+useSearchForPassages.defaultProps = {
   proskomma: undefined,
   stateId: 0,
   text: '',
   tokens: false,
+  blocks: false,
 };
