@@ -33,8 +33,7 @@ export const searchForPassagesQuery = ({text, docSetId, bookCode, blocks=false, 
             text
             ${_tokensClause}          }
         }
-      }
-`;
+      }`;
 
   const _versesClause = `cvMatching(
         allChars : true
@@ -44,9 +43,7 @@ export const searchForPassagesQuery = ({text, docSetId, bookCode, blocks=false, 
       ) {
         scopeLabels(startsWith:["chapter/", "verse/"])
         text
-        ${_tokensClause}
-      }
-`;
+        ${_tokensClause}      }`;
 
   const _blocksOrVersesClause = blocks ? _blocksClause : _versesClause;
 
