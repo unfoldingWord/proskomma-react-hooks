@@ -2,27 +2,28 @@ import { useState, useEffect } from 'react';
 import { useDeepCompareCallback } from 'use-deep-compare';
 import PropTypes from 'prop-types';
 
-import { searchForBlocksFilter, searchForBlocksQuery } from '../helpers/searchForBlocks';
+import { searchForBlocksFilter, searchForPassagesQuery, searchForVersesFilter } from '../helpers/searchForPassages';
 import { useQuery } from '..';
 
-export default function useSearchForBlocks ({
+export default function useSearchForPassages ({
   proskomma,
   stateId,
   docSetId,
   bookCode,
   text,
   tokens,
+  blocks,
 }) {
   const cleanState = {
     query: '',
-    bookCodes: [],
+    passages: [],
     stateId: 0,
     errors: [],
     data: {},
   };
   const [state, setState] = useState({ ...cleanState });
 
-  const query = searchForBlocksQuery({ text, docSetId, bookCode, tokens });
+  const query = searchForPassagesQuery({ text, docSetId, bookCode, tokens, blocks });
 
   const {
     stateId: queryStateId,
@@ -35,21 +36,21 @@ export default function useSearchForBlocks ({
   });
 
   const parse = useDeepCompareCallback(() => {
-    let blocks = [];
+    let passages = [];
     let errors = [...queryErrors];
 
     if (errors.length < 1) {
-      blocks = searchForBlocksFilter({data});
+      passages = blocks ? searchForBlocksFilter({data}) : searchForVersesFilter({data});
     };
 
     setState({
       stateId: queryStateId,
       query,
       data,
-      blocks,
+      passages,
       errors,
     });
-  }, [data, queryStateId]);
+  }, [data, queryStateId, blocks]);
 
   useEffect(() => {
     if (state.stateId !== queryStateId) {
@@ -61,7 +62,7 @@ export default function useSearchForBlocks ({
   return state;
 };
 
-useSearchForBlocks.propTypes = {
+useSearchForPassages.propTypes = {
   /** Proskomma instance to query */
   proskomma: PropTypes.object,
   /** Change Index to synchronize Proskomma updates/imports */
@@ -74,11 +75,14 @@ useSearchForBlocks.propTypes = {
   tokens: PropTypes.bool,
   /** Text to search for */
   text: PropTypes.string,
+  /** Search in blocks not verses */
+  blocks: PropTypes.bool,
 };
 
-useSearchForBlocks.defaultProps = {
+useSearchForPassages.defaultProps = {
   proskomma: undefined,
   stateId: 0,
   text: '',
   tokens: false,
+  blocks: false,
 };

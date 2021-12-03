@@ -1,7 +1,7 @@
-# useSearchForBlocks
+# useSearchForPassages
 
 ```js
-import { useProskomma, useImport, useSearchForBlocks } from 'proskomma-react-hooks';
+import { useProskomma, useImport, useSearchForPassages } from 'proskomma-react-hooks';
 import ReactJson from 'react-json-view';
 
 const usfm = `\\id 3JN
@@ -58,15 +58,17 @@ function Component () {
   const {
     stateId: searchStateId,
     query,
-    blocks,
+    passages,
     errors: searchErrors, 
     data,
-  } = useSearchForBlocks({
+  } = useSearchForPassages({
     proskomma,
     stateId,
     text: searchText,
     docSetId,
     bookCode,
+    blocks: true,
+    tokens: true,
   });
 
   const json = {
@@ -75,7 +77,7 @@ function Component () {
     proskommaErrors,
     searchText,
     query,
-    blocks,
+    passages,
     searchErrors,
     // documents,
     data,

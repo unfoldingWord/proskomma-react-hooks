@@ -6,7 +6,7 @@ module.exports = {
   moduleAliases: { 'proskomma-react-hooks': path.resolve(__dirname, 'src') },
   getComponentPathLine: componentPath => {
     const name = path.basename(componentPath, '.js')
-    return `import { ${name} } from 'proskomma-react-hooks';`
+    return `import { ${name.split('.')[0]} } from 'proskomma-react-hooks';`
   },
   handlers: componentPath => (
     require('react-docgen').defaultHandlers.concat(
