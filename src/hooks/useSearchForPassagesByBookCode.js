@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { searchForBlocksFilter, searchForPassagesQuery, searchForVersesFilter } from '../helpers/searchForPassages';
 import { useQuery } from '..';
 
-export default function useSearchForPassages ({
+export default function useSearchForPassagesByBookCode ({
   proskomma,
   stateId,
   docSetId,
@@ -45,9 +45,10 @@ export default function useSearchForPassages ({
 
     setState({
       stateId: queryStateId,
+      passages,
+      bookCode,
       query,
       data,
-      passages,
       errors,
     });
   }, [data, queryStateId, blocks]);
@@ -62,7 +63,7 @@ export default function useSearchForPassages ({
   return state;
 };
 
-useSearchForPassages.propTypes = {
+useSearchForPassagesByBookCode.propTypes = {
   /** Proskomma instance to query */
   proskomma: PropTypes.object,
   /** Change Index to synchronize Proskomma updates/imports */
@@ -79,7 +80,7 @@ useSearchForPassages.propTypes = {
   blocks: PropTypes.bool,
 };
 
-useSearchForPassages.defaultProps = {
+useSearchForPassagesByBookCode.defaultProps = {
   proskomma: undefined,
   stateId: 0,
   text: '',

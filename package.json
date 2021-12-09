@@ -10,7 +10,7 @@
     "url": "https://github.com/unfoldingWord/proskomma-react-hooks.git"
   },
   "scripts": {
-    "start": "npx styleguidist server",
+    "start": "yarn && npx styleguidist server",
     "build-dev": "npx styleguidist build",
     "build": "webpack --mode production --config webpack.prod.js",
     "watch": "webpack --watch --mode development",
