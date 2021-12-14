@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useDeepCompareCallback, useDeepCompareEffect } from 'use-deep-compare';
+import { useDeepCompareEffect, useDeepCompareCallback } from 'use-deep-compare';
 import PropTypes from 'prop-types';
+import differenceWith from 'lodash.differencewith';
+import isEqual from 'lodash.isequal';
 
 import { useSearchForPassagesByBookCode } from '..';
+import useBookCodeQueue from './useBookCodeQueue';
 
-export default function useSearch ({
+export default function useSearchForPassagesByBookCodes ({
   proskomma,
   docSetId,
   bookCodes,
@@ -13,15 +16,44 @@ export default function useSearch ({
   tokens,
   blocks,
 }) {
-  const [bookCodesQueue, setBookCodesQueue] = useState([]);
-  const [nextBookCode, setNextBookCode] = useState();
-  const [passages, setPassages] = useState([]);
+  const cleanState = {
+    stateId,
+    docSetId,
+    bookCodes,
+    text,
+    tokens,
+    blocks,
+    passages: [],
+    errors: [],
+    lastBookCode: null,
+  };
+  const [state, setState] = useState(cleanState);
+
+  
+  const refreshState = useDeepCompareCallback(() => {
+    setState(cleanState);
+  }, [cleanState]);
+  
+  // 1. if input changes, refresh state;
+  useEffect(() => {
+    const changed = (
+      docSetId !== state.docSetId ||
+      bookCodes !== state.bookCodes ||
+      stateId !== state.stateId ||
+      text !== state.text ||
+      tokens !== state.tokens ||
+      blocks !== state.blocks
+    );
+
+    if (changed) refreshState();
+  }, [blocks, bookCodes, docSetId, refreshState, stateId, text, tokens, state]);
 
   const {
-    passages: passagesByBookCode,
-    stateId: passagesStateId,
-    bookCode: lastBookCode,
-  } = useSearchForPassagesByBookCode({
+    nextBookCode,
+    errors: queueErrors,
+  } = useBookCodeQueue({bookCodes, lastBookCode: state.lastBookCode, stateId});
+
+  const stateSearchForPassagesByBookCode = useSearchForPassagesByBookCode({
     proskomma,
     stateId,
     docSetId,
@@ -31,57 +63,50 @@ export default function useSearch ({
     blocks,
   });
 
-  const getNextBookCodeFromQueue = useDeepCompareCallback(() => {
-    const nextBookCodesQueue = [...bookCodesQueue];
-    const nextBookCode = nextBookCodesQueue.shift();
-    setBookCodesQueue(nextBookCodesQueue);
-    return nextBookCode;
-  }, [bookCodesQueue]);
-
-  const getNextBookCode = useDeepCompareCallback(() => {
-    const _nextBookCode = getNextBookCodeFromQueue();
-    if (nextBookCode !== _nextBookCode) {
-      setNextBookCode(_nextBookCode);
-    };
-  }, [bookCodesQueue, nextBookCode]);
-
-  // 1. Queue if bookCodes, docSetId or stateId changes
+  // 1. useSearchForPassagesByBookCode will run each update of nextBookCode, add results
   useDeepCompareEffect(() => {
-    if (docSetId && stateId) {
-      setBookCodesQueue(bookCodes);
+    const {
+      passages: lastPassages,
+      stateId: lastStateId,
+      bookCode: lastBookCode,
+      errors: lastErrors,
+    } = stateSearchForPassagesByBookCode;
+    if (lastPassages?.length && stateId === lastStateId) { // ensure stateId is up to date
+      // if (lastBookCode !== nextBookCode) { // ensure its not a repeat run.
+        let newPassages = differenceWith(lastPassages, state.passages, isEqual);
+        const passages = [...state.passages, ...newPassages];
+        const errors = [...state.errors, ...lastErrors];
+        const newState = {...state, passages, lastBookCode, errors};
+        console.log('1. Add results after useSearchForPassagesByBookCode runs on each update of nextBookCode', lastBookCode, lastPassages, newPassages);
+        setState(newState);
+      // };
     };
-  }, [bookCodes, docSetId, stateId]);
+  }, [state, stateSearchForPassagesByBookCode]);
 
-  // 2. Use the first book off the queue fist time around
-  useDeepCompareEffect(() => {
-    if (bookCodes === nextBookCode) {
-      getNextBookCode();
-    };
-  }, [bookCodes, nextBookCode, getNextBookCode]);
-
-  // 3. Use the first book off the queue fist time around
-  useEffect(() => {
-    if (lastBookCode !== nextBookCode) {
-      getNextBookCode();
-    };
-  }, [nextBookCode, lastBookCode, getNextBookCode]);
-
-  return {
-    passages,
-  };
+  return state;
 };
 
-useSearch.propTypes = {
+useSearchForPassagesByBookCodes.propTypes = {
   /** Proskomma instance to query */
-  proskomma: PropTypes.object,
+  proskomma: PropTypes.object.isRequired,
   /** Change Index to synchronize Proskomma updates/imports */
-  stateId: PropTypes.string,
+  stateId: PropTypes.string.isRequired,
+  /** The docSetId to know which docSet to search, ie. "unfoldingword/en_ult" */
+  docSetId: PropTypes.string.isRequired,
+  /** The bookCodes to know which documents to search, ie. ["tit"] */
+  bookCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   /** Text to search for */
-  text: PropTypes.string,
+  text: PropTypes.string.isRequired,
+  /** Include tokens */
+  tokens: PropTypes.bool,
+  /** Search in blocks not verses */
+  blocks: PropTypes.bool,
 };
 
-useSearch.defaultProps = {
+useSearchForPassagesByBookCodes.defaultProps = {
   proskomma: undefined,
   stateId: 0,
   text: '',
+  tokens: false,
+  blocks: false,
 };

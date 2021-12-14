@@ -15,13 +15,18 @@ export default function useSearchForPassagesByBookCode ({
   blocks,
 }) {
   const cleanState = {
+    stateId: 0,
+    docSetId: null,
+    bookCode: null,
+    text: null,
+    tokens: null,
+    blocks: null,
     query: '',
     passages: [],
-    stateId: 0,
     errors: [],
     data: {},
   };
-  const [state, setState] = useState({ ...cleanState });
+  const [state, setState] = useState(cleanState);
 
   const query = searchForPassagesQuery({ text, docSetId, bookCode, tokens, blocks });
 
@@ -44,6 +49,7 @@ export default function useSearchForPassagesByBookCode ({
     };
 
     setState({
+      ...cleanState,
       stateId: queryStateId,
       passages,
       bookCode,
@@ -54,28 +60,36 @@ export default function useSearchForPassagesByBookCode ({
   }, [data, queryStateId, blocks]);
 
   useEffect(() => {
-    if (state.stateId !== queryStateId) {
-      console.log('useSearchForBookCodes.useEffect() stateId: ' + queryStateId);
+    const changedInput = (
+      state.stateId !== queryStateId ||
+      state.docSetId !== docSetId ||
+      state.bookCode !== bookCode ||
+      state.text !== text ||
+      state.tokens !== tokens ||
+      state.blocks !== blocks
+    );
+    if (changedInput) {
+      console.log('useSearchForPassagesByBookCode.useEffect() stateId: ' + queryStateId);
       parse();
     };
-  }, [state.stateId, queryStateId, parse]);
+  }, [state.stateId, queryStateId, parse, state.docSetId, state.bookCode, state.text, state.tokens, state.blocks, docSetId, bookCode, text, tokens, blocks]);
 
   return state;
 };
 
 useSearchForPassagesByBookCode.propTypes = {
   /** Proskomma instance to query */
-  proskomma: PropTypes.object,
+  proskomma: PropTypes.object.isRequired,
   /** Change Index to synchronize Proskomma updates/imports */
-  stateId: PropTypes.string,
-  /** The docSetId to know which document to search, ie. "unfoldingword/en_ult" */
-  docSetId: PropTypes.string,
-  /** The bookCode to know which document to search, ie. "unfoldingword/en_ult" */
-  bookCode: PropTypes.string,
+  stateId: PropTypes.string.isRequired,
+  /** The docSetId to know which docSet to search, ie. "unfoldingword/en_ult" */
+  docSetId: PropTypes.string.isRequired,
+  /** The bookCode to know which document to search, ie. "tit" */
+  bookCode: PropTypes.string.isRequired,
+  /** Text to search for */
+  text: PropTypes.string.isRequired,
   /** Include tokens */
   tokens: PropTypes.bool,
-  /** Text to search for */
-  text: PropTypes.string,
   /** Search in blocks not verses */
   blocks: PropTypes.bool,
 };

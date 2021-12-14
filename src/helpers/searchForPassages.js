@@ -52,7 +52,7 @@ export const searchForPassagesQuery = ({text, docSetId, bookCode, blocks=false, 
   docSet(id:"${docSetId}") {
     id
     document(
-      bookCode:"${bookCode.toUpperCase()}" 
+      bookCode:"${bookCode?.toUpperCase()}" 
     ) {
       id
       bookCode: header(id: "bookCode")

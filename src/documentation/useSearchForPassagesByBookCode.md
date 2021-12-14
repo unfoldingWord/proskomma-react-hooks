@@ -1,7 +1,7 @@
-# useSearchForPassages
+# useSearchForPassagesByBookCode
 
 ```js
-import { useProskomma, useImport, useSearchForPassages } from 'proskomma-react-hooks';
+import { useProskomma, useImport, useSearchForPassagesByBookCode } from 'proskomma-react-hooks';
 import ReactJson from 'react-json-view';
 
 const usfm = `\\id 3JN
@@ -61,7 +61,7 @@ function Component () {
     passages,
     errors: searchErrors, 
     data,
-  } = useSearchForPassages({
+  } = useSearchForPassagesByBookCode({
     proskomma,
     stateId,
     text: searchText,
