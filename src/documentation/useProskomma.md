@@ -4,7 +4,7 @@
 import { useProskomma } from 'proskomma-react-hooks';
 import ReactJson from 'react-json-view';
 
-const verbose = true;
+const verbose = false;
 
 function Component() {
   const {

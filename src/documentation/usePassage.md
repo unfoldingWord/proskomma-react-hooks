@@ -1,38 +1,37 @@
 # usePassage
 
 ```js
-import { useProskomma, useImport, usePassage } from 'proskomma-react-hooks';
+import { useState } from 'react';
+import { useProskomma, useImport, useCatalog, usePassage } from 'proskomma-react-hooks';
 import ReactJson from 'react-json-view';
+import { loremIpsumBook } from 'lorem-ipsum-usfm';
 
-const usfm = `\\id 3JN
-\\ide UTF-8
-\\h 3 Jean
-\\toc1 Troisième épître de Jean
-\\toc2 3 Jean
-\\toc3 3jn
-\\mt 3 Jean
-
-\\s5
-\\c 1
-\\p 
-\\v 1 L'ancien au bien-aimé Gaius, que j'aime dans la vérité.
-\\v 2 Bien-aimé, je prie que tu pospères en toutes choses et sois en santé, juste comme prospère ton âme.`;
+const document = ({bookCode, bookName, ...props}) => ({
+  selectors: { org: 'unfoldingWord', lang: 'lat', abbr: 'lor' }, 
+  data: loremIpsumBook({ bookCode, bookName, ...props }),
+  bookCode, 
+});
 
 const documents = [
-  {
-    selectors: {
-      org: 'unfoldingWord',
-      lang: 'fr',
-      abbr: 'ulb',
-    },
-    bookCode: '3jn',
-    data: usfm,
-  }
+  document({ bookCode: 'mat', bookName: 'Matthew', chapterCount: 1, verseMax: 1 }),
+  document({ bookCode: 'mar', bookName: 'Mark', chapterCount: 1, verseMax: 1 }),
+  document({ bookCode: 'luk', bookName: 'Luke', chapterCount: 1, verseMax: 1 }),
+  document({ bookCode: 'jhn', bookName: 'John', chapterCount: 1, verseMax: 1 }),
+  document({ bookCode: '1jn', bookName: '1 Jean', chapterCount: 1, verseMax: 1 }),
+  document({ bookCode: '2jn', bookName: '2 Jean', chapterCount: 1, verseMax: 1 }),
+  document({ bookCode: '3jn', bookName: '3 Jean', chapterCount: 1, verseMin: 10 }),
 ];
 
-const verbose = true;
+const verbose = false;
+const reference = '3JN 1:1-2'; // { bookCode: '3JN', chapter: 1, verse: 1 };
+
 
 function Component () {
+  const [startImport, setStartImport] = useState(false);
+  const [startQuery, setStartQuery] = useState(false);
+  const _documents = startImport ? documents : [];
+  const _reference = startQuery ? reference : '';
+
   const {
     stateId,
     newStateId,
@@ -41,40 +40,64 @@ function Component () {
   } = useProskomma({
     verbose,
   });
+
   const {
     errors: importErrors,
   } = useImport({
     proskomma,
     stateId,
     newStateId,
-    documents,
+    documents: _documents,
     verbose,
   });
 
-  const reference = '3JN 1:1-2'; // { bookCode: '3JN', chapter: 1, verse: 1 };
+  const {
+    stateId: catalogStateId,
+    catalog,
+    errors: catalogErrors, 
+  } = useCatalog({
+    proskomma,
+    stateId,
+    verbose,
+  });
 
   const {
-    stateId: passageStateId, query, passages, data, errors: passageErrors, 
+    stateId: passageStateId,
+    query,
+    passages,
+    data,
+    errors: passageErrors, 
+    reference: passageReference,
   } = usePassage({
-    proskomma, stateId, reference,
+    proskomma,
+    stateId,
+    reference: _reference,
+    verbose,
   });
 
   const json = {
     stateId,
     passageStateId,
-    documents,
+    passageReference,
+    passages,
+    catalog,
+    // documents,
     query,
     errors: [ ...proskommaErrors, ...passageErrors ],
-    passages,
     data,
   };
 
+
   return (
-    <ReactJson
-      style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
-      src={json}
-      theme="monokai"
-    />
+    <>
+      <ReactJson
+        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
+        src={json}
+        theme="monokai"
+      />
+      <button style={{margin: '1em'}} onClick={() => {setStartImport(true);}}>Import</button>
+      <button style={{margin: '1em'}} onClick={() => {setStartQuery(true);}}>Query</button>
+    </>
   );
 };
 

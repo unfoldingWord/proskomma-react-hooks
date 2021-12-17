@@ -13,6 +13,8 @@ useSearchForBookCodes.propTypes = {
   docSetId: PropTypes.string,
   /** Text to search for */
   text: PropTypes.string,
+  /** console log details */
+  verbose: PropTypes.bool,
 };
 
 useSearchForBookCodes.defaultProps = {

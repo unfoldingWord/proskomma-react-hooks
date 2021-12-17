@@ -1,82 +1,77 @@
-import { useState, useEffect } from 'react';
-import { useDeepCompareCallback } from 'use-deep-compare';
 import PropTypes from 'prop-types';
 
-import { searchForBlocksFilter, searchForPassagesQuery, searchForVersesFilter } from '../helpers/searchForPassages';
-import { useQuery } from '..';
+import { useSearchForBookCodes, useSearchForPassagesByBookCodes } from '..';
 
 export default function useSearchForPassages ({
   proskomma,
-  stateId,
   docSetId,
-  bookCode,
+  stateId,
   text,
   tokens,
   blocks,
+  verbose,
 }) {
-  const cleanState = {
-    query: '',
-    passages: [],
-    stateId: 0,
-    errors: [],
-    data: {},
-  };
-  const [state, setState] = useState({ ...cleanState });
-
-  const query = searchForPassagesQuery({ text, docSetId, bookCode, tokens, blocks });
-
+  
   const {
-    stateId: queryStateId,
-    data, 
-    errors: queryErrors, 
-  } = useQuery({
+    bookCodes,
+    docSetId: bookCodesDocSetId,
+    stateId: bookCodesStateId,
+    errors: bookCodesErrors,
+    text: bookCodesText,
+  } = useSearchForBookCodes({
     proskomma,
     stateId,
-    query,
+    docSetId,
+    text,
+    verbose,
   });
 
-  const parse = useDeepCompareCallback(() => {
-    let passages = [];
-    let errors = [...queryErrors];
+  const {
+    stateId: passagesStateId,
+    docSetId: passagesDocSetId,
+    text: passagesText,
+    tokens: passagesTokens,
+    blocks: passagesBlocks,
+    passages,
+    errors: passagesErrors,
+  } = useSearchForPassagesByBookCodes({
+    proskomma,
+    docSetId: bookCodesDocSetId,
+    stateId: bookCodesStateId,
+    bookCodes,
+    text: bookCodesText,
+    tokens,
+    blocks,
+    verbose,
+  });
 
-    if (errors.length < 1) {
-      passages = blocks ? searchForBlocksFilter({data}) : searchForVersesFilter({data});
-    };
-
-    setState({
-      stateId: queryStateId,
-      query,
-      data,
-      passages,
-      errors,
-    });
-  }, [data, queryStateId, blocks]);
-
-  useEffect(() => {
-    if (state.stateId !== queryStateId) {
-      console.log('useSearchForBookCodes.useEffect() stateId: ' + queryStateId);
-      parse();
-    };
-  }, [state.stateId, queryStateId, parse]);
-
-  return state;
+  return {
+    passages,
+    bookCodes,
+    stateId: passagesStateId,
+    docSetId: passagesDocSetId,
+    text: passagesText,
+    tokens: passagesTokens,
+    blocks: passagesBlocks,
+    errors: [...bookCodesErrors, ...passagesErrors],
+  };
 };
 
 useSearchForPassages.propTypes = {
   /** Proskomma instance to query */
-  proskomma: PropTypes.object,
+  proskomma: PropTypes.object.isRequired,
   /** Change Index to synchronize Proskomma updates/imports */
-  stateId: PropTypes.string,
-  /** The docSetId to know which document to search, ie. "unfoldingword/en_ult" */
-  docSetId: PropTypes.string,
-  /** The bookCode to know which document to search, ie. "unfoldingword/en_ult" */
-  bookCode: PropTypes.string,
+  stateId: PropTypes.string.isRequired,
+  /** The docSetId to know which docSet to search, ie. "unfoldingword/en_ult" */
+  docSetId: PropTypes.string.isRequired,
+  /** Text to search for */
+  text: PropTypes.string.isRequired,
   /** Include tokens */
   tokens: PropTypes.bool,
-  /** Text to search for */
-  text: PropTypes.string,
   /** Search in blocks not verses */
   blocks: PropTypes.bool,
+  /** console log details */
+  verbose: PropTypes.bool,
 };
 
 useSearchForPassages.defaultProps = {

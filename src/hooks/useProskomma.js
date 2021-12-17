@@ -7,7 +7,6 @@ import { UWProskomma, randomString } from '..';
  * This is the hook.
  */
 export default function useProskomma ({
-  documents,
   serialize,
   verbose,
 }) {
@@ -17,9 +16,9 @@ export default function useProskomma ({
 
   const newStateId = useCallback(() => {
     const _stateId = randomString();
-    console.log('useProskomma.newStateId(): ' + _stateId);
+    if (verbose) console.log('useProskomma.newStateId(): ' + _stateId);
     setStateId(_stateId);
-  }, []);
+  }, [verbose]);
 
   const proskomma = useMemo(() => {
     let _proskomma;
@@ -37,6 +36,6 @@ export default function useProskomma ({
 };
 
 useProskomma.propTypes = {
-  /** console success details */
+  /** console log details */
   verbose: PropTypes.bool,
 };

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareCallback } from 'use-deep-compare';
 
-export default function useQuery({proskomma, stateId, query}) {
+export default function useQuery({proskomma, stateId, query, verbose}) {
   const cleanState = {
     query: '',
     data: {},
@@ -12,16 +12,20 @@ export default function useQuery({proskomma, stateId, query}) {
   const [state, setState] = useState({ ...cleanState });
 
   const runQuery = useDeepCompareCallback(async () => {
-    console.log('runQuery() stateId: ' + stateId);
+    if (verbose) console.log('runQuery() stateId: ' + stateId);
 
     let data;
     let errors = [];
 
-    const { errors: _errors, data: _data } = await proskomma.gqlQuery(query);
-    errors = _errors || [];
-    if (_data) {
-      data = JSON.parse(JSON.stringify(_data)); // graphQL nested object fix
-    };
+    if (query.length > 0) {
+      const { errors: _errors, data: _data } = await proskomma.gqlQuery(query);
+      errors = _errors || [];
+      if (_data) {
+        data = JSON.parse(JSON.stringify(_data)); // graphQL nested object fix
+      };
+    } else {
+      errors = ['useQuery.runQuery(): Empty query not run.'];
+    }
 
     setState({
       query,
@@ -47,6 +51,8 @@ useQuery.propTypes = {
   stateId: PropTypes.string,
   /** GraphQL Query to run */
   query: PropTypes.string,
+  /** console log details */
+  verbose: PropTypes.bool,
 };
 
 useQuery.defaultProps = {
