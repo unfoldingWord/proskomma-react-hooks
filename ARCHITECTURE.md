@@ -50,7 +50,7 @@ Documentation includes .MD documented examples and wrapper JSX files to enable S
 - `useImport`
 - `useQuery`
 - `useCatalog`
-- `useSearch`
+- `useSearchForPassages`
 
 ### Simple Bootstrapping `useProskomma`
 
@@ -81,3 +81,9 @@ Custom Query Hooks tightly couple the query generation and the result parsing.
 
 `useCatalog` is a custom hook that wraps useQuery that runs the query to return what documents are loaded.
 The goal is to decouple react state management from duplicating and storing the documents content after import as well as allow each hook to do only one thing.
+
+### Simple Searching `useSearchForPassages`
+
+`useSearchForPassages` is a custom hook that wraps many other nested hooks to handle proper lifecycle management for all the complexity of fetching the bookCodes that include those terms, building a queue of each bookCode to search in and returning a growing array as new results are found in dequeued bookCodes.
+
+Each nested custom hook that `useSearchForPassages` uses does one thing and manages one state change.
