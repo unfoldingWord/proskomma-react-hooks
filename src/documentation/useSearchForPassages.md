@@ -1,7 +1,7 @@
-# useSearchForPassagesByBookCodes
+# useSearchForPassages
 
 ```js
-import { useProskomma, useImport, useSearchForPassagesByBookCodes } from 'proskomma-react-hooks';
+import { useProskomma, useImport, useSearchForPassages } from 'proskomma-react-hooks';
 import ReactJson from 'react-json-view';
 import { loremIpsumBook } from 'lorem-ipsum-usfm';
 
@@ -22,7 +22,6 @@ const documents = [
 ];
 
 const docSetId = `unfoldingWord/lat_lor`;
-const bookCodes = ['mat','mar','luk','jhn','1jn', '2jn', '3jn'];
 const searchText = 'adipisicing excepteur fugiat velit';
 
 const verbose = false;
@@ -48,16 +47,14 @@ function Component () {
 
   const {
     stateId: searchStateId,
-    query,
     passages,
+    bookCodes,
     errors: searchErrors, 
-    data,
-  } = useSearchForPassagesByBookCodes({
+  } = useSearchForPassages({
     proskomma,
     stateId,
     text: searchText,
     docSetId,
-    bookCodes,
     blocks: false,
     tokens: false,
     verbose,
@@ -66,13 +63,12 @@ function Component () {
   const json = {
     stateId,
     searchStateId,
-    proskommaErrors,
     searchText,
-    query,
+    bookCodes,
     passages,
+    proskommaErrors,
+    importErrors,
     searchErrors,
-    // documents,
-    data,
   };
 
   return (

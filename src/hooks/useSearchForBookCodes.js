@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useDeepCompareCallback } from 'use-deep-compare';
+import { useState, useMemo } from 'react';
+import { useDeepCompareCallback, useDeepCompareEffect } from 'use-deep-compare';
 import PropTypes from 'prop-types';
 
 import {
@@ -13,9 +13,12 @@ export default function useSearchForBookCodes ({
   stateId,
   docSetId,
   text,
+  verbose,
 }) {
   const cleanState = {
+    docSetId,
     query: '',
+    text: '',
     bookCodes: [],
     stateId: 0,
     errors: [],
@@ -23,7 +26,11 @@ export default function useSearchForBookCodes ({
   };
   const [state, setState] = useState({ ...cleanState });
 
-  const query = searchForBookCodesQuery({text, docSetId});
+  const query = useMemo(() => {
+    let _query = state.query;
+    if (text && docSetId) _query = searchForBookCodesQuery({text, docSetId});
+    return _query;
+  }, [text, docSetId, state.query]);
 
   const {
     stateId: queryStateId,
@@ -33,6 +40,7 @@ export default function useSearchForBookCodes ({
     proskomma,
     stateId,
     query,
+    verbose,
   });
 
   const parse = useDeepCompareCallback(() => {
@@ -46,7 +54,7 @@ export default function useSearchForBookCodes ({
         errors = [...errors, error];
       };
     } else {
-      debugger
+      if (!data?.docSet) errors.push('useSearchForBookCodes: response from query has empty docSet.');
     };
 
     setState({
@@ -55,15 +63,22 @@ export default function useSearchForBookCodes ({
       data,
       bookCodes,
       errors,
+      text,
+      docSetId,
     });
-  }, [data, queryStateId]);
+  }, [data, queryStateId, query]);
 
-  useEffect(() => {
-    if (state.stateId !== queryStateId) {
-      console.log('useSearchForBookCodes.useEffect() stateId: ' + queryStateId);
+  useDeepCompareEffect(() => {
+    const changed = (
+      state.stateId !== queryStateId ||
+      state.query !== query ||
+      state.data !== data
+    );
+    if (changed && query.length > 0) {
+      if (verbose) console.log('useSearchForBookCodes.useEffect() stateId: ' + queryStateId);
       parse();
     };
-  }, [state.stateId, queryStateId, parse]);
+  }, [state.stateId, queryStateId, parse, query, state.query, state.data, data]);
 
   return state;
 };
@@ -77,6 +92,8 @@ useSearchForBookCodes.propTypes = {
   docSetId: PropTypes.string,
   /** Text to search for */
   text: PropTypes.string,
+  /** console log details */
+  verbose: PropTypes.bool,
 };
 
 useSearchForBookCodes.defaultProps = {

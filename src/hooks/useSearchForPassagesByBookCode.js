@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useDeepCompareCallback } from 'use-deep-compare';
 import PropTypes from 'prop-types';
 
@@ -13,6 +13,7 @@ export default function useSearchForPassagesByBookCode ({
   text,
   tokens,
   blocks,
+  verbose,
 }) {
   const cleanState = {
     stateId: 0,
@@ -28,7 +29,13 @@ export default function useSearchForPassagesByBookCode ({
   };
   const [state, setState] = useState(cleanState);
 
-  const query = searchForPassagesQuery({ text, docSetId, bookCode, tokens, blocks });
+  const query = useMemo(() => {
+    let _query = state.query;
+    if (text && docSetId && bookCode) {
+      _query = searchForPassagesQuery({ text, docSetId, bookCode, tokens, blocks });
+    };
+    return _query;
+  }, [state.query, blocks, bookCode, docSetId, text, tokens]);
 
   const {
     stateId: queryStateId,
@@ -38,6 +45,7 @@ export default function useSearchForPassagesByBookCode ({
     proskomma,
     stateId,
     query,
+    verbose,
   });
 
   const parse = useDeepCompareCallback(() => {
@@ -69,10 +77,10 @@ export default function useSearchForPassagesByBookCode ({
       state.blocks !== blocks
     );
     if (changedInput) {
-      console.log('useSearchForPassagesByBookCode.useEffect() stateId: ' + queryStateId);
+      if (verbose) console.log('useSearchForPassagesByBookCode.useEffect() stateId: ' + queryStateId);
       parse();
     };
-  }, [state.stateId, queryStateId, parse, state.docSetId, state.bookCode, state.text, state.tokens, state.blocks, docSetId, bookCode, text, tokens, blocks]);
+  }, [verbose, state.stateId, queryStateId, parse, state.docSetId, state.bookCode, state.text, state.tokens, state.blocks, docSetId, bookCode, text, tokens, blocks]);
 
   return state;
 };
@@ -92,6 +100,8 @@ useSearchForPassagesByBookCode.propTypes = {
   tokens: PropTypes.bool,
   /** Search in blocks not verses */
   blocks: PropTypes.bool,
+  /** console log details */
+  verbose: PropTypes.bool,
 };
 
 useSearchForPassagesByBookCode.defaultProps = {

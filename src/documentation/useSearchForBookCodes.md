@@ -3,37 +3,28 @@
 ```js
 import { useProskomma, useImport, useSearchForBookCodes } from 'proskomma-react-hooks';
 import ReactJson from 'react-json-view';
+import { loremIpsumBook } from 'lorem-ipsum-usfm';
 
-const usfm = `\\id 3JN
-\\ide UTF-8
-\\h 3 Jean
-\\toc1 Troisième épître de Jean
-\\toc2 3 Jean
-\\toc3 3jn
-\\mt 3 Jean
-
-\\s5
-\\c 1
-\\p 
-\\v 1 L'ancien au bien-aimé Gaius, que j'aime dans la vérité.
-\\v 2 Bien-aimé, je prie que tu pospères en toutes choses et sois en santé, juste comme prospère ton âme.`;
+const document = ({bookCode, bookName}) => ({
+  selectors: { org: 'unfoldingWord', lang: 'lat', abbr: 'lor' }, 
+  data: loremIpsumBook({ bookCode, bookName }),
+  bookCode, 
+});
 
 const documents = [
-  {
-    selectors: {
-      org: 'unfoldingWord',
-      lang: 'fr',
-      abbr: 'ulb',
-    },
-    bookCode: '3JN',
-    data: usfm,
-  }
+  document({ bookCode: 'mat', bookName: 'Matthew', chapterCount: 28 }),
+  document({ bookCode: 'mar', bookName: 'Mark', chapterCount: 16 }),
+  document({ bookCode: 'luk', bookName: 'Luke', chapterCount: 24 }),
+  document({ bookCode: 'jhn', bookName: 'John', chapterCount: 21 }),
+  document({ bookCode: '1jn', bookName: '1 Jean', chapterCount: 5 }),
+  document({ bookCode: '2jn', bookName: '2 Jean', chapterCount: 1 }),
+  document({ bookCode: '3jn', bookName: '3 Jean', chapterCount: 1 }),
 ];
 
-const docSetId = `unfoldingWord/fr_ulb`;
-const searchText = 'vérité';
+const docSetId = `unfoldingWord/lat_lor`;
+const searchText = 'adipisicing excepteur fugiat velit';
 
-const verbose = true;
+const verbose = false;
 
 function Component () {
   const {
@@ -65,6 +56,7 @@ function Component () {
     stateId,
     text: searchText,
     docSetId,
+    verbose,
   });
 
   const json = {

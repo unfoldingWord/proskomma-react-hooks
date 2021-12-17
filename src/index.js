@@ -3,6 +3,7 @@ import useImport from './hooks/useImport';
 import useQuery from './hooks/useQuery';
 // import useSearch from './hooks/useSearch';
 import useSearchForBookCodes from './hooks/useSearchForBookCodes';
+import useSearchForPassages from './hooks/useSearchForPassages';
 import useSearchForPassagesByBookCode from './hooks/useSearchForPassagesByBookCode';
 import useSearchForPassagesByBookCodes from './hooks/useSearchForPassagesByBookCodes';
 import usePassage from './hooks/usePassage';
@@ -24,6 +25,7 @@ export {
   useQuery,
   // useSearch,
   useSearchForBookCodes,
+  useSearchForPassages,
   useSearchForPassagesByBookCode,
   useSearchForPassagesByBookCodes,
   usePassage,

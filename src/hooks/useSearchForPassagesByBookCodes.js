@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDeepCompareEffect, useDeepCompareCallback } from 'use-deep-compare';
 import PropTypes from 'prop-types';
 import differenceWith from 'lodash.differencewith';
@@ -15,6 +15,7 @@ export default function useSearchForPassagesByBookCodes ({
   text,
   tokens,
   blocks,
+  verbose,
 }) {
   const cleanState = {
     stateId,
@@ -35,7 +36,7 @@ export default function useSearchForPassagesByBookCodes ({
   }, [cleanState]);
   
   // 1. if input changes, refresh state;
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     const changed = (
       docSetId !== state.docSetId ||
       bookCodes !== state.bookCodes ||
@@ -51,9 +52,14 @@ export default function useSearchForPassagesByBookCodes ({
   const {
     nextBookCode,
     errors: queueErrors,
-  } = useBookCodeQueue({bookCodes, lastBookCode: state.lastBookCode, stateId});
+  } = useBookCodeQueue({bookCodes, lastBookCode: state.lastBookCode, stateId, verbose});
 
-  const stateSearchForPassagesByBookCode = useSearchForPassagesByBookCode({
+  const {
+    passages: lastPassages,
+    stateId: lastStateId,
+    bookCode: lastBookCode,
+    errors: lastErrors,
+  } = useSearchForPassagesByBookCode({
     proskomma,
     stateId,
     docSetId,
@@ -65,23 +71,17 @@ export default function useSearchForPassagesByBookCodes ({
 
   // 1. useSearchForPassagesByBookCode will run each update of nextBookCode, add results
   useDeepCompareEffect(() => {
-    const {
-      passages: lastPassages,
-      stateId: lastStateId,
-      bookCode: lastBookCode,
-      errors: lastErrors,
-    } = stateSearchForPassagesByBookCode;
     if (lastPassages?.length && stateId === lastStateId) { // ensure stateId is up to date
       // if (lastBookCode !== nextBookCode) { // ensure its not a repeat run.
         let newPassages = differenceWith(lastPassages, state.passages, isEqual);
         const passages = [...state.passages, ...newPassages];
         const errors = [...state.errors, ...lastErrors];
         const newState = {...state, passages, lastBookCode, errors};
-        console.log('1. Add results after useSearchForPassagesByBookCode runs on each update of nextBookCode', lastBookCode, lastPassages, newPassages);
+        if (verbose) console.log('1. Add results after useSearchForPassagesByBookCode runs on each update of nextBookCode', lastBookCode, lastPassages, newPassages);
         setState(newState);
       // };
     };
-  }, [state, stateSearchForPassagesByBookCode]);
+  }, [state.passages, state.errors, lastPassages, lastStateId, lastBookCode, lastErrors]);
 
   return state;
 };
@@ -101,6 +101,8 @@ useSearchForPassagesByBookCodes.propTypes = {
   tokens: PropTypes.bool,
   /** Search in blocks not verses */
   blocks: PropTypes.bool,
+  /** console log details */
+  verbose: PropTypes.bool,
 };
 
 useSearchForPassagesByBookCodes.defaultProps = {

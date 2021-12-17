@@ -34,7 +34,7 @@ const docSetId = `unfoldingWord/fr_ulb`;
 const bookCode = '3JN';
 const searchText = 'vérité';
 
-const verbose = true;
+const verbose = false;
 
 function Component () {
   const {
@@ -69,6 +69,7 @@ function Component () {
     bookCode,
     blocks: true,
     tokens: true,
+    verbose,
   });
 
   const json = {

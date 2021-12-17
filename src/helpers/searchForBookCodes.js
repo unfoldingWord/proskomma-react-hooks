@@ -7,15 +7,18 @@ export const searchForBookCodesQuery = ({text, docSetId, }) => {
   const _searchTermsClause = searchTermsClause(text);
   const _attTermsClause = attTermsClause(text);
 
+  // TODO: figure out why this doesn't work with more than one book
+  const _sortClause = false ? `        sortedBy: "paratext"\n` : '';
+
   const bookCodeMatchQuery = `{
     docSet( id:"${docSetId}" ) {
-      documents(
-        sortedBy: "paratext"
+      documents(` +
+        _sortClause + `
         allChars: true
-        allScopes: true
         withMatchingChars: [${_searchTermsClause}]
 ${(_attTermsClause.length > 0) ?
 `        withScopes: [${_attTermsClause}]
+        allScopes: true
 ` : ''
 }      ) {
         bookCode: header( id:"bookCode" ) 
@@ -26,5 +29,9 @@ ${(_attTermsClause.length > 0) ?
 };
 
 export const searchForBookCodesFilter = ({data}) => {
-  return data?.docSet?.documents?.map((book) => book.bookCode);
+  let bookCodes = [];
+  if (data && data.docSet && data.docSet.documents ) {
+    bookCodes = data?.docSet?.documents?.map((book) => book.bookCode);
+  };
+  return bookCodes;
 };

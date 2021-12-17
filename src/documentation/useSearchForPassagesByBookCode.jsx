@@ -19,6 +19,8 @@ useSearchForPassagesByBookCode.propTypes = {
   tokens: PropTypes.bool,
   /** Search in blocks not verses */
   blocks: PropTypes.bool,
+  /** console log details */
+  verbose: PropTypes.bool,
 };
 
 useSearchForPassagesByBookCode.defaultProps = {

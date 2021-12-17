@@ -8330,6 +8330,13 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
 
+lorem-ipsum-usfm@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/lorem-ipsum-usfm/-/lorem-ipsum-usfm-0.1.4.tgz#63e491e93e933d937640530896cd785c8fa50000"
+  integrity sha512-g66YebooMyU4mo4/Vq36mWZzG56vjcU+1InvBZPK/SMIqNSVxzK0/fF7JG7k3Kol6nqKNcRn5W4ZFSWYhLc2nA==
+  dependencies:
+    lorem-ipsum "^2.0.4"
+
 lorem-ipsum@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/lorem-ipsum/-/lorem-ipsum-2.0.4.tgz#5feedb37a14e9cb96c3e994d4a2edd4cb0c299db"
@@ -10366,10 +10373,10 @@ proskomma-utils@^0.4.28:
     uuid-base64 "^1.0.0"
     xregexp "^4.4.1"
 
-proskomma@^0.4.96:
-  version "0.4.96"
-  resolved "https://registry.yarnpkg.com/proskomma/-/proskomma-0.4.96.tgz#4de599e15353b7caa3084999df449eaa3917ebe2"
-  integrity sha512-q/LuIjuVJTGDe7+m5KktGaUOUdYHrMILv+3dNhoJiGdx3ZEq2vZ3zpGG0iQwI+X+bXb/kuFSB4XDnmnEroHYCw==
+proskomma@^0.4.99:
+  version "0.4.99"
+  resolved "https://registry.yarnpkg.com/proskomma/-/proskomma-0.4.99.tgz#2b9111bba17b0f7c7da397c7d8ee283f349e5903"
+  integrity sha512-7DMKchK2l5nV3T9PUFd2//ffz7jgOzs+O+aYnomqBdC0mqwxqXD6Rpv90fqFdW5ol+i0w+g+ajQ6MUePPX+1aw==
   dependencies:
     "@babel/core" "^7.12.9"
     async-mutex "^0.2.6"
