@@ -1,5 +1,6 @@
 const path = require('path');
 module.exports = {
+  pagePerSection: true,
   usageMode: 'expand',
   exampleMode: 'expand',
   components: 'src/documentation/**/*.{js,jsx,ts,tsx}',

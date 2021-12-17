@@ -6,6 +6,7 @@ import { useQuery } from '..';
 export default function useCatalog ({
   proskomma,
   stateId,
+  verbose,
 }) {
   const {
     stateId: queryStateId,
@@ -15,6 +16,7 @@ export default function useCatalog ({
     proskomma,
     stateId,
     query: catalogQuery,
+    verbose,
   });
 
   return { stateId: queryStateId, catalog, errors };

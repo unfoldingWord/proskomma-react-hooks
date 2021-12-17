@@ -9,6 +9,7 @@ export default function usePassage ({
   proskomma,
   stateId,
   reference,
+  verbose,
 }) {
   const cleanState = {
     stateId: 0,
@@ -24,7 +25,7 @@ export default function usePassage ({
   const {
     stateId: queryStateId, data, errors: queryErrors,
   } = useQuery({
-    proskomma, stateId, query,
+    proskomma, stateId, query, verbose,
   });
 
   const parse = useDeepCompareCallback(() => {
@@ -35,7 +36,7 @@ export default function usePassage ({
       try {
         const { bookCode } = parseReferenceString(reference);
         passages = parsePassageResponse({ bookCode, data });
-        console.log(passages);
+        if (verbose) console.log('usePassage.parse()', passages);
       } catch (error) {
         errors = [...errors, error];
       };
@@ -54,10 +55,10 @@ export default function usePassage ({
 
   useEffect(() => {
     if (state.stateId !== queryStateId) {
-      console.log('usePassage.useEffect() stateId: ' + queryStateId);
+      if (verbose) console.log('usePassage.useEffect() stateId: ' + queryStateId);
       parse();
     };
-  }, [state.stateId, queryStateId, parse]);
+  }, [state.stateId, queryStateId, parse, verbose]);
 
   return state;
 };
