@@ -16,7 +16,7 @@ const documents = [
   // document({ bookCode: 'mar', bookName: 'Mark', chapterCount: 16 }),
   // document({ bookCode: 'luk', bookName: 'Luke', chapterCount: 24 }),
   // document({ bookCode: 'jhn', bookName: 'John', chapterCount: 21 }),
-  document({ bookCode: '1jn', bookName: '1 Jean', chapterCount: 5 }),
+  // document({ bookCode: '1jn', bookName: '1 Jean', chapterCount: 5 }),
   document({ bookCode: '2jn', bookName: '2 Jean', chapterCount: 1 }),
   document({ bookCode: '3jn', bookName: '3 Jean', chapterCount: 1 }),
 ];

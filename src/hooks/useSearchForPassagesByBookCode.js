@@ -52,7 +52,7 @@ export default function useSearchForPassagesByBookCode ({
     let passages = [];
     let errors = [...queryErrors];
 
-    if (errors.length < 1) {
+    if (data && errors.length < 1) {
       passages = blocks ? searchForBlocksFilter({data}) : searchForVersesFilter({data});
     };
 

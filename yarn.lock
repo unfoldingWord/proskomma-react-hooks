@@ -8330,10 +8330,10 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
 
-lorem-ipsum-usfm@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/lorem-ipsum-usfm/-/lorem-ipsum-usfm-0.1.4.tgz#63e491e93e933d937640530896cd785c8fa50000"
-  integrity sha512-g66YebooMyU4mo4/Vq36mWZzG56vjcU+1InvBZPK/SMIqNSVxzK0/fF7JG7k3Kol6nqKNcRn5W4ZFSWYhLc2nA==
+lorem-ipsum-usfm@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/lorem-ipsum-usfm/-/lorem-ipsum-usfm-0.2.1.tgz#80c9198b32ed44b446ae53f95ff4f9b14dbaa4db"
+  integrity sha512-3kLkSCLmmmDsFicPDBNuB8XTmm5t1JZ9sm0bUL6MZSMw0wmM0jLvdBtynyCnIC/yL9oVP9oBuPDq6U64pReH6A==
   dependencies:
     lorem-ipsum "^2.0.4"
 

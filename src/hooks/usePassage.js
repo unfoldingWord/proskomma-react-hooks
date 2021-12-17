@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useDeepCompareCallback } from 'use-deep-compare';
+import { useState, useMemo } from 'react';
+import { useDeepCompareCallback, useDeepCompareEffect } from 'use-deep-compare';
 import PropTypes from 'prop-types';
 
 import { useQuery } from '..';
@@ -17,10 +17,14 @@ export default function usePassage ({
     errors: [],
     passages: [],
     data: {},
+    reference,
   };
   const [state, setState] = useState({ ...cleanState });
 
-  const query = passageQuery({reference});
+  const query = useMemo(() => {
+    if (verbose) console.log('usePassage.query reference:', reference);
+    return passageQuery({reference});
+  }, [reference, verbose]);
 
   const {
     stateId: queryStateId, data, errors: queryErrors,
@@ -32,16 +36,18 @@ export default function usePassage ({
     let passages = [];
     let errors = queryErrors || [];
 
-    if (errors.length < 1) {
+    if (
+      reference.length &&
+      data.documents.length &&
+      errors.length < 1  
+    ) {
       try {
         const { bookCode } = parseReferenceString(reference);
         passages = parsePassageResponse({ bookCode, data });
-        if (verbose) console.log('usePassage.parse()', passages);
+        if (verbose) console.log('usePassage.parse() query:', query);
       } catch (error) {
         errors = [...errors, error];
       };
-    } else {
-      debugger
     }
 
     setState({
@@ -50,15 +56,21 @@ export default function usePassage ({
       errors,
       data,
       passages,
+      reference,
     });
-  }, [data, queryStateId]);
+  }, [data, queryStateId, query, reference]);
 
-  useEffect(() => {
-    if (state.stateId !== queryStateId) {
+  useDeepCompareEffect(() => {
+    const changed = (
+      queryStateId !== state.stateId  ||
+      query !== state.query ||
+      data?.documents?.length !== state.data?.documents?.length
+    )
+    if (changed) {
       if (verbose) console.log('usePassage.useEffect() stateId: ' + queryStateId);
       parse();
     };
-  }, [state.stateId, queryStateId, parse, verbose]);
+  }, [state.stateId, data, state.data, queryStateId, parse, query, state.query, verbose]);
 
   return state;
 };

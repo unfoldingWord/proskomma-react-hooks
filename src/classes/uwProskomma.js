@@ -37,7 +37,7 @@ class UWProskomma extends Proskomma {
     }
 
     processor() {
-        return "ProsKomma JS for unfoldingWord";
+        return "Proskomma JS for unfoldingWord";
     }
 
     packageVersion() {

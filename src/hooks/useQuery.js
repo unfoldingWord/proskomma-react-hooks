@@ -17,11 +17,15 @@ export default function useQuery({proskomma, stateId, query, verbose}) {
     let data;
     let errors = [];
 
-    const { errors: _errors, data: _data } = await proskomma.gqlQuery(query);
-    errors = _errors || [];
-    if (_data) {
-      data = JSON.parse(JSON.stringify(_data)); // graphQL nested object fix
-    };
+    if (query.length > 0) {
+      const { errors: _errors, data: _data } = await proskomma.gqlQuery(query);
+      errors = _errors || [];
+      if (_data) {
+        data = JSON.parse(JSON.stringify(_data)); // graphQL nested object fix
+      };
+    } else {
+      errors = ['useQuery.runQuery(): Empty query not run.'];
+    }
 
     setState({
       query,
