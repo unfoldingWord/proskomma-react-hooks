@@ -79,22 +79,21 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://proskomma-react-hooks.netlify.app/)
 
-**Purpose**
+**Purpose:**
 A collection of React Hooks that provide a way to simplify the implementation of Proskomma into your React projects.
 
-**Problem**
+**Problem:**
 Proskomma.js is a very powerful tool but has a fairly steep learning curve to setup and get running.
 
-**Scope**
+**Scope:**
 This project aims to simplify the implementing of Proskomma.js into our projects and especially the common use cases. It includes bootstrapping, importing and common queries/filters of Proskomma.
 
 This project does not cover the downloading or obtaining of files to import.
 
-**Background**
-- What led us to this point? How did we get here?
+**Background:**
 We implemented Proskomma.js in a few early projects but found it taking too long to setup and too much specific domain knowledge to make it useful. We kept refactoring our common use cases into this project as custom hooks and have a single place to maintain them.
 
-**Architecture and Design Principles**
+**Architecture and Design Principles:**
 See ARCHITECTURE.md for details on architecture and design principles for this project.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
