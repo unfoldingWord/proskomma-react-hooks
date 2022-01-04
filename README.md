@@ -32,7 +32,7 @@
 
 <h3 align="center">Proskomma React Hooks</h3>
   <p align="center">
-    A collection of React Hooks that provide a way to simplify the implementation of Proskomma into your React projects.
+    Training wheels for a speed bike.
     <br />
     <a href="https://proskomma-react-hooks.netlify.app"><strong>Explore the docs and code playground »</strong></a>
     <br />
