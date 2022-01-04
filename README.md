@@ -68,7 +68,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Proskomma React Hooks Screen Shot][product-screenshot]](public/screen-shot.png)
 
 **Purpose**
 A collection of React Hooks that provide a way to simplify the implementation of Proskomma into your React projects.
