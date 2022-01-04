@@ -233,7 +233,5 @@ Project Link: [https://github.com/unfoldingWord/proskomma-react-hooks](https://g
 [issues-shield]: https://img.shields.io/github/issues/unfoldingWord/proskomma-react-hooks.svg?style=for-the-badge
 [issues-url]: https://github.com/unfoldingWord/proskomma-react-hooks/issues
 [license-shield]: https://img.shields.io/github/license/unfoldingWord/proskomma-react-hooks.svg?style=for-the-badge
-[license-url]: https://github.com/unfoldingWord/proskomma-react-hooks/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
+[license-url]: https://github.com/unfoldingWord/proskomma-react-hooks/blob/master/LICENSE
 [product-screenshot]: public/screenshot.png
