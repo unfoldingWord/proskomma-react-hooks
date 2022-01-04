@@ -37,7 +37,6 @@
 </div>
 
 
-
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
@@ -70,7 +69,6 @@
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
-
 
 **Purpose**
 A collection of React Hooks that provide a way to simplify the implementation of Proskomma into your React projects.
@@ -152,13 +150,12 @@ This is an example of how to list things you need to use the software and how to
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-
 <!-- USAGE EXAMPLES -->
 ## Usage/Integration
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
-_For more examples, please refer to the [Styleguidist](https://proskomma-react-hooks.netlify.app/#usequery).
+_For more examples, please refer to the [Styleguidist](https://proskomma-react-hooks.netlify.app/#usequery)._
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
