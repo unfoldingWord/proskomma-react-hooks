@@ -122,7 +122,7 @@ To get a local copy up and running follow these simple example steps.
 **Data**
 The source of the data to import into Proskomma are scripture files such as USFM.
 
-Testing files can be generated using [Lorem Ipsum USFM] (https://lorem-ipsum-usfm.netlify.app). 
+Testing files can be generated using [Lorem Ipsum USFM](https://lorem-ipsum-usfm.netlify.app). 
 
 Real USFM files can be found in multiple places such as:
 - [Door43 Catalog](https://git.door43.org/catalog)
