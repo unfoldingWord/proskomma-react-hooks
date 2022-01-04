@@ -32,7 +32,7 @@
 
 <h3 align="center">Proskomma React Hooks</h3>
   <p align="center">
-    Training wheels for a speed bike.
+    This project is like placing training wheels on a speed bike (Proskomma).
     <br />
     <a href="https://proskomma-react-hooks.netlify.app"><strong>Explore the docs and code playground »</strong></a>
     <br />
