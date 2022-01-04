@@ -171,11 +171,11 @@ _For more examples, please refer to the [Styleguidist](https://proskomma-react-h
 <!-- ROADMAP -->
 ## Roadmap
 
-- [] [Return `data` in `useSearchForPassages` and `useSearchForPassagesByBookCodes` just like `useSearchForPassagesByBookCode`](https://github.com/unfoldingWord/proskomma-react-hooks/issues/16)
-- [] [Import Serialized JSON for faster importing/resuming of previous Proskomma state](https://github.com/unfoldingWord/proskomma-react-hooks/issues/4)
-- [] [Enable editing of data through mutations](https://github.com/unfoldingWord/proskomma-react-hooks/issues/7)
-- [] [Importing of non-USFM sources such as USX](https://github.com/unfoldingWord/proskomma-react-hooks/issues/3)
-- [] [Rendering to Epub, PDF, HTML, and React via pk-render](https://github.com/unfoldingWord/proskomma-react-hooks/issues/11)
+- [ ] [Return `data` in `useSearchForPassages` and `useSearchForPassagesByBookCodes` just like `useSearchForPassagesByBookCode`](https://github.com/unfoldingWord/proskomma-react-hooks/issues/16)
+- [ ] [Import Serialized JSON for faster importing/resuming of previous Proskomma state](https://github.com/unfoldingWord/proskomma-react-hooks/issues/4)
+- [ ] [Enable editing of data through mutations](https://github.com/unfoldingWord/proskomma-react-hooks/issues/7)
+- [ ] [Importing of non-USFM sources such as USX](https://github.com/unfoldingWord/proskomma-react-hooks/issues/3)
+- [ ] [Rendering to Epub, PDF, HTML, and React via pk-render](https://github.com/unfoldingWord/proskomma-react-hooks/issues/11)
 
 See the [open issues](https://github.com/unfoldingWord/proskomma-react-hooks/issues) for a full list of proposed features (and known issues).
 
