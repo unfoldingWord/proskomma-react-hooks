@@ -224,14 +224,14 @@ Project Link: [https://github.com/unfoldingWord/proskomma-react-hooks](https://g
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/unfoldingWord/proskomma-react-hooks.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/unfoldingWord/proskomma-react-hooks.svg?style=flat
 [contributors-url]: https://github.com/unfoldingWord/proskomma-react-hooks/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/unfoldingWord/proskomma-react-hooks.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/unfoldingWord/proskomma-react-hooks.svg?style=flat
 [forks-url]: https://github.com/unfoldingWord/proskomma-react-hooks/network/members
-[stars-shield]: https://img.shields.io/github/stars/unfoldingWord/proskomma-react-hooks.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/unfoldingWord/proskomma-react-hooks.svg?style=flat
 [stars-url]: https://github.com/unfoldingWord/proskomma-react-hooks/stargazers
-[issues-shield]: https://img.shields.io/github/issues/unfoldingWord/proskomma-react-hooks.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/unfoldingWord/proskomma-react-hooks.svg?style=flat
 [issues-url]: https://github.com/unfoldingWord/proskomma-react-hooks/issues
-[license-shield]: https://img.shields.io/github/license/unfoldingWord/proskomma-react-hooks.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/unfoldingWord/proskomma-react-hooks.svg?style=flat
 [license-url]: https://github.com/unfoldingWord/proskomma-react-hooks/blob/master/LICENSE
 [product-screenshot]: public/screenshot.png
