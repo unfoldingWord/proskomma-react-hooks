@@ -243,4 +243,4 @@ Project Link: [https://github.com/unfoldingWord/proskomma-react-hooks](https://g
 [issues-url]: https://github.com/unfoldingWord/proskomma-react-hooks/issues
 [license-shield]: https://img.shields.io/github/license/unfoldingWord/proskomma-react-hooks.svg?style=flat
 [license-url]: https://github.com/unfoldingWord/proskomma-react-hooks/blob/master/LICENSE
-[product-screenshot]: public/screenshot.png
+[product-screenshot]: https://github.com/unfoldingWord/proskomma-react-hooks/raw/master/public/screen-shot.png
