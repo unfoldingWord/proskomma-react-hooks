@@ -25,7 +25,7 @@ export default function useSearchForPassagesByBookCodes ({
     tokens,
     blocks,
     passages: [],
-    data: [],
+    dataArray: [],
     errors: [],
     lastBookCode: null,
   };
@@ -77,9 +77,9 @@ export default function useSearchForPassagesByBookCodes ({
       // if (lastBookCode !== nextBookCode) { // ensure its not a repeat run.
         let newPassages = differenceWith(lastPassages, state.passages, isEqual);
         const passages = [...state.passages, ...newPassages];
-        const data = [...state.data, ...lastData];
+        const dataArray = [...state.dataArray, lastData];
         const errors = [...state.errors, ...lastErrors];
-        const newState = {...state, passages, data, lastBookCode, errors};
+        const newState = {...state, passages, dataArray, lastBookCode, errors};
         if (verbose) console.log('1. Add results after useSearchForPassagesByBookCode runs on each update of nextBookCode', lastBookCode, lastPassages, newPassages);
         setState(newState);
       // };
