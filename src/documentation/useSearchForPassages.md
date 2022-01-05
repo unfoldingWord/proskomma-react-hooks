@@ -64,9 +64,10 @@ function Component () {
 
   const {
     stateId: searchStateId,
-    passages,
     bookCodes,
-    errors: searchErrors, 
+    passages,
+    data,
+    errors: searchErrors,
   } = useSearchForPassages({
     proskomma,
     stateId,
@@ -84,6 +85,7 @@ function Component () {
     bookCodes,
     passages,
     catalog,
+    data,
     proskommaErrors,
     importErrors,
     searchErrors,
