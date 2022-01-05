@@ -33,6 +33,7 @@ export default function useSearchForPassages ({
     tokens: passagesTokens,
     blocks: passagesBlocks,
     passages,
+    data,
     errors: passagesErrors,
   } = useSearchForPassagesByBookCodes({
     proskomma,
@@ -47,6 +48,7 @@ export default function useSearchForPassages ({
 
   return {
     passages,
+    data,
     bookCodes,
     stateId: passagesStateId,
     docSetId: passagesDocSetId,
