@@ -75,8 +75,9 @@ function Component () {
     stateId: searchStateId,
     query,
     passages,
+    passagesBookCodes,
     errors: searchErrors, 
-    data,
+    dataArray,
   } = useSearchForPassagesByBookCodes({
     proskomma,
     stateId,
@@ -92,13 +93,14 @@ function Component () {
     stateId,
     searchStateId,
     searchText,
+    passagesBookCodes,
     passages,
     catalog,
     query,
     proskommaErrors,
     searchErrors,
     // documents,
-    data,
+    dataArray,
   };
 
   return (

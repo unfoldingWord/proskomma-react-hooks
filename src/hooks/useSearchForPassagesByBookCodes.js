@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useDeepCompareEffect, useDeepCompareCallback } from 'use-deep-compare';
 import PropTypes from 'prop-types';
-import differenceWith from 'lodash.differencewith';
-import isEqual from 'lodash.isequal';
 
 import { useSearchForPassagesByBookCode } from '..';
 import useBookCodeQueue from './useBookCodeQueue';
@@ -25,6 +23,8 @@ export default function useSearchForPassagesByBookCodes ({
     tokens,
     blocks,
     passages: [],
+    passagesBookCodes: [],
+    dataArray: [],
     errors: [],
     lastBookCode: null,
   };
@@ -56,6 +56,7 @@ export default function useSearchForPassagesByBookCodes ({
 
   const {
     passages: lastPassages,
+    data: lastData,
     stateId: lastStateId,
     bookCode: lastBookCode,
     errors: lastErrors,
@@ -67,21 +68,23 @@ export default function useSearchForPassagesByBookCodes ({
     text,
     tokens,
     blocks,
+    verbose,
   });
 
   // 1. useSearchForPassagesByBookCode will run each update of nextBookCode, add results
   useDeepCompareEffect(() => {
-    if (lastPassages?.length && stateId === lastStateId) { // ensure stateId is up to date
-      // if (lastBookCode !== nextBookCode) { // ensure its not a repeat run.
-        let newPassages = differenceWith(lastPassages, state.passages, isEqual);
-        const passages = [...state.passages, ...newPassages];
-        const errors = [...state.errors, ...lastErrors];
-        const newState = {...state, passages, lastBookCode, errors};
-        if (verbose) console.log('1. Add results after useSearchForPassagesByBookCode runs on each update of nextBookCode', lastBookCode, lastPassages, newPassages);
+    if (lastPassages && stateId === lastStateId) { // ensure stateId is up to date
+      if (lastBookCode && !state.passagesBookCodes.includes(lastBookCode)) { // ensure its not a repeat run.
+        const passages = [...state.passages, ...lastPassages];
+        const passagesBookCodes = [...state.passagesBookCodes, lastBookCode];
+        const dataArray = [...state.dataArray, lastData];
+        const errors = [...state.errors, ...queueErrors, ...lastErrors];
+        const newState = {...state, passages, dataArray, lastBookCode, passagesBookCodes, errors};
+        if (verbose) console.log('useSearchForPassagesByBookCodes.useDeepCompareEffect: Add results after useSearchForPassagesByBookCode runs on each update of nextBookCode', lastBookCode, lastPassages);
         setState(newState);
-      // };
+      };
     };
-  }, [state.passages, state.errors, lastPassages, lastStateId, lastBookCode, lastErrors]);
+  }, [state, queueErrors, lastPassages, lastStateId, lastBookCode, nextBookCode, lastErrors]);
 
   return state;
 };
