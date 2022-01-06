@@ -33,6 +33,7 @@ export default function useSearchForPassages ({
     tokens: passagesTokens,
     blocks: passagesBlocks,
     passages,
+    passagesBookCodes,
     dataArray,
     errors: passagesErrors,
   } = useSearchForPassagesByBookCodes({
@@ -48,6 +49,7 @@ export default function useSearchForPassages ({
 
   return {
     passages,
+    passagesBookCodes,
     dataArray,
     bookCodes,
     stateId: passagesStateId,
