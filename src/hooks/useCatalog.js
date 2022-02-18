@@ -31,5 +31,5 @@ useCatalog.propTypes = {
 
 useCatalog.defaultProps = {
   proskomma: undefined,
-  stateId: 0,
+  stateId: '',
 };

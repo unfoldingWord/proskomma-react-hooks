@@ -19,6 +19,6 @@ useSearchForBookCodes.propTypes = {
 
 useSearchForBookCodes.defaultProps = {
   proskomma: undefined,
-  stateId: 0,
+  stateId: '',
   text: '',
 };

@@ -25,7 +25,7 @@ useSearchForPassagesByBookCode.propTypes = {
 
 useSearchForPassagesByBookCode.defaultProps = {
   proskomma: undefined,
-  stateId: 0,
+  stateId: '',
   text: '',
   tokens: false,
   blocks: false,

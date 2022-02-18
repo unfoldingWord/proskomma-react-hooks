@@ -11,7 +11,7 @@ export default function useProskomma ({
   verbose,
 }) {
   // manage two states required since they need updating at different times.
-  const [stateId, setStateId] = useState(0);
+  const [stateId, setStateId] = useState(''); // needs to start out defined and type is string
   const [errors, setErrors] = useState([]);
 
   const newStateId = useCallback(() => {

@@ -12,7 +12,7 @@ export default function usePassage ({
   verbose,
 }) {
   const cleanState = {
-    stateId: 0,
+    stateId: '',
     query: '',
     errors: [],
     passages: [],
@@ -86,6 +86,6 @@ usePassage.propTypes = {
 
 usePassage.defaultProps = {
   proskomma: undefined,
-  stateId: 0,
+  stateId: '',
   text: '',
 };

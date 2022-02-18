@@ -15,7 +15,4 @@ module.exports = {
       require('react-docgen-displayname-handler').createDisplayNameHandler(componentPath)
     )
   ),
-  // styles: {
-  //   stringValue: { whiteSpace: 'pre' },
-  // }
 };

@@ -15,6 +15,6 @@ useQuery.propTypes = {
 
 useQuery.defaultProps = {
   proskomma: undefined,
-  stateId: 0,
+  stateId: '',
   query: '',
 };

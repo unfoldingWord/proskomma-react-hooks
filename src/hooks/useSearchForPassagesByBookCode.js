@@ -16,7 +16,7 @@ export default function useSearchForPassagesByBookCode ({
   verbose,
 }) {
   const cleanState = {
-    stateId: 0,
+    stateId: '',
     docSetId: null,
     bookCode: null,
     text: null,
@@ -106,7 +106,7 @@ useSearchForPassagesByBookCode.propTypes = {
 
 useSearchForPassagesByBookCode.defaultProps = {
   proskomma: undefined,
-  stateId: 0,
+  stateId: '',
   text: '',
   tokens: false,
   blocks: false,

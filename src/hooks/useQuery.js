@@ -4,9 +4,9 @@ import { useDeepCompareCallback } from 'use-deep-compare';
 
 export default function useQuery({proskomma, stateId, query, verbose}) {
   const cleanState = {
+    stateId: '',
     query: '',
     data: {},
-    stateId: 0,
     errors: [],
   };
   const [state, setState] = useState({ ...cleanState });
@@ -57,6 +57,6 @@ useQuery.propTypes = {
 
 useQuery.defaultProps = {
   proskomma: undefined,
-  stateId: 0,
+  stateId: '',
   query: '',
 };

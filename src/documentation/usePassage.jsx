@@ -14,6 +14,6 @@ usePassage.propTypes = {
 
 usePassage.defaultProps = {
   proskomma: undefined,
-  stateId: 0,
+  stateId: '',
 
 };

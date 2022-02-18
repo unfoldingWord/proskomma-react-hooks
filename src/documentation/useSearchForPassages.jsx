@@ -23,7 +23,7 @@ useSearchForPassages.propTypes = {
 
 useSearchForPassages.defaultProps = {
   proskomma: undefined,
-  stateId: 0,
+  stateId: '',
   text: '',
   tokens: false,
   blocks: false,
