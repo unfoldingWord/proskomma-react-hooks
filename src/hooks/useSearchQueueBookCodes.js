@@ -5,7 +5,7 @@ import {
   useDeepCompareEffect, useDeepCompareCallback, useDeepCompareMemo,
 } from 'use-deep-compare';
 
-export default function useBookCodeQueue({
+export default function useSearchQueueBookCodes({
   bookCodes: _bookCodes, lastBookCode: _bookCode, stateId: _stateId,
 }) {
   const cleanState = {

@@ -3,7 +3,7 @@ import { useDeepCompareEffect, useDeepCompareCallback } from 'use-deep-compare';
 import PropTypes from 'prop-types';
 
 import { useSearchForPassagesByBookCode } from '..';
-import useBookCodeQueue from './useBookCodeQueue';
+import useSearchQueueBookCodes from './useSearchQueueBookCodes';
 
 export default function useSearchForPassagesByBookCodes({
   proskomma,
@@ -54,7 +54,7 @@ export default function useSearchForPassagesByBookCodes({
   const {
     nextBookCode,
     errors: queueErrors,
-  } = useBookCodeQueue({
+  } = useSearchQueueBookCodes({
     bookCodes, lastBookCode: state.lastBookCode, stateId, verbose,
   });
 

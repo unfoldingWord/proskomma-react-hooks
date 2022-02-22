@@ -20,11 +20,11 @@ export const importDocument = async ({
   return result;
 };
 
-export const importDocuments = async ({
+export const importDocuments = ({
   // eslint-disable-next-line no-unused-vars
   proskomma, documents, onImport, serialize, verbose,
 }) => {
-  await documents.forEach(async (document) => {
+  documents.forEach(async (document) => {
     await importDocument({
       proskomma, document, onImport, verbose,
     });

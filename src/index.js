@@ -1,6 +1,7 @@
 import useProskomma from './hooks/useProskomma';
 import useImport from './hooks/useImport';
 import useQuery from './hooks/useQuery';
+import useSuccinctDocSetSerialize from './hooks/useSuccinctDocSetSerialize';
 // import useSearch from './hooks/useSearch';
 import useSearchForBookCodes from './hooks/useSearchForBookCodes';
 import useSearchForPassages from './hooks/useSearchForPassages';
@@ -23,6 +24,7 @@ export {
   useImport,
   useCatalog,
   useQuery,
+  useSuccinctDocSetSerialize,
   // useSearch,
   useSearchForBookCodes,
   useSearchForPassages,

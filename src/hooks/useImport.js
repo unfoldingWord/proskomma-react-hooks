@@ -13,13 +13,13 @@ export default function useImport({
 }) {
   const [errors, setErrors] = useState([]);
 
-  const runImport = useDeepCompareCallback(async () => {
+  const runImport = useDeepCompareCallback(() => {
     const onImport = newStateId;
     let _errors = [];
 
     if (proskomma) {
       try {
-        await importDocuments({
+        importDocuments({
           proskomma, documents, onImport, verbose,
         });
       } catch (e) {
@@ -43,7 +43,9 @@ useImport.propTypes = {
   /** Proskomma instance to query */
   proskomma: PropTypes.object,
   /** Change Index to synchronize Proskomma updates/imports */
-  stateId: PropTypes.string,
+  stateId: PropTypes.string.isRequired,
+  /** Function to trigger a new stateId onImport */
+  newStateId: PropTypes.func.isRequired,
   /** Array of documents to be imported */
   documents: PropTypes.arrayOf(
     PropTypes.shape({
