@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import { useSearchForBookCodes, useSearchForPassagesByBookCodes } from '..';
 
-export default function useSearchForPassages ({
+export default function useSearchForPassages({
   proskomma,
   docSetId,
   stateId,
@@ -11,7 +11,6 @@ export default function useSearchForPassages ({
   blocks,
   verbose,
 }) {
-  
   const {
     bookCodes,
     docSetId: bookCodesDocSetId,

@@ -12,7 +12,7 @@ import useCatalog from './hooks/useCatalog';
 import randomString from './helpers/randomString';
 import {
   importDocuments,
-  importDocument
+  importDocument,
 } from './helpers/proskomma';
 // import { searchQuery } from './helpers/search';
 

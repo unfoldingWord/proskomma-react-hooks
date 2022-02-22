@@ -4,22 +4,24 @@ import { useDeepCompareEffect, useDeepCompareCallback } from 'use-deep-compare';
 
 import { importDocuments } from '..';
 
-export default function useImport ({
+export default function useImport({
   proskomma,
   stateId,
   newStateId,
   documents,
   verbose,
 }) {
-  const [errors, setErrors] = useState([]);   
+  const [errors, setErrors] = useState([]);
 
-  const runImport = useDeepCompareCallback( async () => {
+  const runImport = useDeepCompareCallback(async () => {
     const onImport = newStateId;
     let _errors = [];
 
     if (proskomma) {
       try {
-        importDocuments({ proskomma, documents, onImport, verbose });
+        await importDocuments({
+          proskomma, documents, onImport, verbose,
+        });
       } catch (e) {
         _errors = e;
       };
@@ -31,13 +33,17 @@ export default function useImport ({
   }, [stateId, documents, verbose]);
 
   useDeepCompareEffect(() => {
-      runImport();
+    runImport();
   }, [documents]);
 
   return { errors };
 };
 
 useImport.propTypes = {
+  /** Proskomma instance to query */
+  proskomma: PropTypes.object,
+  /** Change Index to synchronize Proskomma updates/imports */
+  stateId: PropTypes.string,
   /** Array of documents to be imported */
   documents: PropTypes.arrayOf(
     PropTypes.shape({
@@ -54,7 +60,7 @@ useImport.propTypes = {
       bookCode: PropTypes.string,
       /** USFM string for the book */
       data: PropTypes.string.isRequired,
-    })
+    }),
   ),
   /** console success details */
   verbose: PropTypes.bool,

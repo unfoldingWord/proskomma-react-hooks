@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useSearchForPassagesByBookCode } from '..';
 import useBookCodeQueue from './useBookCodeQueue';
 
-export default function useSearchForPassagesByBookCodes ({
+export default function useSearchForPassagesByBookCodes({
   proskomma,
   docSetId,
   bookCodes,
@@ -30,11 +30,11 @@ export default function useSearchForPassagesByBookCodes ({
   };
   const [state, setState] = useState(cleanState);
 
-  
+
   const refreshState = useDeepCompareCallback(() => {
     setState(cleanState);
   }, [cleanState]);
-  
+
   // 1. if input changes, refresh state;
   useDeepCompareEffect(() => {
     const changed = (
@@ -46,13 +46,17 @@ export default function useSearchForPassagesByBookCodes ({
       blocks !== state.blocks
     );
 
-    if (changed) refreshState();
+    if (changed) {
+      refreshState();
+    };
   }, [blocks, bookCodes, docSetId, refreshState, stateId, text, tokens, state]);
 
   const {
     nextBookCode,
     errors: queueErrors,
-  } = useBookCodeQueue({bookCodes, lastBookCode: state.lastBookCode, stateId, verbose});
+  } = useBookCodeQueue({
+    bookCodes, lastBookCode: state.lastBookCode, stateId, verbose,
+  });
 
   const {
     passages: lastPassages,
@@ -79,8 +83,13 @@ export default function useSearchForPassagesByBookCodes ({
         const passagesBookCodes = [...state.passagesBookCodes, lastBookCode];
         const dataArray = [...state.dataArray, lastData];
         const errors = [...state.errors, ...queueErrors, ...lastErrors];
-        const newState = {...state, passages, dataArray, lastBookCode, passagesBookCodes, errors};
-        if (verbose) console.log('useSearchForPassagesByBookCodes.useDeepCompareEffect: Add results after useSearchForPassagesByBookCode runs on each update of nextBookCode', lastBookCode, lastPassages);
+        const newState = {
+          ...state, passages, dataArray, lastBookCode, passagesBookCodes, errors,
+        };
+
+        if (verbose) {
+          console.log('useSearchForPassagesByBookCodes.useDeepCompareEffect: Add results after useSearchForPassagesByBookCode runs on each update of nextBookCode', lastBookCode, lastPassages);
+        };
         setState(newState);
       };
     };

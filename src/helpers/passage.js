@@ -19,11 +19,13 @@ export const passageQuery = ({
     verse = parsed.verse;
   };
 
-  let _scope = scope({bookCode});
+  let _scope = scope({ bookCode });
 
-  let clause = (chapterVerses) ? 
-    chapterVersesClause({chapterVerses}) : 
-    referenceClause({bookCode, chapter, verse});
+  let clause = (chapterVerses) ?
+    chapterVersesClause({ chapterVerses }) :
+    referenceClause({
+      bookCode, chapter, verse,
+    });
 
   query = `{
     ${_scope} {
@@ -39,7 +41,7 @@ export const parseReferenceString = (reference) => {
   let response = {};
   // 3JN 1:1-2 PSA 119:100 MAT 1-2
   const regex = /(?<bookCode>[\d\w]\w{2}) (?<cv>[\d:-]+)/;
-  const {bookCode, cv} = reference.match(regex).groups;
+  const { bookCode, cv } = reference.match(regex).groups;
   response.bookCode = bookCode;
 
   if (cv.includes('-')) {
@@ -54,17 +56,18 @@ export const parseReferenceString = (reference) => {
   return response;
 };
 
-const scope = ({bookCode}) => `documents ( withBook: "${bookCode}" )`;
+const scope = ({ bookCode }) => `documents ( withBook: "${bookCode}" )`;
 
-const chapterVersesClause = ({chapterVerses}) => `chapterVerses: "${chapterVerses}"`;
+const chapterVersesClause = ({ chapterVerses }) => `chapterVerses: "${chapterVerses}"`;
 
-const referenceClause = ({chapter, verse}) => `chapter: "${chapter}" verses: ["${verse}"]`;
+const referenceClause = ({ chapter, verse }) => `chapter: "${chapter}" verses: ["${verse}"]`;
 
 export const parsePassageResponse = ({ bookCode, data }) => {
   let passages = [];
+
   data.documents.forEach((doc) => {
-    doc.cv.forEach(({scopeLabels, text}) => {
-      const {chapter, verse} = parseScopeLabels({scopeLabels});
+    doc.cv.forEach(({ scopeLabels, text }) => {
+      const { chapter, verse } = parseScopeLabels({ scopeLabels });
       const passage = {
         docSetId: doc.docSetId,
         reference: `${bookCode} ${chapter}:${verse}`,
@@ -76,10 +79,10 @@ export const parsePassageResponse = ({ bookCode, data }) => {
   return passages;
 };
 
-export const parseScopeLabels = ({scopeLabels}) => {
+export const parseScopeLabels = ({ scopeLabels }) => {
   const chapter = scopeLabels?.filter((sl) => sl.startsWith('chapter'))[0].split('/')[1];
   const verses = scopeLabels?.filter((sl) => sl.startsWith('verse')).map(v => v.split('/')[1]);
   const verse = (verses.length > 1) ? `${verses[0]}-${verses[verses.length - 1]}` : verses[0];
 
-  return {chapter, verse};
+  return { chapter, verse };
 };

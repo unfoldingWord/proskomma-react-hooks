@@ -8,7 +8,7 @@ import {
 } from '../helpers/searchForBookCodes';
 import { useQuery } from '..';
 
-export default function useSearchForBookCodes ({
+export default function useSearchForBookCodes({
   proskomma,
   stateId,
   docSetId,
@@ -28,14 +28,17 @@ export default function useSearchForBookCodes ({
 
   const query = useMemo(() => {
     let _query = state.query;
-    if (text && docSetId) _query = searchForBookCodesQuery({text, docSetId});
+
+    if (text && docSetId) {
+      _query = searchForBookCodesQuery({ text, docSetId });
+    };
     return _query;
   }, [text, docSetId, state.query]);
 
   const {
     stateId: queryStateId,
-    data, 
-    errors: queryErrors, 
+    data,
+    errors: queryErrors,
   } = useQuery({
     proskomma,
     stateId,
@@ -49,12 +52,14 @@ export default function useSearchForBookCodes ({
 
     if (errors.length < 1) {
       try {
-        bookCodes = searchForBookCodesFilter({data});
+        bookCodes = searchForBookCodesFilter({ data });
       } catch (error) {
         errors = [...errors, error];
       };
     } else {
-      if (!data?.docSet) errors.push('useSearchForBookCodes: response from query has empty docSet.');
+      if (!data?.docSet) {
+        errors.push('useSearchForBookCodes: response from query has empty docSet.');
+      };
     };
 
     setState({
@@ -74,8 +79,11 @@ export default function useSearchForBookCodes ({
       state.query !== query ||
       state.data !== data
     );
+
     if (changed && query.length > 0) {
-      if (verbose) console.log('useSearchForBookCodes.useEffect() stateId: ' + queryStateId);
+      if (verbose) {
+        console.log('useSearchForBookCodes.useEffect() stateId: ' + queryStateId);
+      };
       parse();
     };
   }, [state.stateId, queryStateId, parse, query, state.query, state.data, data]);

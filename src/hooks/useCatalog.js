@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import { catalogQuery } from '../helpers/catalog';
 import { useQuery } from '..';
 
-export default function useCatalog ({
+export default function useCatalog({
   proskomma,
   stateId,
   verbose,
 }) {
   const {
     stateId: queryStateId,
-    data: catalog, 
-    errors, 
+    data: catalog,
+    errors,
   } = useQuery({
     proskomma,
     stateId,
@@ -19,7 +19,9 @@ export default function useCatalog ({
     verbose,
   });
 
-  return { stateId: queryStateId, catalog, errors };
+  return {
+    stateId: queryStateId, catalog, errors,
+  };
 };
 
 useCatalog.propTypes = {

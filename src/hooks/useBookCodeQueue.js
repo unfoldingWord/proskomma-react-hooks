@@ -1,7 +1,13 @@
-import { useState, useEffect, useMemo } from "react";
-import { useDeepCompareEffect, useDeepCompareCallback, useDeepCompareMemo } from "use-deep-compare";
+import {
+  useState, useEffect, useMemo,
+} from 'react';
+import {
+  useDeepCompareEffect, useDeepCompareCallback, useDeepCompareMemo,
+} from 'use-deep-compare';
 
-export default function useBookCodeQueue({ bookCodes: _bookCodes, lastBookCode: _bookCode, stateId: _stateId }) {
+export default function useBookCodeQueue({
+  bookCodes: _bookCodes, lastBookCode: _bookCode, stateId: _stateId,
+}) {
   const cleanState = {
     stateId: _stateId,
     bookCodes: _bookCodes,
@@ -18,25 +24,37 @@ export default function useBookCodeQueue({ bookCodes: _bookCodes, lastBookCode: 
   }, [cleanState]);
 
   useEffect(() => {
-    if (changedBookCodes || changedStateId) refreshState();
+    if (changedBookCodes || changedStateId) {
+      refreshState();
+    };
   }, [changedBookCodes, changedStateId, refreshState]);
 
-  const addUsedBookCode = useDeepCompareCallback(({bookCode}) => {
+  const addUsedBookCode = useDeepCompareCallback(({ bookCode }) => {
     let add = true;
     let usedBookCodes = [...state.usedBookCodes];
     let errors = [];
 
     const isUsed = (state.usedBookCodes.includes(bookCode));
-    if (isUsed) add = false && errors.push(`useBookCodeQueue.addUsedBookCode({'${bookCode}'}): bookCode isUsed.`);
-    if (changedStateId) add = false && errors.push(`useBookCodeQueue.addUsedBookCode({'${bookCode}'}): stateId changed.`);
 
-    if (add) usedBookCodes = [...usedBookCodes, bookCode];
+    if (isUsed) {
+      add = false && errors.push(`useBookCodeQueue.addUsedBookCode({'${bookCode}'}): bookCode isUsed.`);
+    };
 
-    setState({ ...state, usedBookCodes, errors });
+    if (changedStateId) {
+      add = false && errors.push(`useBookCodeQueue.addUsedBookCode({'${bookCode}'}): stateId changed.`);
+    };
+
+    if (add) {
+      usedBookCodes = [...usedBookCodes, bookCode];
+    };
+
+    setState({
+      ...state, usedBookCodes, errors,
+    });
   }, [state, changedStateId]);
 
   useDeepCompareEffect(() => {
-    addUsedBookCode({bookCode: _bookCode});
+    addUsedBookCode({ bookCode: _bookCode });
   }, [state, _bookCode, addUsedBookCode]);
 
   const bookCodesQueue = useDeepCompareMemo(() => (
@@ -44,8 +62,10 @@ export default function useBookCodeQueue({ bookCodes: _bookCodes, lastBookCode: 
   ), [state]);
 
   const nextBookCode = useDeepCompareMemo(() => (
-    ( bookCodesQueue.length ? bookCodesQueue[0] : null )
+    (bookCodesQueue.length ? bookCodesQueue[0] : null)
   ), [bookCodesQueue]);
 
-  return {...state, addUsedBookCode, bookCodesQueue, nextBookCode};
+  return {
+    ...state, addUsedBookCode, bookCodesQueue, nextBookCode,
+  };
 };

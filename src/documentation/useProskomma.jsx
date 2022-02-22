@@ -1,6 +1,7 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function useProskomma(props) {
+export default function useProskomma() {
   return (<></>);
 };
 

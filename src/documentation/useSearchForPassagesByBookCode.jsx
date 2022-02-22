@@ -1,6 +1,7 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function useSearchForPassagesByBookCode(props) {
+export default function useSearchForPassagesByBookCode() {
   return (<></>);
 };
 

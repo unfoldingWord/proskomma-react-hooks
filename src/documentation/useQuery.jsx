@@ -1,6 +1,7 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function useQuery(props) {
+export default function useQuery() {
   return (<></>);
 };
 

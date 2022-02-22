@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareCallback } from 'use-deep-compare';
 
-export default function useQuery({proskomma, stateId, query, verbose}) {
+export default function useQuery({
+  proskomma, stateId, query, verbose,
+}) {
   const cleanState = {
     stateId: '',
     query: '',
@@ -12,7 +14,9 @@ export default function useQuery({proskomma, stateId, query, verbose}) {
   const [state, setState] = useState({ ...cleanState });
 
   const runQuery = useDeepCompareCallback(async () => {
-    if (verbose) console.log('runQuery() stateId: ' + stateId);
+    if (verbose) {
+      console.log('runQuery() stateId: ' + stateId);
+    };
 
     let data;
     let errors = [];
@@ -20,6 +24,7 @@ export default function useQuery({proskomma, stateId, query, verbose}) {
     if (query.length > 0) {
       const { errors: _errors, data: _data } = await proskomma.gqlQuery(query);
       errors = _errors || [];
+
       if (_data) {
         data = JSON.parse(JSON.stringify(_data)); // graphQL nested object fix
       };

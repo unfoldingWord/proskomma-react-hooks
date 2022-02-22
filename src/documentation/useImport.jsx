@@ -1,6 +1,7 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function useImport(props) {
+export default function useImport() {
   return (<></>);
 };
 
@@ -21,6 +22,6 @@ useImport.propTypes = {
       bookCode: PropTypes.string,
       /** USFM string for the book */
       data: PropTypes.string.isRequired,
-    })
+    }),
   ),
 };

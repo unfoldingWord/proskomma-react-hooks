@@ -3,9 +3,11 @@ import { useDeepCompareCallback, useDeepCompareEffect } from 'use-deep-compare';
 import PropTypes from 'prop-types';
 
 import { useQuery } from '..';
-import { passageQuery, parsePassageResponse, parseReferenceString } from '../helpers/passage';
+import {
+  passageQuery, parsePassageResponse, parseReferenceString,
+} from '../helpers/passage';
 
-export default function usePassage ({
+export default function usePassage({
   proskomma,
   stateId,
   reference,
@@ -22,8 +24,10 @@ export default function usePassage ({
   const [state, setState] = useState({ ...cleanState });
 
   const query = useMemo(() => {
-    if (verbose) console.log('usePassage.query reference:', reference);
-    return passageQuery({reference});
+    if (verbose) {
+      console.log('usePassage.query reference:', reference);
+    };
+    return passageQuery({ reference });
   }, [reference, verbose]);
 
   const {
@@ -39,12 +43,15 @@ export default function usePassage ({
     if (
       reference.length &&
       data.documents.length &&
-      errors.length < 1  
+      errors.length < 1
     ) {
       try {
         const { bookCode } = parseReferenceString(reference);
         passages = parsePassageResponse({ bookCode, data });
-        if (verbose) console.log('usePassage.parse() query:', query);
+
+        if (verbose) {
+          console.log('usePassage.parse() query:', query);
+        };
       } catch (error) {
         errors = [...errors, error];
       };
@@ -62,12 +69,15 @@ export default function usePassage ({
 
   useDeepCompareEffect(() => {
     const changed = (
-      queryStateId !== state.stateId  ||
+      queryStateId !== state.stateId ||
       query !== state.query ||
       data?.documents?.length !== state.data?.documents?.length
-    )
+    );
+
     if (changed) {
-      if (verbose) console.log('usePassage.useEffect() stateId: ' + queryStateId);
+      if (verbose) {
+        console.log('usePassage.useEffect() stateId: ' + queryStateId);
+      };
       parse();
     };
   }, [state.stateId, data, state.data, queryStateId, parse, query, state.query, verbose]);

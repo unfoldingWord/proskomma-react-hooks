@@ -2,9 +2,11 @@ import {
   searchTermsClause,
   attTermsClause,
   searchTermsRegex,
-} from "./search";
+} from './search';
 
-export const searchForPassagesQuery = ({text, docSetId, bookCode, blocks=false, tokens=false, }) => {
+export const searchForPassagesQuery = ({
+  text, docSetId, bookCode, blocks = false, tokens = false,
+}) => {
   const _searchTermsClause = searchTermsClause(text);
   const _attTermsClause = attTermsClause(text);
   const _searchTermsRegex = searchTermsRegex(text);
@@ -48,7 +50,7 @@ export const searchForPassagesQuery = ({text, docSetId, bookCode, blocks=false, 
   const _blocksOrVersesClause = blocks ? _blocksClause : _versesClause;
 
   const blockMatchQuery = (
-`{
+    `{
   docSet(id:"${docSetId}") {
     id
     document(
@@ -61,12 +63,13 @@ export const searchForPassagesQuery = ({text, docSetId, bookCode, blocks=false, 
     matches: enumRegexIndexesForString (enumType:"wordLike" searchRegex:"${_searchTermsRegex}") { matched }
   }
 }`
-);
+  );
   return blockMatchQuery;
 };
 
-export const searchForBlocksFilter = ({data}) => {
+export const searchForBlocksFilter = ({ data }) => {
   let passages = [];
+
   passages = data?.docSet?.document?.mainSequence?.blocks?.map(block => {
     const docSetId = data.docSet.id;
     const bookCode = data.docSet.document.bookCode;
@@ -76,7 +79,7 @@ export const searchForBlocksFilter = ({data}) => {
     const verse = (verses.length > 1) ? `${verses[0]}-${verses[verses.length - 1]}` : verses[0];
     const reference = `${bookCode} ${chapter}:${verse}`; // {bookCode, chapter, verse};
     // const matches = data.docSet.matches.map(m => m.matched);
-    const itemGroups = block.itemGroups
+    const itemGroups = block.itemGroups;
     const text = itemGroups.map(itemGroup => itemGroup.text).join(' ');
 
     return {
@@ -88,8 +91,9 @@ export const searchForBlocksFilter = ({data}) => {
   return passages;
 };
 
-export const searchForVersesFilter = ({data}) => {
+export const searchForVersesFilter = ({ data }) => {
   let passages = [];
+
   passages = data?.docSet?.document?.cvMatching?.map(cvMatch => {
     const docSetId = data.docSet.id;
     const bookCode = data.docSet.document.bookCode;
@@ -109,16 +113,3 @@ export const searchForVersesFilter = ({data}) => {
   });
   return passages;
 };
-
-// export const parseBlock = ({block, bookCode, docSetId}) => {
-//   let row = {};
-//   const { scopeLabels: labels } = block;
-//   const chapter = labels?.filter((sl) => sl.startsWith('chapter'))[0].split('/')[1];
-//   const verses = labels?.filter((sl) => sl.startsWith('verses')).map(v => v.split('/')[1]);
-//   const verse = (verses.length > 1) ? `${verses[0]}-${verses[verses.length - 1]}` : verses[0];
-//   const reference = `${bookCode} ${chapter}:${verse}`; // {bookCode, chapter, verse};
-//   const text = block?.tokens.map((token) => Object.values(token)).join('');
-
-//   row = {docSetId, reference, text};
-//   return row;
-// };

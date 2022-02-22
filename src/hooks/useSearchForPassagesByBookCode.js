@@ -1,11 +1,15 @@
-import { useState, useEffect, useMemo } from 'react';
+import {
+  useState, useEffect, useMemo,
+} from 'react';
 import { useDeepCompareCallback } from 'use-deep-compare';
 import PropTypes from 'prop-types';
 
-import { searchForBlocksFilter, searchForPassagesQuery, searchForVersesFilter } from '../helpers/searchForPassages';
+import {
+  searchForBlocksFilter, searchForPassagesQuery, searchForVersesFilter,
+} from '../helpers/searchForPassages';
 import { useQuery } from '..';
 
-export default function useSearchForPassagesByBookCode ({
+export default function useSearchForPassagesByBookCode({
   proskomma,
   stateId,
   docSetId,
@@ -31,16 +35,19 @@ export default function useSearchForPassagesByBookCode ({
 
   const query = useMemo(() => {
     let _query = state.query;
+
     if (text && docSetId && bookCode) {
-      _query = searchForPassagesQuery({ text, docSetId, bookCode, tokens, blocks });
+      _query = searchForPassagesQuery({
+        text, docSetId, bookCode, tokens, blocks,
+      });
     };
     return _query;
   }, [state.query, blocks, bookCode, docSetId, text, tokens]);
 
   const {
     stateId: queryStateId,
-    data, 
-    errors: queryErrors, 
+    data,
+    errors: queryErrors,
   } = useQuery({
     proskomma,
     stateId,
@@ -53,7 +60,7 @@ export default function useSearchForPassagesByBookCode ({
     let errors = [...queryErrors];
 
     if (data && errors.length < 1) {
-      passages = blocks ? searchForBlocksFilter({data}) : searchForVersesFilter({data});
+      passages = blocks ? searchForBlocksFilter({ data }) : searchForVersesFilter({ data });
     };
 
     setState({
@@ -76,8 +83,11 @@ export default function useSearchForPassagesByBookCode ({
       state.tokens !== tokens ||
       state.blocks !== blocks
     );
+
     if (changedInput) {
-      if (verbose) console.log('useSearchForPassagesByBookCode.useEffect() stateId: ' + queryStateId);
+      if (verbose) {
+        console.log('useSearchForPassagesByBookCode.useEffect() stateId: ' + queryStateId);
+      };
       parse();
     };
   }, [verbose, state.stateId, queryStateId, parse, state.docSetId, state.bookCode, state.text, state.tokens, state.blocks, docSetId, bookCode, text, tokens, blocks]);
