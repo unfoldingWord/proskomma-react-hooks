@@ -59,6 +59,7 @@
     "eslint-plugin-react": "^7.25.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-test-selectors": "^2.0.3",
+    "lodash": "^4.17.21",
     "lorem-ipsum-usfm": "^0.2.1",
     "prettier": "^2.5.1",
     "prop-types": "^15.7.2",
