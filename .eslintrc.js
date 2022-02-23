@@ -4,6 +4,7 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     '@unfoldingword',
+    'prettier',
   ],
   'parserOptions': {
     'ecmaFeatures': { 'jsx': true },

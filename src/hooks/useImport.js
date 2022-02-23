@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareEffect, useDeepCompareCallback } from 'use-deep-compare';
 
@@ -8,13 +8,18 @@ export default function useImport({
   proskomma,
   stateId,
   newStateId,
+  onImport: _onImport,
   documents,
   verbose,
 }) {
   const [errors, setErrors] = useState([]);
 
+  const onImport = useCallback((props) => {
+    newStateId();
+    _onImport(props);
+  }, [_onImport, newStateId]);
+
   const runImport = useDeepCompareCallback(() => {
-    const onImport = newStateId;
     let _errors = [];
 
     if (proskomma) {

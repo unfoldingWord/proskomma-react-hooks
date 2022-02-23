@@ -37,12 +37,15 @@ function Component() {
     verbose,
   });
 
+  const onImport = (props) => console.log('Imported doc!', props);
+
   const {
     errors: importErrors,
   } = useImport({
     proskomma,
     stateId,
     newStateId,
+    onImport,
     documents: _documents,
     verbose,
   });
