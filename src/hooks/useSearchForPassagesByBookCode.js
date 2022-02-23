@@ -36,7 +36,7 @@ export default function useSearchForPassagesByBookCode({
   const query = useMemo(() => {
     let _query = state.query;
 
-    if (text && docSetId && bookCode) {
+    if (text && docSetId) {
       _query = searchForPassagesQuery({
         text, docSetId, bookCode, tokens, blocks,
       });
