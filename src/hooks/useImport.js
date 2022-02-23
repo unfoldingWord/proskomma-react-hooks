@@ -28,7 +28,7 @@ export default function useImport({
           proskomma, documents, onImport, verbose,
         });
       } catch (e) {
-        _errors = e;
+        _errors = [e];
       };
     } else {
       _errors = [`useImport({proskomma, stateId: ${stateId}}): proskomma not provided`];
