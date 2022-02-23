@@ -5,7 +5,14 @@ export default function useImport() {
   return (<></>);
 };
 
+
 useImport.propTypes = {
+  /** Proskomma instance to query */
+  proskomma: PropTypes.object,
+  /** Function to trigger a new stateId onImport */
+  newStateId: PropTypes.func.isRequired,
+  /** Callback when document is imported, props={org, lang, abbr, bookCode} */
+  onImport: PropTypes.func,
   /** Array of documents to be imported */
   documents: PropTypes.arrayOf(
     PropTypes.shape({
@@ -24,4 +31,6 @@ useImport.propTypes = {
       data: PropTypes.string.isRequired,
     }),
   ),
+  /** console success details */
+  verbose: PropTypes.bool,
 };

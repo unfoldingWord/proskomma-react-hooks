@@ -13,7 +13,7 @@ export const importDocument = async ({
     if (verbose) {
       console.log(`Imported`, selectors, bookCode, result);
     };
-    onImport({ selectors, bookCode });
+    onImport({ ...selectors, bookCode });
   } catch (e) {
     console.log(`Failed to Import`, { ...selectors, bookCode }, e);
   };
