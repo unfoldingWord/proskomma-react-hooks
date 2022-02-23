@@ -1,44 +1,41 @@
 # useSearchForPassagesByBookCodes
 
 ```js
-import { useState } from 'react';
-import { useProskomma, useImport, useCatalog, useSearchForPassagesByBookCodes } from 'proskomma-react-hooks';
-import ReactJson from 'react-json-view';
-import { loremIpsumBook } from 'lorem-ipsum-usfm';
+import { useState } from "react";
+import {
+  useProskomma,
+  useImport,
+  useCatalog,
+  useSearchForPassagesByBookCodes
+} from "proskomma-react-hooks";
+import ReactJson from "react-json-view";
+import { loremIpsumBook } from "lorem-ipsum-usfm";
 
-const document = ({bookCode, bookName, ...props}) => ({
-  selectors: { org: 'unfoldingWord', lang: 'lat', abbr: 'lor' }, 
+const document = ({ bookCode, bookName, ...props }) => ({
+  selectors: { org: "unfoldingWord", lang: "lat", abbr: "lor" },
   data: loremIpsumBook({ bookCode, bookName, ...props }),
-  bookCode, 
+  bookCode
 });
 
 const documents = [
-  document({ bookCode: 'mat', bookName: 'Matthew', chapterCount: 28 }),
-  document({ bookCode: 'mar', bookName: 'Mark', chapterCount: 16 }),
-  document({ bookCode: 'luk', bookName: 'Luke', chapterCount: 24 }),
-  document({ bookCode: 'jhn', bookName: 'John', chapterCount: 21 }),
-  document({ bookCode: '1jn', bookName: '1 Jean', chapterCount: 5 }),
-  document({ bookCode: '2jn', bookName: '2 Jean', chapterCount: 1 }),
-  document({ bookCode: '3jn', bookName: '3 Jean', chapterCount: 1 }),
+  document({ bookCode: "mat", bookName: "Matthew", chapterCount: 1, verseMax: 1 }),
+  document({ bookCode: "mar", bookName: "Mark", chapterCount: 1, verseMax: 1 }),
+  document({ bookCode: "luk", bookName: "Luke", chapterCount: 1, verseMax: 1 }),
+  document({ bookCode: "jhn", bookName: "John", chapterCount: 1, verseMax: 1 }),
+  document({ bookCode: "1jn", bookName: "1 Jean", chapterCount: 1, verseMax: 1 }),
+  document({ bookCode: "2jn", bookName: "2 Jean", chapterCount: 1, verseMax: 1 }),
+  document({ bookCode: "3jn", bookName: "3 Jean", chapterCount: 10, verseMax: 100 })
 ];
 
 const docSetId = `unfoldingWord/lat_lor`;
-const bookCodes = [
-  'mat',
-  'mar',
-  'luk',
-  'jhn',
-  '1jn',
-  '2jn',
-  '3jn'
-];
-const searchText = 'adipisicing excepteur fugiat';
+const bookCodes = ["mat", "mar", "luk", "jhn", "1jn", "2jn", "3jn"];
 
 const verbose = false;
 
-function Component () {
+function Component() {
   const [startImport, setStartImport] = useState(false);
   const [startSearch, setStartSearch] = useState(false);
+  const [searchText, setSearchText] = useState("adipisicing excepteur fugiat");
   const _documents = startImport ? documents : [];
   const _bookCodes = startSearch ? bookCodes : [];
 
@@ -46,29 +43,27 @@ function Component () {
     stateId,
     newStateId,
     proskomma,
-    errors: proskommaErrors,
+    errors: proskommaErrors
   } = useProskomma({
-    verbose,
+    verbose
   });
 
-  const {
-    errors: importErrors,
-  } = useImport({
+  const { errors: importErrors } = useImport({
     proskomma,
     stateId,
     newStateId,
     documents: _documents,
-    verbose,
+    verbose
   });
 
   const {
     stateId: catalogStateId,
     catalog,
-    errors: catalogErrors, 
+    errors: catalogErrors
   } = useCatalog({
     proskomma,
     stateId,
-    verbose,
+    verbose
   });
 
   const {
@@ -76,8 +71,9 @@ function Component () {
     query,
     passages,
     passagesBookCodes,
-    errors: searchErrors, 
-    dataArray,
+    nextBookCode,
+    errors: searchErrors,
+    dataArray
   } = useSearchForPassagesByBookCodes({
     proskomma,
     stateId,
@@ -86,7 +82,7 @@ function Component () {
     bookCodes: _bookCodes,
     blocks: false,
     tokens: false,
-    verbose,
+    verbose
   });
 
   const json = {
@@ -94,27 +90,48 @@ function Component () {
     searchStateId,
     searchText,
     passagesBookCodes,
+    nextBookCode,
     passages,
     catalog,
     query,
     proskommaErrors,
     searchErrors,
     // documents,
-    dataArray,
+    dataArray
   };
 
   return (
     <>
       <ReactJson
-        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
+        style={{ maxHeight: "500px", overflow: "scroll", whiteSpace: "pre" }}
         src={json}
         theme="monokai"
       />
-      <button style={{margin: '1em'}} onClick={() => {setStartImport(true);}}>Import</button>
-      <button style={{margin: '1em'}} onClick={() => {setStartSearch(true);}}>Search</button>
+      <input
+        onBlur={(e) => {
+          setSearchText(e.target.value);
+        }}
+        defaultValue={searchText}
+      />
+      <button
+        style={{ margin: "1em" }}
+        onClick={() => {
+          setStartImport(true);
+        }}
+      >
+        Import
+      </button>
+      <button
+        style={{ margin: "1em" }}
+        onClick={() => {
+          setStartSearch(true);
+        }}
+      >
+        Search
+      </button>
     </>
   );
-};
+}
 
-<Component />
+<Component />;
 ```

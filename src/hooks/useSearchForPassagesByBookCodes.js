@@ -26,7 +26,7 @@ export default function useSearchForPassagesByBookCodes({
     passagesBookCodes: [],
     dataArray: [],
     errors: [],
-    lastBookCode: null,
+    lastBookCode: undefined,
   };
   const [state, setState] = useState(cleanState);
 
@@ -55,7 +55,7 @@ export default function useSearchForPassagesByBookCodes({
     nextBookCode,
     errors: queueErrors,
   } = useSearchQueueBookCodes({
-    bookCodes, lastBookCode: state.lastBookCode, stateId, verbose,
+    bookCodes, lastBookCode: state.lastBookCode, stateId, text, verbose,
   });
 
   const {
@@ -95,7 +95,7 @@ export default function useSearchForPassagesByBookCodes({
     };
   }, [state, queueErrors, lastPassages, lastStateId, lastBookCode, nextBookCode, lastErrors]);
 
-  return state;
+  return { ...state, nextBookCode };
 };
 
 useSearchForPassagesByBookCodes.propTypes = {
