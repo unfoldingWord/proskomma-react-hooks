@@ -13,9 +13,9 @@ export const importDocument = async ({
     if (verbose) {
       console.log(`Imported`, selectors, bookCode, result);
     };
-    onImport();
+    onImport({ selectors, bookCode });
   } catch (e) {
-    console.log(`Failed to Import`, selectors, bookCode, e);
+    console.log(`Failed to Import`, { ...selectors, bookCode }, e);
   };
   return result;
 };
@@ -26,7 +26,7 @@ export const importDocuments = ({
 }) => {
   documents.forEach(async (document) => {
     await importDocument({
-      proskomma, document, onImport, verbose,
+      proskomma, document, onImport, verbose, serialize,
     });
   });
 };

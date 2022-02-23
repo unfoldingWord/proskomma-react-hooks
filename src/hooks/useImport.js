@@ -6,7 +6,6 @@ import { importDocuments } from '..';
 
 export default function useImport({
   proskomma,
-  stateId,
   newStateId,
   onImport: _onImport,
   documents,
@@ -16,7 +15,8 @@ export default function useImport({
 
   const onImport = useCallback((props) => {
     newStateId();
-    _onImport(props);
+
+    if (_onImport) { _onImport(props); };
   }, [_onImport, newStateId]);
 
   const runImport = useDeepCompareCallback(() => {
@@ -31,11 +31,11 @@ export default function useImport({
         _errors = [e];
       };
     } else {
-      _errors = [`useImport({proskomma, stateId: ${stateId}}): proskomma not provided`];
+      _errors = [`useImport({proskomma, documents, stateId, newStateId}): proskomma not provided`];
     };
 
     setErrors(_errors);
-  }, [stateId, documents, verbose]);
+  }, [documents, verbose]);
 
   useDeepCompareEffect(() => {
     runImport();
@@ -47,8 +47,6 @@ export default function useImport({
 useImport.propTypes = {
   /** Proskomma instance to query */
   proskomma: PropTypes.object,
-  /** Change Index to synchronize Proskomma updates/imports */
-  stateId: PropTypes.string.isRequired,
   /** Function to trigger a new stateId onImport */
   newStateId: PropTypes.func.isRequired,
   /** Array of documents to be imported */
