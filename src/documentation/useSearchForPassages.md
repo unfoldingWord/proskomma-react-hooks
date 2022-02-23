@@ -23,13 +23,14 @@ const documents = [
 ];
 
 const docSetId = `unfoldingWord/lat_lor`;
-const searchText = 'adipisicing excepteur fugiat';
+const _searchText = 'adipisicing excepteur fugiat';
 
 const verbose = false;
 
 function Component () {
   const [startImport, setStartImport] = useState(false);
   const [startSearch, setStartSearch] = useState(false);
+  const [searchText, setSearchText] = useState(_searchText);
   const _documents = startImport ? documents : [];
   const _docSetId = startSearch ? docSetId : '';
 
@@ -100,6 +101,7 @@ function Component () {
         src={json}
         theme="monokai"
       />
+      <input onBlur={(e) => { setSearchText(e.target.value); }} defaultValue={searchText} />
       <button style={{margin: '1em'}} onClick={() => {setStartImport(true);}}>Import</button>
       <button style={{margin: '1em'}} onClick={() => {setStartSearch(true);}}>Search</button>
     </>

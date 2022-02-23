@@ -29,7 +29,7 @@ export default function useSearchForBookCodes({
   const query = useMemo(() => {
     let _query = state.query;
 
-    if (text && docSetId) {
+    if (docSetId) {
       _query = searchForBookCodesQuery({ text, docSetId });
     };
     return _query;
