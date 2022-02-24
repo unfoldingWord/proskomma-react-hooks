@@ -34,7 +34,7 @@ export default function useSearchForPassagesByBookCode({
   const [state, setState] = useState(cleanState);
 
   const query = useMemo(() => {
-    let _query = state.query;
+    let _query = '';
 
     if (text && docSetId) {
       _query = searchForPassagesQuery({
@@ -42,7 +42,7 @@ export default function useSearchForPassagesByBookCode({
       });
     };
     return _query;
-  }, [state.query, blocks, bookCode, docSetId, text, tokens]);
+  }, [blocks, bookCode, docSetId, text, tokens]);
 
   const {
     stateId: queryStateId,
@@ -62,6 +62,8 @@ export default function useSearchForPassagesByBookCode({
     if (data && errors.length < 1) {
       passages = blocks ? searchForBlocksFilter({ data }) : searchForVersesFilter({ data });
     };
+
+    passages = passages || [];
 
     setState({
       ...cleanState,
