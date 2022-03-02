@@ -2,7 +2,9 @@ export const catalogQuery = `{
   nDocSets nDocuments
   docSets {
     id hasMapping
-    documents {
+    documents (
+      sortedBy: "paratext"
+    ) {
       id
       bookCode: header(id:"bookCode")
       h: header(id:"h")

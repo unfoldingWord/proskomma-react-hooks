@@ -6,6 +6,12 @@ export default function useProskomma() {
 };
 
 useProskomma.propTypes = {
-  /** console success details */
+  /** console log details */
   verbose: PropTypes.bool,
+  /** Document Selectors uW: {org, lang, abbr} vs {lang, abbr} and other differences.  */
+  unfoldingWord: PropTypes.bool,
+};
+
+useProskomma.defaultProps = {
+  unfoldingWord: true,
 };

@@ -14,7 +14,7 @@ const document = ({bookCode, bookName, ...props}) => ({
 
 const documents = [
   document({ bookCode: 'mat', bookName: 'Matthew', chapterCount: 1 }),
-  document({ bookCode: 'mar', bookName: 'Mark', chapterCount: 1 }),
+  document({ bookCode: 'mrk', bookName: 'Mark', chapterCount: 1 }),
   document({ bookCode: 'luk', bookName: 'Luke', chapterCount: 1 }),
   document({ bookCode: 'jhn', bookName: 'John', chapterCount: 1 }),
   document({ bookCode: '1jn', bookName: '1 Jean', chapterCount: 1 }),

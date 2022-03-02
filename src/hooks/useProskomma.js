@@ -3,12 +3,14 @@ import {
 } from 'react';
 import PropTypes from 'prop-types';
 
+import { Proskomma } from 'proskomma';
+
 import { UWProskomma, randomString } from '..';
 
 /**
  * This is the hook.
  */
-export default function useProskomma({ verbose }) {
+function useProskomma({ verbose, unfoldingWord = true, }) {
   // manage two states required since they need updating at different times.
   const [stateId, setStateId] = useState(''); // needs to start out defined and type is string
   const [errors, setErrors] = useState([]);
@@ -26,14 +28,14 @@ export default function useProskomma({ verbose }) {
     let _proskomma;
 
     try {
-      _proskomma = new UWProskomma();
+      _proskomma = unfoldingWord ? new UWProskomma() : new Proskomma();
       newStateId();
       // import frozen proskomma state
     } catch (e) {
       setErrors([e]);
     };
     return _proskomma;
-  }, [newStateId]);
+  }, [newStateId, unfoldingWord]);
 
   return {
     proskomma, stateId, newStateId, errors,
@@ -43,4 +45,12 @@ export default function useProskomma({ verbose }) {
 useProskomma.propTypes = {
   /** console log details */
   verbose: PropTypes.bool,
+  /** Is this an unfoldingWord related project? Set to false if it won't import */
+  unfoldingWord: PropTypes.bool,
 };
+
+useProskomma.defaultProps = {
+  unfoldingWord: true,
+};
+
+export default useProskomma;
