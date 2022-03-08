@@ -8,10 +8,9 @@ export const catalogQuery = `{
       id
       bookCode: header(id:"bookCode")
       h: header(id:"h")
-      toc1: header(id:"toc1")
+      toc: header(id:"toc")
       toc2: header(id:"toc2")
       toc3: header(id:"toc3")
-      mt: header(id:"mt")
     }
   }
 }`;
