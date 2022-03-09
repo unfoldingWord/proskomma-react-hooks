@@ -42,7 +42,7 @@ export default function usePassage({
 
     if (
       reference.length &&
-      data.documents.length &&
+      data?.documents?.length &&
       errors.length < 1
     ) {
       try {
