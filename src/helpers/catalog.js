@@ -1,7 +1,12 @@
 export const catalogQuery = `{
   nDocSets nDocuments
   docSets {
-    id hasMapping
+    id
+    selectors {
+      key
+      value
+    }
+    hasMapping
     documents (
       sortedBy: "paratext"
     ) {
