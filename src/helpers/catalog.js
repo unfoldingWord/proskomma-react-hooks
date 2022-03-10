@@ -1,7 +1,12 @@
 export const catalogQuery = `{
   nDocSets nDocuments
   docSets {
-    id hasMapping
+    id
+    selectors {
+      key
+      value
+    }
+    hasMapping
     documents (
       sortedBy: "paratext"
     ) {
@@ -11,6 +16,13 @@ export const catalogQuery = `{
       toc: header(id:"toc")
       toc2: header(id:"toc2")
       toc3: header(id:"toc3")
+      cvNumbers: cvIndexes {
+        chapter
+        verses: verseNumbers {
+          number
+          range
+        }
+      }
     }
   }
 }`;
