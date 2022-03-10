@@ -11,6 +11,13 @@ export const catalogQuery = `{
       toc: header(id:"toc")
       toc2: header(id:"toc2")
       toc3: header(id:"toc3")
+      cvNumbers: cvIndexes {
+        chapter
+        verses: verseNumbers {
+          number
+          range
+        }
+      }
     }
   }
 }`;
