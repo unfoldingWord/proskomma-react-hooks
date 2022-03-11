@@ -7,8 +7,7 @@ export const searchForBookCodesQuery = ({ text, docSetId }) => {
   const _searchTermsClause = searchTermsClause(text);
   const _attTermsClause = attTermsClause(text);
 
-  // TODO: figure out why this doesn't work with more than one book
-  const _sortClause = ''; // false ? `        sortedBy: "paratext"\n` : '';
+  const _sortClause = 'sortedBy: "paratext"';
 
   const bookCodeMatchQuery = `{
     docSet( id:"${docSetId}" ) {
