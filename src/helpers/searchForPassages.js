@@ -30,7 +30,7 @@ export const searchForPassagesQuery = ({
           withScopes: [${_attTermsClause}]
         ) {
           scopeLabels(startsWith:["chapter/", "verse/"])
-          itemGroups(byScopes:["chapter/", "verses/"], includeContext:true) {
+          itemGroups(byScopes:["chapter/", "verses/"]) {
             scopeLabels(startsWith:["verses/"])
             text
             ${_tokensClause}          }
