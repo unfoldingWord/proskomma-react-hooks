@@ -3,29 +3,24 @@ export const passageQuery = ({
   bookCode: _bookCode,
   chapterVerses: _chapterVerses,
   chapter: _chapter,
-  verse: _verse,
 }) => {
   let query;
   let bookCode = _bookCode;
   let chapterVerses = _chapterVerses;
   let chapter = _chapter;
-  let verse = _verse;
 
   if (reference) {
     const parsed = parseReferenceString(reference);
     bookCode = parsed.bookCode;
     chapterVerses = parsed.chapterVerses;
     chapter = parsed.chapter;
-    verse = parsed.verse;
   };
 
   let _scope = scope({ bookCode });
 
   let clause = (chapterVerses) ?
     chapterVersesClause({ chapterVerses }) :
-    referenceClause({
-      bookCode, chapter, verse,
-    });
+    chapterClause({ bookCode, chapter });
 
   query = `{
     ${_scope} {
@@ -40,17 +35,14 @@ export const passageQuery = ({
 export const parseReferenceString = (reference) => {
   let response = {};
   // 3JN 1:1-2 PSA 119:100 MAT 1-2
-  const regex = /(?<bookCode>[\d\w]\w{2}) (?<cv>[\d:-]+)/;
-  const { bookCode, cv } = reference.match(regex).groups;
+  const regex = /(?<bookCode>[\d\w]\w{2}) (?<cv>(?<c>\d+):?(?<v>[\d-]*))/;
+  const { bookCode, cv, c, v } = reference.match(regex).groups;
   response.bookCode = bookCode;
 
-  if (cv.includes('-')) {
+  if (cv.includes(':') && !!v) {
     response.chapterVerses = cv;
-  } else if (cv.includes(':')) {
-    const regex = /(?<chapter>\d+):(?<verse>\d+)/;
-    const { groups } = cv.match(regex);
-    response.chapter = groups.chapter;
-    response.verse = groups.verse;
+  } else if (!!c && !v) {
+    response.chapter = c;
   };
 
   return response;
@@ -60,7 +52,7 @@ const scope = ({ bookCode }) => `documents ( withBook: "${bookCode}" )`;
 
 const chapterVersesClause = ({ chapterVerses }) => `chapterVerses: "${chapterVerses}"`;
 
-const referenceClause = ({ chapter, verse }) => `chapter: "${chapter}" verses: ["${verse}"]`;
+const chapterClause = ({ chapter }) => `chapter: "${chapter}"`;
 
 export const parsePassageResponse = ({ bookCode, data }) => {
   let passages = [];
@@ -68,9 +60,10 @@ export const parsePassageResponse = ({ bookCode, data }) => {
   data.documents.forEach((doc) => {
     doc.cv.forEach(({ scopeLabels, text }) => {
       const { chapter, verse } = parseScopeLabels({ scopeLabels });
+      const verseReference = verse ? `:${verse}` : '';
       const passage = {
         docSetId: doc.docSetId,
-        reference: `${bookCode} ${chapter}:${verse}`,
+        reference: `${bookCode} ${chapter}${verseReference}`,
         text,
       };
       passages = [...passages, passage];
@@ -82,7 +75,7 @@ export const parsePassageResponse = ({ bookCode, data }) => {
 export const parseScopeLabels = ({ scopeLabels }) => {
   const chapter = scopeLabels?.filter((sl) => sl.startsWith('chapter'))[0].split('/')[1];
   const verses = scopeLabels?.filter((sl) => sl.startsWith('verse')).map(v => v.split('/')[1]);
-  const verse = (verses.length > 1) ? `${verses[0]}-${verses[verses.length - 1]}` : verses[0];
+  const verse = verses[verses.length - 1];
 
   return { chapter, verse };
 };
