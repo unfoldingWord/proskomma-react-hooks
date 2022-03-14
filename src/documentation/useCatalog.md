@@ -53,6 +53,7 @@ function Component () {
   } = useCatalog({
     proskomma,
     stateId,
+    cv: true,
     verbose,
   });
 

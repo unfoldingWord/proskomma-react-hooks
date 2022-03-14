@@ -6,6 +6,7 @@ import { useQuery } from '..';
 export default function useCatalog({
   proskomma,
   stateId,
+  cv,
   verbose,
 }) {
   const {
@@ -15,7 +16,7 @@ export default function useCatalog({
   } = useQuery({
     proskomma,
     stateId,
-    query: catalogQuery,
+    query: catalogQuery({ cv }),
     verbose,
   });
 
@@ -29,9 +30,12 @@ useCatalog.propTypes = {
   proskomma: PropTypes.object,
   /** Change Index to synchronize Proskomma updates/imports */
   stateId: PropTypes.string,
+  /** Include chapter and verse details */
+  cv: PropTypes.bool,
 };
 
 useCatalog.defaultProps = {
   proskomma: undefined,
   stateId: '',
+  cv: false,
 };

@@ -36,7 +36,7 @@ export const parseReferenceString = (reference) => {
   let response = {};
   // 3JN 1:1-2 PSA 119:100 MAT 1-2
   const regex = /(?<bookCode>[\d\w]\w{2}) (?<cv>(?<c>\d+):?(?<v>[\d-]*))/;
-  const { bookCode, cv, c, v } = reference.match(regex).groups;
+  const { bookCode, cv, c, v } = reference.match(regex).groups || {};
   response.bookCode = bookCode;
 
   if (cv.includes(':') && !!v) {

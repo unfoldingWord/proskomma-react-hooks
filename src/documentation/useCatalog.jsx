@@ -10,9 +10,12 @@ useCatalog.propTypes = {
   proskomma: PropTypes.object,
   /** Change Index to synchronize Proskomma updates/imports */
   stateId: PropTypes.string,
+  /** Include chapter and verse details */
+  cv: PropTypes.bool,
 };
 
 useCatalog.defaultProps = {
   proskomma: undefined,
   stateId: '',
+  cv: false,
 };
