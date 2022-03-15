@@ -31,66 +31,42 @@ function Component () {
   const _documents = startImport ? documents : [];
   const _docSetId = startSerialize ? 'unfoldingWord/lat_lor' : undefined;
 
-  const {
-    stateId,
-    newStateId,
-    proskomma,
-    errors: proskommaErrors,
-  } = useProskomma({
-    verbose,
-  });
-  const {
-    errors: importErrors,
-  } = useImport({
-    proskomma,
-    stateId,
-    newStateId,
+  const proskommaHook = useProskomma({ verbose });
+
+  const importHook = useImport({
+    ...proskommaHook,
     documents: _documents,
     verbose,
   });
 
-  const {
-    stateId: catalogStateId,
-    catalog,
-    errors: catalogErrors, 
-  } = useCatalog({
-    proskomma,
-    stateId,
+  const { data, ...catalogHook } = useCatalog({
+    ...proskommaHook,
+    cv: true,
     verbose,
   });
 
-  const {
-    stateId: serializeStateId,
-    errors: serializeErrors,
-    succinctDocSet,
-  } = useSuccinctDocSetSerialize({
-    proskomma,
-    stateId,
+  const succinctDocSetSerializeHook = useSuccinctDocSetSerialize({
+    ...proskommaHook,
     docSetId: _docSetId,
     verbose,
   });
 
-  const json = {
-    stateId,
-    serializeStateId,
-    serializeErrors,
-    succinctDocSet,
-    catalogStateId,
-    catalog,
-    proskommaErrors,
-    catalogErrors,
-    // documents,
-  };
-
   return (
     <>
-      <ReactJson
-        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
-        src={json}
-        theme="monokai"
-      />
       <button style={{margin: '1em'}} onClick={() => {setStartImport(true);}}>Import</button>
       <button style={{margin: '1em'}} onClick={() => {setStartSerialize(true);}}>Serialize</button>
+      <h3>catalogHook</h3>
+      <ReactJson
+        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
+        src={catalogHook}
+        theme="monokai"
+      />
+      <h3>succinctDocSetSerializeHook</h3>
+      <ReactJson
+        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
+        src={succinctDocSetSerializeHook}
+        theme="monokai"
+      />
     </>
   );
 };

@@ -35,43 +35,22 @@ function Component () {
   const _documents = startImport ? documents : [];
   const _bookCode = startSearch ? bookCode : '';
 
-  const {
-    stateId,
-    newStateId,
-    proskomma,
-    errors: proskommaErrors,
-  } = useProskomma({
-    verbose,
-  });
-  const {
-    errors: importErrors,
-  } = useImport({
-    proskomma,
-    stateId,
-    newStateId,
+  const proskommaHook = useProskomma({ verbose });
+
+  const importHook = useImport({
+    ...proskommaHook,
     documents: _documents,
     verbose,
   });
 
-  const {
-    stateId: catalogStateId,
-    catalog,
-    errors: catalogErrors, 
-  } = useCatalog({
-    proskomma,
-    stateId,
+  const { data, ...catalogHook } = useCatalog({
+    ...proskommaHook,
+    cv: true,
     verbose,
   });
 
-  const {
-    stateId: searchStateId,
-    query,
-    passages,
-    errors: searchErrors, 
-    data,
-  } = useSearchForPassagesByBookCode({
-    proskomma,
-    stateId,
+  const searchForPassagesByBookCodeHook = useSearchForPassagesByBookCode({
+    ...proskommaHook,
     text: searchText,
     docSetId,
     bookCode: _bookCode,
@@ -80,29 +59,23 @@ function Component () {
     verbose,
   });
 
-  const json = {
-    stateId,
-    searchStateId,
-    searchText,
-    passages,
-    catalog,
-    query,
-    searchErrors,
-    proskommaErrors,
-    // documents,
-    data,
-  };
-
   return (
     <>
-      <ReactJson
-        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
-        src={json}
-        theme="monokai"
-      />
       <input onBlur={(e) => { setSearchText(e.target.value); }} defaultValue={searchText} />
       <button style={{margin: '1em'}} onClick={() => {setStartImport(true);}}>Import</button>
       <button style={{margin: '1em'}} onClick={() => {setStartSearch(true);}}>Search</button>
+      <h3>catalogHook</h3>
+      <ReactJson
+        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
+        src={catalogHook}
+        theme="monokai"
+      />
+      <h3>searchForPassagesByBookCodeHook</h3>
+      <ReactJson
+        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
+        src={searchForPassagesByBookCodeHook}
+        theme="monokai"
+      />
     </>
   );
 };

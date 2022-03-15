@@ -15,13 +15,13 @@ const document = ({bookCode, bookName, ...props}) => ({
 });
 
 const documents = [
-  document({ bookCode: 'mat', bookName: 'Matthew', chapterCount: 1, verseMax: 1 }),
-  document({ bookCode: 'mrk', bookName: 'Mark', chapterCount: 1, verseMax: 1 }),
-  document({ bookCode: 'luk', bookName: 'Luke', chapterCount: 1, verseMax: 1 }),
-  document({ bookCode: 'jhn', bookName: 'John', chapterCount: 1, verseMax: 1 }),
-  document({ bookCode: '1jn', bookName: '1 Jean', chapterCount: 1, verseMax: 1 }),
-  document({ bookCode: '2jn', bookName: '2 Jean', chapterCount: 1, verseMax: 1 }),
-  document({ bookCode: '3jn', bookName: '3 Jean', chapterCount: 1, verseMax: 1 }),
+  document({ bookCode: 'mat', bookName: 'Matthew', chapterCount: 1 }),
+  document({ bookCode: 'mrk', bookName: 'Mark', chapterCount: 1 }),
+  document({ bookCode: 'luk', bookName: 'Luke', chapterCount: 1 }),
+  document({ bookCode: 'jhn', bookName: 'John', chapterCount: 1 }),
+  document({ bookCode: '1jn', bookName: '1 Jean', chapterCount: 1 }),
+  document({ bookCode: '2jn', bookName: '2 Jean', chapterCount: 1 }),
+  document({ bookCode: '3jn', bookName: '3 Jean', chapterCount: 1 }),
 ];
 
 const verbose = false;
@@ -34,100 +34,72 @@ function Component () {
   const _documents = startImport ? documents : [];
   const _docSetId = startSerialize ? 'unfoldingWord/lat_lor' : undefined;
 
-  const {
-    stateId,
-    newStateId,
-    proskomma,
-    errors: proskommaErrors,
-  } = useProskomma({
-    verbose,
-  });
+  const proskommaHook = useProskomma({ verbose });
 
-  const {
-    errors: importErrors,
-  } = useImport({
-    proskomma,
-    stateId,
-    newStateId,
+  const importHook = useImport({
+    ...proskommaHook,
     documents: _documents,
     verbose,
   });
 
-  const {
-    stateId: catalogStateId,
-    catalog,
-    errors: catalogErrors, 
-  } = useCatalog({
-    proskomma,
-    stateId,
+  const { data, ...catalogHook } = useCatalog({
+    ...proskommaHook,
+    cv: true,
     verbose,
   });
 
-  const {
-    stateId: serializeStateId,
-    errors: serializeErrors,
-    succinctDocSet,
-  } = useSuccinctDocSetSerialize({
-    proskomma,
-    stateId,
+  const succinctDocSetSerializeHook = useSuccinctDocSetSerialize({
+    ...proskommaHook,
     docSetId: _docSetId,
     verbose,
   });
 
-  const {
-    stateId: stateId2,
-    newStateId: newStateId2,
-    proskomma: proskomma2,
-    errors: proskommaErrors2,
-  } = useProskomma({
+  const proskomma2Hook = useProskomma({
     verbose,
   });
 
-  const {
-    stateId: catalogStateId2,
-    catalog: catalog2,
-    errors: catalogErrors2, 
-  } = useCatalog({
-    proskomma: proskomma2,
-    stateId: stateId2,
+  const { data: data2, ...catalog2Hook } = useCatalog({
+    ...proskomma2Hook,
     verbose,
   });
 
-  const _succinctDocSet = startLoad ? succinctDocSet : undefined;
+  const _succinctDocSet = startLoad ? succinctDocSetSerializeHook.succinctDocSet : undefined;
 
-  const {
-    errors: loadErrors,
-  } = useSuccinctDocSetLoad({
-    proskomma: proskomma2,
-    stateId: stateId2,
-    newStateId: newStateId2,
+  const succinctDocSetLoadHook = useSuccinctDocSetLoad({
+    ...proskomma2Hook,
     succinctDocSet: _succinctDocSet,
     verbose,
   });
 
-  const json = {
-    stateId,
-    succinctDocSet,
-    catalogStateId,
-    catalog,
-    serializeStateId,
-    serializeErrors,
-    stateId2,
-    catalogStateId2,
-    catalog2,
-    loadErrors,
-  };
-
   return (
     <>
-      <ReactJson
-        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
-        src={json}
-        theme="monokai"
-      />
       <button style={{margin: '1em'}} onClick={() => {setStartImport(true);}}>Import</button>
       <button style={{margin: '1em'}} onClick={() => {setStartSerialize(true);}}>Serialize</button>
       <button style={{margin: '1em'}} onClick={() => {setStartLoad(true);}}>Load</button>
+      <h3>catalogHook</h3>
+      <ReactJson
+        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
+        src={catalogHook}
+        theme="monokai"
+      />
+      <h3>succinctDocSetSerializeHook</h3>
+      <ReactJson
+        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
+        src={succinctDocSetSerializeHook}
+        theme="monokai"
+      />
+      <h3>catalog2Hook</h3>
+      <ReactJson
+        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
+        src={catalog2Hook}
+        theme="monokai"
+      />
+      <h3>succinctDocSetLoadHook</h3>
+      <ReactJson
+        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
+        src={succinctDocSetLoadHook}
+        theme="monokai"
+      />
     </>
   );
 };

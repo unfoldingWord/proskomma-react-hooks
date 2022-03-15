@@ -28,3 +28,38 @@ export const catalogQuery = ({ cv }) => `{
     }
   }
 }`;
+
+export const parseChapterVerseMapInDocSets = ({ docSets: _docSets }) => {
+  let docSets = (_docSets?.length > 0) ? JSON.parse(JSON.stringify(_docSets)) : [];
+
+  docSets?.forEach((docSet) => {
+    if (docSet?.selectors?.forEach) {
+      const selectors = {};
+
+      docSet.selectors.forEach(({ key, value }) => {
+        selectors[key] = value;
+      });
+      docSet.selectors = selectors;
+    };
+
+    docSet.documents.forEach((document) => {
+      if (document?.cvNumbers) {
+        let chapterVerseMap = new Map();
+
+        document?.cvNumbers?.forEach(({ chapter, verses }) => {
+          let verseMap = new Map();
+
+          verses.forEach(({ number, range }) => {
+            verseMap.set(number, range);
+          });
+          chapterVerseMap.set(chapter, verseMap);
+        });
+
+        delete document.cvNumbers;
+        document.chapterVerseMap = chapterVerseMap;
+      };
+    });
+  });
+
+  return docSets;
+};

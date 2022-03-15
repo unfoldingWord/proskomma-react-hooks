@@ -32,71 +32,41 @@ function Component () {
   const _documents = startImport ? documents : [];
   const _reference = startQuery ? reference : '';
 
-  const {
-    stateId,
-    newStateId,
-    proskomma,
-    errors: proskommaErrors,
-  } = useProskomma({
-    verbose,
-  });
+  const proskommaHook = useProskomma({ verbose });
 
-  const {
-    errors: importErrors,
-  } = useImport({
-    proskomma,
-    stateId,
-    newStateId,
+  const importHook = useImport({
+    ...proskommaHook,
     documents: _documents,
     verbose,
   });
 
-  const {
-    stateId: catalogStateId,
-    catalog,
-    errors: catalogErrors, 
-  } = useCatalog({
-    proskomma,
-    stateId,
+  const { data, ...catalogHook } = useCatalog({
+    ...proskommaHook,
     verbose,
   });
 
-  const {
-    stateId: passageStateId,
-    query,
-    passages,
-    data,
-    errors: passageErrors, 
-    reference: passageReference,
-  } = usePassage({
-    proskomma,
-    stateId,
+  const passageHook = usePassage({
+    ...proskommaHook,
     reference: _reference,
     verbose,
   });
 
-  const json = {
-    stateId,
-    passageStateId,
-    passageReference,
-    passages,
-    catalog,
-    // documents,
-    query,
-    errors: [ ...proskommaErrors, ...passageErrors ],
-    data,
-  };
-
-
   return (
     <>
-      <ReactJson
-        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
-        src={json}
-        theme="monokai"
-      />
       <button style={{margin: '1em'}} onClick={() => {setStartImport(true);}}>Import</button>
       <button style={{margin: '1em'}} onClick={() => {setStartQuery(true);}}>Query</button>
+      <h3>catalogHook</h3>
+      <ReactJson
+        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
+        src={catalogHook}
+        theme="monokai"
+      />
+      <h3>passageHook</h3>
+      <ReactJson
+        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
+        src={passageHook}
+        theme="monokai"
+      />
     </>
   );
 };

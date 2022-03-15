@@ -28,49 +28,28 @@ function Component () {
   const [startImport, setStartImport] = useState(false);
   const _documents = startImport ? documents : [];
 
-  const {
-    stateId,
-    newStateId,
-    proskomma,
-    errors: proskommaErrors,
-  } = useProskomma({
+  const proskommaHook = useProskomma({
     verbose,
   });
-  const {
-    errors: importErrors,
-  } = useImport({
-    proskomma,
-    stateId,
-    newStateId,
+  
+  const importHook = useImport({
+    ...proskommaHook,
     documents: _documents,
     verbose,
   });
 
-  const {
-    stateId: catalogStateId,
-    catalog,
-    errors: catalogErrors, 
-  } = useCatalog({
-    proskomma,
-    stateId,
+  const catalogHook = useCatalog({
+    ...proskommaHook,
     cv: true,
     verbose,
   });
 
-  const json = {
-    stateId,
-    catalogStateId,
-    catalog,
-    proskommaErrors,
-    catalogErrors,
-    // documents,
-  };
-
   return (
     <>
+      <h3>catalogHook</h3>
       <ReactJson
         style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
-        src={json}
+        src={catalogHook}
         theme="monokai"
       />
       <button style={{margin: '1em'}} onClick={() => {setStartImport(true);}}>Import</button>

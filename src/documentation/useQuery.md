@@ -19,7 +19,7 @@ const documents = [
   document({ bookCode: 'jhn', bookName: 'John', chapterCount: 21 }),
   document({ bookCode: '1jn', bookName: '1 Jean', chapterCount: 5 }),
   document({ bookCode: '2jn', bookName: '2 Jean', chapterCount: 1, verseMax: 1 }),
-  document({ bookCode: '3jn', bookName: '3 Jean', chapterCount: 1, verseMin: 10 }),
+  document({ bookCode: '3jn', bookName: '3 Jean', chapterCount: 1, verseMin: 10, rangeChance: 0 }),
 ];
 
 const verbose = false;
@@ -39,62 +39,42 @@ function Component () {
   const _documents = startImport ? documents : [];
   const _query = startQuery ? query : '';
 
-  const {
-    stateId,
-    newStateId,
-    proskomma,
-    errors: proskommaErrors,
-  } = useProskomma({
-    verbose,
-  });
+  const proskommaHook = useProskomma({ verbose });
 
-  const {
-    errors: importErrors,
-  } = useImport({
-    proskomma,
-    stateId,
-    newStateId,
+  const importHook = useImport({
+    ...proskommaHook,
     documents: _documents,
     verbose,
   });
 
-  const {
-    stateId: catalogStateId,
-    catalog,
-    errors: catalogErrors, 
-  } = useCatalog({
-    proskomma,
-    stateId,
+  const { data, ...catalogHook } = useCatalog({
+    ...proskommaHook,
+    cv: true,
     verbose,
   });
 
-  const {
-    stateId: queryStateId, query: queryRun, data, errors: queryErrors, 
-  } = useQuery({
-    proskomma,
-    stateId,
+  const queryHook = useQuery({
+    ...proskommaHook,
     query: _query,
     verbose,
   });
 
-  const json = {
-    queryStateId,
-    // documents,
-    data,
-    catalog,
-    query: queryRun,
-    errors: [ ...proskommaErrors, ...queryErrors ],
-  };
-
   return (
     <>
-      <ReactJson
-        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
-        src={json}
-        theme="monokai"
-      />
       <button style={{margin: '1em'}} onClick={() => {setStartImport(true);}}>Import</button>
       <button style={{margin: '1em'}} onClick={() => {setStartQuery(true);}}>Query</button>
+      <h3>catalogHook</h3>
+      <ReactJson
+        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
+        src={catalogHook}
+        theme="monokai"
+      />
+      <h3>queryHook</h3>
+      <ReactJson
+        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
+        src={queryHook}
+        theme="monokai"
+      />
     </>
   );
 };

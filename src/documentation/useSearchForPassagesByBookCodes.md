@@ -39,44 +39,22 @@ function Component() {
   const _documents = startImport ? documents : [];
   const _bookCodes = startSearch ? bookCodes : [];
 
-  const {
-    stateId,
-    newStateId,
-    proskomma,
-    errors: proskommaErrors
-  } = useProskomma({
-    verbose
-  });
+  const proskommaHook = useProskomma({ verbose });
 
-  const { errors: importErrors } = useImport({
-    proskomma,
-    stateId,
-    newStateId,
+  const importHook = useImport({
+    ...proskommaHook,
     documents: _documents,
-    verbose
+    verbose,
   });
 
-  const {
-    stateId: catalogStateId,
-    catalog,
-    errors: catalogErrors
-  } = useCatalog({
-    proskomma,
-    stateId,
-    verbose
+  const { data, ...catalogHook } = useCatalog({
+    ...proskommaHook,
+    cv: true,
+    verbose,
   });
 
-  const {
-    stateId: searchStateId,
-    query,
-    passages,
-    passagesBookCodes,
-    nextBookCode,
-    errors: searchErrors,
-    dataArray
-  } = useSearchForPassagesByBookCodes({
-    proskomma,
-    stateId,
+  const searchForPassagesByBookCodesHook = useSearchForPassagesByBookCodes({
+    ...proskommaHook,
     text: searchText,
     docSetId,
     bookCodes: _bookCodes,
@@ -85,50 +63,24 @@ function Component() {
     verbose
   });
 
-  const json = {
-    stateId,
-    searchStateId,
-    searchText,
-    passagesBookCodes,
-    nextBookCode,
-    passages,
-    catalog,
-    query,
-    proskommaErrors,
-    searchErrors,
-    // documents,
-    dataArray
-  };
-
   return (
     <>
+      <input onBlur={(e) => {setSearchText(e.target.value);}} defaultValue={searchText} />
+      <button style={{ margin: "1em" }} onClick={()=>{setStartImport(true);}}>Import</button>
+      <button style={{ margin: "1em" }} onClick={()=>{setStartSearch(true);}}
+      >Search</button>
+      <h3>catalogHook</h3>
       <ReactJson
-        style={{ maxHeight: "500px", overflow: "scroll", whiteSpace: "pre" }}
-        src={json}
+        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
+        src={catalogHook}
         theme="monokai"
       />
-      <input
-        onBlur={(e) => {
-          setSearchText(e.target.value);
-        }}
-        defaultValue={searchText}
+      <h3>searchForPassagesByBookCodesHook</h3>
+      <ReactJson
+        style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
+        src={searchForPassagesByBookCodesHook}
+        theme="monokai"
       />
-      <button
-        style={{ margin: "1em" }}
-        onClick={() => {
-          setStartImport(true);
-        }}
-      >
-        Import
-      </button>
-      <button
-        style={{ margin: "1em" }}
-        onClick={() => {
-          setStartSearch(true);
-        }}
-      >
-        Search
-      </button>
     </>
   );
 }

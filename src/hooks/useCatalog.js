@@ -1,17 +1,18 @@
 import PropTypes from 'prop-types';
+import { useDeepCompareMemo } from 'use-deep-compare';
 
-import { catalogQuery } from '../helpers/catalog';
+import { catalogQuery, parseChapterVerseMapInDocSets } from '../helpers/catalog';
 import { useQuery } from '..';
 
 export default function useCatalog({
   proskomma,
   stateId,
-  cv,
+  cv = true,
   verbose,
 }) {
   const {
     stateId: queryStateId,
-    data: catalog,
+    data,
     errors,
   } = useQuery({
     proskomma,
@@ -20,8 +21,14 @@ export default function useCatalog({
     verbose,
   });
 
+  const catalog = useDeepCompareMemo(() => {
+    const docSets = parseChapterVerseMapInDocSets({ docSets: data?.docSets });
+    const _catalog = { ...data, docSets };
+    return _catalog;
+  }, [data]);
+
   return {
-    stateId: queryStateId, catalog, errors,
+    stateId: queryStateId, data, catalog, errors,
   };
 };
 
@@ -37,5 +44,5 @@ useCatalog.propTypes = {
 useCatalog.defaultProps = {
   proskomma: undefined,
   stateId: '',
-  cv: false,
+  cv: true,
 };
