@@ -13,7 +13,7 @@ import { loremIpsumBook } from "lorem-ipsum-usfm";
 
 const document = ({ bookCode, bookName, ...props }) => ({
   selectors: { org: "unfoldingWord", lang: "lat", abbr: "lor" },
-  data: loremIpsumBook({ bookCode, bookName, ...props }),
+  data: loremIpsumBook({ bookCode, bookName, paragraphStartChapter: true, ...props }),
   bookCode
 });
 

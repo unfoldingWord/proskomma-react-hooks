@@ -8,7 +8,7 @@ import { loremIpsumBook } from 'lorem-ipsum-usfm';
 
 const document = ({bookCode, bookName, ...props}) => ({
   selectors: { org: 'unfoldingWord', lang: 'lat', abbr: 'lor' }, 
-  data: loremIpsumBook({ bookCode, bookName, rangeChance: 0, ...props }),
+  data: loremIpsumBook({ bookCode, bookName, paragraphStartChapter: true, rangeChance: 0, ...props }),
   bookCode, 
 });
 
