@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareEffect, useDeepCompareCallback } from 'use-deep-compare';
 
@@ -12,11 +12,13 @@ export default function useImport({
   verbose,
 }) {
   const [errors, setErrors] = useState([]);
+  const [importedCount, setImportedCount] = useState(0);
 
   const onImport = useCallback((props) => {
     newStateId();
 
     if (_onImport) { _onImport(props); };
+    setImportedCount(prev => prev + 1);
   }, [_onImport, newStateId]);
 
   const runImport = useDeepCompareCallback(() => {
@@ -41,7 +43,11 @@ export default function useImport({
     runImport();
   }, [documents]);
 
-  return { errors };
+  const documentsCount = documents.length;
+
+  const importing = useMemo(() => (importedCount < documentsCount), [importedCount, documentsCount]);
+
+  return { errors, importing };
 };
 
 useImport.propTypes = {

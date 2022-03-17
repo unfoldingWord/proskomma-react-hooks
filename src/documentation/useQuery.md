@@ -49,7 +49,7 @@ function Component () {
 
   const { data, ...catalogHook } = useCatalog({
     ...proskommaHook,
-    cv: true,
+    cv: false,
     verbose,
   });
 

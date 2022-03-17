@@ -44,22 +44,23 @@ export const parseChapterVerseMapInDocSets = ({ docSets: _docSets }) => {
 
     docSet.documents.forEach((document) => {
       if (document?.cvNumbers) {
-        let chapterVerseMap = new Map();
+        let chaptersVersesObject = {};
 
         document?.cvNumbers?.forEach(({ chapter, verses }) => {
-          let verseMap = new Map();
+          let versesObject = {};
 
           verses.forEach(({ number, range }) => {
-            verseMap.set(number, range);
+            versesObject[number] = range;
           });
-          chapterVerseMap.set(chapter, verseMap);
+          chaptersVersesObject[chapter] = versesObject;
         });
 
         delete document.cvNumbers;
-        document.chapterVerseMap = chapterVerseMap;
+        document.versesByChapters = chaptersVersesObject;
       };
     });
   });
+
 
   return docSets;
 };
