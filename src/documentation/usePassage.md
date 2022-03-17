@@ -13,13 +13,13 @@ const document = ({bookCode, bookName, ...props}) => ({
 });
 
 const documents = [
-  document({ bookCode: 'mat', bookName: 'Matthew', chapterCount: 1, verseMax: 1 }),
-  document({ bookCode: 'mrk', bookName: 'Mark', chapterCount: 1, verseMax: 1 }),
-  document({ bookCode: 'luk', bookName: 'Luke', chapterCount: 1, verseMax: 1 }),
-  document({ bookCode: 'jhn', bookName: 'John', chapterCount: 1, verseMax: 1 }),
-  document({ bookCode: '1jn', bookName: '1 Jean', chapterCount: 1, verseMax: 1 }),
-  document({ bookCode: '2jn', bookName: '2 Jean', chapterCount: 1, verseMax: 1 }),
-  document({ bookCode: '3jn', bookName: '3 Jean', chapterCount: 1, verseMin: 10 }),
+  document({ bookCode: 'mat', bookName: 'Matthew', chapterCount: 28 }),
+  document({ bookCode: 'mrk', bookName: 'Mark', chapterCount: 16 }),
+  document({ bookCode: 'luk', bookName: 'Luke', chapterCount: 24 }),
+  document({ bookCode: 'jhn', bookName: 'John', chapterCount: 21 }),
+  document({ bookCode: '1jn', bookName: '1 Jean', chapterCount: 5 }),
+  document({ bookCode: '2jn', bookName: '2 Jean', chapterCount: 1 }),
+  document({ bookCode: '3jn', bookName: '3 Jean', chapterCount: 1 }),
 ];
 
 const verbose = false;
@@ -60,6 +60,7 @@ function Component () {
         style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
         src={catalogHook}
         theme="monokai"
+        collapsed='5'
       />
       <h3>passageHook</h3>
       <ReactJson
