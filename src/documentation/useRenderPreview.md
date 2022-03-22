@@ -7,10 +7,11 @@ import ReactJson from 'react-json-view';
 import { loremIpsumBook } from 'lorem-ipsum-usfm';
 import { useDeepCompareMemo } from 'use-deep-compare';
 
-const document = ({bookCode, bookName, ...props}) => ({
-  selectors: { org: 'unfoldingWord', lang: 'lat', abbr: 'lor' }, 
+const document = ({bookCode, bookName, testament, ...props}) => ({
+  selectors: { org: 'unfoldingWord', lang: 'lat', abbr: 'lor' },
   data: loremIpsumBook({ bookCode, bookName, paragraphStartChapter: true, ...props }),
-  bookCode, 
+  bookCode,
+  testament,
 });
 
 const documents = [
@@ -51,7 +52,7 @@ function Component () {
   
   const importHook = useImport({
     ...proskommaHook,
-    documents: _documents,
+    documents: documents,
     ready: startImport,
     verbose,
   });
@@ -63,14 +64,14 @@ function Component () {
   });
 
   const i18n = {
-    notes: "Notes",
-    tocBooks: "Books of the Bible",
+    // coverAlt: "Cover",
     titlePage: "unfoldingWord Literal Translation: Psalms and Gospels",
     copyright: "Licensed under a Creative Commons Attribution-Sharealike 4.0 International License",
-    coverAlt: "Cover",
-    preface: "Preface",
+    // preface: "Preface",
+    tocBooks: "Books of the Bible",
     ot: "Old Testament",
     nt: "New Testament"
+    // notes: "Notes",
   };
 
   const {
@@ -79,11 +80,11 @@ function Component () {
     progress, // dummy 0...50...100
     errors, // caught and floated up
   } = useRenderPreview({
-    ...prokommaHook,
-    docSet, // docset provides language and docSetId to potentially query, and build structure
-    title,
-    direction,
-    structure, // generate structure from docSet
+    ...proskommaHook,
+    docSet: catalogHook.catalog.docSets[0], // docset provides language and docSetId to potentially query, and build structure
+    title: i18n.titlePage, // isn't this already in the i18n? Do we need to pass it again?
+    dir: 'ltr',
+    structure, // eventually generate structure from catalog
     i18n,
     ready: startRender, // bool to allow render to run, don't run until true and all content is present
     // pagedJS, // is this a link or a local file?
