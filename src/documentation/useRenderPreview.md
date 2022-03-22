@@ -74,7 +74,7 @@ function Component () {
   };
 
   const {
-    html, // dummy output
+    html, // dummy output (currently <html><head>...</head><body>...</body></html>)
     rendering, // dummy timer for simulating false, true, false.
     progress, // dummy 0...50...100
     errors, // caught and floated up
@@ -86,19 +86,26 @@ function Component () {
     structure, // generate structure from docSet
     i18n,
     ready: startRender, // bool to allow render to run, don't run until true and all content is present
+    // pagedJS, // is this a link or a local file?
+    // css, // 
+    // htmlFragment, // show full html or what's in the body
     verbose,
   });
 
   return (
     <>
-      <button style={{margin: '1em'}} onClick={() => {setStartImport(true);}}>Import</button>
-      <button style={{margin: '1em'}} onClick={() => {setStartRender(true);}}>Render</button>
+      <button style={{ margin: '1em' }} onClick={() => { setStartImport(true); }}>Import</button>
+      <button style={{ margin: '1em' }} onClick={() => { setStartRender(true); }}>Render</button>
       <h3>catalogHook</h3>
       <ReactJson
         style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
         src={catalogHook}
         theme='monokai'
         collapsed='5'
+      />
+      <div
+        style={{ border: '1px solid black', maxHeight: '250px' }}
+        dangerouslySetInnerHTML={{ __html: html }}
       />
     </>
   );
