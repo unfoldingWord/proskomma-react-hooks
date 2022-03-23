@@ -88,7 +88,7 @@ function Component () {
     dir: 'ltr',
     structure, // eventually generate structure from catalog
     i18n,
-    ready: startRender, // bool to allow render to run, don't run until true and all content is present
+    ready: startRender && catalogHook && catalogHook.catalog, // bool to allow render to run, don't run until true and all content is present
     // pagedJS, // is this a link or a local file?
     // css, // 
     // htmlFragment, // show full html or what's in the body
@@ -108,8 +108,9 @@ function Component () {
       />
       <div
         style={{ border: '1px solid black', maxHeight: '250px' }}
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
+        >
+        {html}
+      </div>
     </>
   );
 };
