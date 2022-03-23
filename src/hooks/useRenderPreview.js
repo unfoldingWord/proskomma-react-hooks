@@ -38,7 +38,7 @@ export async function renderUsfmToHTML(pk, htmlTitle, language, direction, struc
   const _structure = testamentIds.map((testamentId) => {
     const testament = structure[testamentId];
     const _testament = testament.map((bookId) => (
-      ['bookCode', bookId]
+      ['bookCode', bookId.toUpperCase()]
     ))
     return ['section', testamentId, _testament]
   }
@@ -56,7 +56,7 @@ export async function renderUsfmToHTML(pk, htmlTitle, language, direction, struc
   config.bookOutput = {};
 
   const config2 = await doRender(pk, config, docSetIds);
-  return config2.output;
+  return config2;
 }
 
 export default function useRenderPreview({
@@ -80,6 +80,7 @@ export default function useRenderPreview({
         setHtml(results.output)
       } catch (e) {
         setErrors(e)
+        console.error('Proskomma Error', e);
       }
       setProgress(100)
       setRendering(false)
