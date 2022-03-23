@@ -108,9 +108,8 @@ function Component () {
       />
       <div
         style={{ border: '1px solid black', maxHeight: '250px' }}
-        >
-        {html}
-      </div>
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
     </>
   );
 };
