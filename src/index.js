@@ -1,6 +1,7 @@
 import useProskomma from './hooks/useProskomma';
 import useImport from './hooks/useImport';
 import useQuery from './hooks/useQuery';
+import useRenderPreview from './hooks/useRenderPreview';
 import useSuccinctDocSetSerialize from './hooks/useSuccinctDocSetSerialize';
 import useSuccinctDocSetLoad from './hooks/useSuccinctDocSetLoad';
 // import useSearch from './hooks/useSearch';
@@ -25,6 +26,7 @@ export {
   useImport,
   useCatalog,
   useQuery,
+  useRenderPreview,
   useSuccinctDocSetSerialize,
   useSuccinctDocSetLoad,
   // useSearch,
