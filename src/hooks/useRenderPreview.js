@@ -34,13 +34,22 @@ const SINGLE_BOOK_CONFIG = {
 
 export async function renderUsfmToHTML(pk, htmlTitle, language, direction, structure, i18n, docSetId) {
   const docSetIds = [docSetId]
+  const testamentIds = Object.keys(structure)
+  const _structure = testamentIds.map((testamentId) => {
+    const testament = structure[testamentId];
+    const _testament = testament.map((bookId) => (
+      ['bookCode', bookId]
+    ))
+    return ['section', testamentId, _testament]
+  }
+  )
 
   const config = {
     ...SINGLE_BOOK_CONFIG,
     title: htmlTitle,
     language,
     textDirection: direction,
-    structure,
+    structure: _structure,
     i18n,
   };
 
