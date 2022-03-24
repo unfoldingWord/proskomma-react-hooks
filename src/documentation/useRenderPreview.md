@@ -75,7 +75,7 @@ function Component () {
     ...proskommaHook,
     docSetId, // docset provides language and docSetId to potentially query, and build structure
     language: 'lat',
-    dir: 'ltr',
+    textDirection: 'ltr',
     structure, // eventually generate structure from catalog
     i18n,
     ready: startRender, // bool to allow render to run, don't run until true and all content is present

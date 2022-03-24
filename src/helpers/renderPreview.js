@@ -29,7 +29,7 @@ export const SINGLE_BOOK_CONFIG = {
   }
 };
 
-export async function renderHTML({ proskomma, htmlTitle, language, direction, structure, i18n, docSetId, onProgress, }) {
+export async function renderHTML({ proskomma, language, textDirection, structure, i18n, docSetId, onProgress }) {
   let response = {};
 
   onProgress(1);
@@ -48,9 +48,9 @@ export async function renderHTML({ proskomma, htmlTitle, language, direction, st
 
   const config = {
     ...SINGLE_BOOK_CONFIG,
-    title: htmlTitle,
+    title: i18n.title,
     language,
-    textDirection: direction,
+    textDirection,
     structure: _structure,
     i18n,
     bookOutput: {}, //?

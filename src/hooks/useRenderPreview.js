@@ -8,7 +8,7 @@ export default function useRenderPreview({
   stateId,
   docSetId,
   language,
-  dir,
+  textDirection,
   structure,
   i18n,
   ready,
@@ -35,7 +35,7 @@ export default function useRenderPreview({
         stateId,
         docSetId,
         language,
-        dir,
+        textDirection,
         structure,
         i18n,
         onProgress: setProgress,
@@ -51,7 +51,7 @@ export default function useRenderPreview({
     };
 
     setState({ html, errors, stateId, running: false });
-  }, [state.running, stateId, docSetId, i18n, structure, language, dir]); // don't use proskomma here, it's too big, stateId is what will change
+  }, [state.running, stateId, docSetId, i18n, structure, language, textDirection]); // don't use proskomma here, it's too big, stateId is what will change
 
   useDeepCompareEffect(() => {
     const hasDependencies = (!!proskomma && !!stateId && !!i18n, !!structure, !!language);
