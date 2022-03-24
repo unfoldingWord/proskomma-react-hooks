@@ -43,18 +43,18 @@ export default function useRenderPreview({
 
       html = results.output;
 
-      if (verbose) { console.log('useRenderPreview.renderUsfmToHTML', results); };
+      if (verbose) { console.log('useRenderPreview.run', results); };
     } catch (e) {
       errors = [e];
 
-      if (verbose) { console.error('Proskomma Render Error', e); };
+      if (verbose) { console.error('useRenderPreview.run: Proskomma Render Error', e); };
     };
 
     setState({ html, errors, stateId, running: false });
   }, [state.running, stateId, docSetId, i18n, structure, language, textDirection]); // don't use proskomma here, it's too big, stateId is what will change
 
   useDeepCompareEffect(() => {
-    const hasDependencies = (!!proskomma && !!stateId && !!i18n, !!structure, !!language);
+    const hasDependencies = (!!proskomma && !!stateId && !!i18n && !!i18n.title && !!structure && !!language);
 
     const stateId_ = (stateId !== state.stateId);
     const propsChanged = (stateId_);
