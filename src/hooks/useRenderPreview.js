@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDeepCompareCallback, useDeepCompareEffect } from 'use-deep-compare';
 import PropTypes from 'prop-types';
-import { renderUsfmToHTML } from '../helpers/renderPreview';
+import { renderHTML } from '../helpers/renderPreview';
 
 export default function useRenderPreview({
   proskomma,
@@ -30,7 +30,7 @@ export default function useRenderPreview({
     let errors = [];
 
     try {
-      const results = await renderUsfmToHTML({
+      const results = await renderHTML({
         proskomma,
         stateId,
         docSetId,

@@ -87,8 +87,19 @@ function Component () {
 
   useEffect(() => {
     if (html) {
-      const wnd = window.open("about:blank", "", "_blank");
-      wnd.document.write(html);
+      const newPage = window.open('','','_window');
+      newPage.document.head.innerHTML = "<title>PDF Preview</title>";
+      const script = newPage.document.createElement('script');
+      script.src = 'https://unpkg.com/pagedjs/dist/paged.polyfill.js';
+      newPage.document.head.appendChild(script);
+      const style = newPage.document.createElement('style');
+      // body { background: light-grey; }
+      // .pagedjs_right_page { float: right; }
+      // .pagedjs_left_page { float: left; }
+      // .pagedjs_page { background: white; }
+      style.innerHTML = html.replace(/^[\s\S]*<style>/, "").replace(/<\/style>[\s\S]*/, "");
+      newPage.document.head.appendChild(style);
+      newPage.document.body.innerHTML = html.replace(/^[\s\S]*<body>/, "").replace(/<\/body>[\s\S]*/, "");
     };
   }, [html]);
 

@@ -29,8 +29,10 @@ export const SINGLE_BOOK_CONFIG = {
   }
 };
 
-export async function renderUsfmToHTML({ proskomma, htmlTitle, language, direction, structure, i18n, docSetId }) {
+export async function renderHTML({ proskomma, htmlTitle, language, direction, structure, i18n, docSetId, onProgress, }) {
   let response = {};
+
+  onProgress(1);
 
   const docSetIds = [docSetId]
   const testamentIds = Object.keys(structure);
@@ -51,11 +53,12 @@ export async function renderUsfmToHTML({ proskomma, htmlTitle, language, directi
     textDirection: direction,
     structure: _structure,
     i18n,
+    bookOutput: {}, //?
   };
 
-  config.bookOutput = {};
-
   response = await doRender(proskomma, config, docSetIds);
+
+  onProgress(100);
 
   return response;
 }
