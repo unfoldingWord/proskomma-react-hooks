@@ -85,6 +85,7 @@ function Component () {
     verbose,
   });
 
+  //TODO: extract to another hook library
   useEffect(() => {
     if (html) {
       const newPage = window.open('','','_window');
