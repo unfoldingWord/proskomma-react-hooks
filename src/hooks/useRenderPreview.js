@@ -1,104 +1,82 @@
 import { useState } from 'react';
-import { useDeepCompareEffect } from 'use-deep-compare';
+import { useDeepCompareCallback, useDeepCompareEffect } from 'use-deep-compare';
 import PropTypes from 'prop-types';
-import { doRender } from "proskomma-render-pdf";
-
-const SINGLE_BOOK_CONFIG = {
-  "title": "unfoldingWord Literal Translation",
-  "language": "en",
-  "textDirection": "ltr",
-  "uid": "ULT",
-  "structure": [
-    [
-      "section",
-      "nt",
-      [
-        [
-          "bookCode",
-          "%bookID%"
-        ]
-      ]
-    ]
-  ],
-  "i18n": {
-    "notes": "Notes",
-    "tocBooks": "Books of the Bible",
-    "titlePage": "unfoldingWord Literal Translation: Psalms and Gospels",
-    "copyright": "Licensed under a Creative Commons Attribution-Sharealike 4.0 International License",
-    "coverAlt": "Cover",
-    "preface": "Preface",
-    "ot": "Old Testament",
-    "nt": "New Testament"
-  }
-};
-
-export async function renderUsfmToHTML(pk, htmlTitle, language, direction, structure, i18n, docSetId) {
-  const docSetIds = [docSetId]
-  const testamentIds = Object.keys(structure)
-  const _structure = testamentIds.map((testamentId) => {
-    const testament = structure[testamentId];
-    const _testament = testament.map((bookId) => (
-      ['bookCode', bookId.toUpperCase()]
-    ))
-    return ['section', testamentId, _testament]
-  }
-  )
-
-  const config = {
-    ...SINGLE_BOOK_CONFIG,
-    title: htmlTitle,
-    language,
-    textDirection: direction,
-    structure: _structure,
-    i18n,
-  };
-
-  config.bookOutput = {};
-
-  const config2 = await doRender(pk, config, docSetIds);
-  return config2;
-}
+import { renderUsfmToHTML } from '../helpers/renderPreview';
 
 export default function useRenderPreview({
-  proskomma, docSet, title, dir, structure, i18n, ready, language
+  proskomma,
+  stateId,
+  docSetId,
+  language,
+  dir,
+  structure,
+  i18n,
+  ready,
+  verbose,
 }) {
-  const [html, setHtml] = useState();
-  const [rendering, setRendering] = useState(false);
-  const [errors, setErrors] = useState(null);
+  const initialState = {
+    html: undefined,
+    running: false,
+    errors: [],
+    stateId: undefined,
+  };
+  const [state, setState] = useState(initialState);
   const [progress, setProgress] = useState(0);
-  const docSetId = docSet?.id;      //TODO: verify the docSet.id
-  const pk = proskomma;
 
-  useDeepCompareEffect(async () => {
-    if (ready && docSetId && pk) {
-      setProgress(0)
-      setErrors(null)
-      setRendering(true)
+  // const reset = useCallback(() => setState(initialState), []);
 
-      try {
-        const results = await renderUsfmToHTML(pk, title, language, dir, structure, i18n, docSetId)
-        setHtml(results.output)
-      } catch (e) {
-        setErrors(e)
-        console.error('Proskomma Error', e);
-      }
-      setProgress(100)
-      setRendering(false)
+  const run = useDeepCompareCallback(async () => {
+    let html;
+    let errors = [];
+
+    try {
+      const results = await renderUsfmToHTML({
+        proskomma,
+        stateId,
+        docSetId,
+        language,
+        dir,
+        structure,
+        i18n,
+        onProgress: setProgress,
+      });
+
+      html = results.output;
+
+      if (verbose) { console.log('useRenderPreview.renderUsfmToHTML', results); };
+    } catch (e) {
+      errors = [e];
+
+      if (verbose) { console.error('Proskomma Render Error', e); };
     };
-  }, [ready, pk, title, language, dir, i18n, docSetId]);
 
+    setState({ html, errors, stateId, running: false });
+  }, [state.running, stateId, docSetId, i18n, structure, language, dir]); // don't use proskomma here, it's too big, stateId is what will change
+
+  useDeepCompareEffect(() => {
+    const hasDependencies = (!!proskomma && !!stateId && !!i18n, !!structure, !!language);
+
+    const stateId_ = (stateId !== state.stateId);
+    const propsChanged = (stateId_);
+
+    const shouldRun = (ready && hasDependencies && propsChanged);
+
+    if (verbose) { console.log('useRenderPreview.shouldRun', { hasDependencies, propsChanged, shouldRun }); }
+
+    if (shouldRun) {
+      setState(prev => ({ ...prev, running: true }));
+      run();
+    };
+  }, [proskomma, stateId, i18n, structure, language, docSetId, ready]);
 
   return {
-    html,
-    rendering,
+    ...state,
     progress,
-    errors,
   };
 };
 
 useRenderPreview.propTypes = {
-  docSet: PropTypes.object,
-  title: PropTypes.string,
+  docSetId: PropTypes.object,
   dir: PropTypes.any,
   structure: PropTypes.object,
   i18n: PropTypes.object,

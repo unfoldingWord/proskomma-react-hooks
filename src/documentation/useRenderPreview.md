@@ -1,7 +1,7 @@
 # useRenderPreview
 
 ```js
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useProskomma, useImport, useCatalog, useRenderPreview } from 'proskomma-react-hooks';
 import ReactJson from 'react-json-view';
 import { loremIpsumBook } from 'lorem-ipsum-usfm';
@@ -24,23 +24,24 @@ const documents = [
 
 const structure = { ot: [], nt: [] };
 
+
+const i18n = {
+  // coverAlt: "Cover",
+  title: "unfoldingWord Literal Translation: Psalms and Gospels",
+  titlePage: "unfoldingWord Literal Translation: Psalms and Gospels",
+  copyright: "Licensed under a Creative Commons Attribution-Sharealike 4.0 International License",
+  // preface: "Preface",
+  tocBooks: "Books of the Bible",
+  ot: "Old Testament",
+  nt: "New Testament"
+  // notes: "Notes",
+};
+
 documents.forEach(({bookCode, testament}) => {
   structure[testament].push(bookCode);
 });
 
-// const structure = {
-//   ot: [
-//     'psa',
-//   ],
-//   nt: [
-//     'mat',
-//     'mrk',
-//     'luk',
-//     'jhn',
-//   ]
-// };
-
-const verbose = false;
+const verbose = true;
 
 function Component () {
   const [startImport, setStartImport] = useState(false);
@@ -63,18 +64,7 @@ function Component () {
     verbose,
   });
 
-  const i18n = {
-    // coverAlt: "Cover",
-    titlePage: "unfoldingWord Literal Translation: Psalms and Gospels",
-    copyright: "Licensed under a Creative Commons Attribution-Sharealike 4.0 International License",
-    // preface: "Preface",
-    tocBooks: "Books of the Bible",
-    ot: "Old Testament",
-    nt: "New Testament"
-    // notes: "Notes",
-  };
-
-
+  const docSetId = 'unfoldingWord/lat_lor';
 
   const {
     html, // dummy output (currently <html><head>...</head><body>...</body></html>)
@@ -83,17 +73,24 @@ function Component () {
     errors, // caught and floated up
   } = useRenderPreview({
     ...proskommaHook,
-    docSet: catalogHook.catalog.docSets[0], // docset provides language and docSetId to potentially query, and build structure
-    title: i18n.titlePage, // isn't this already in the i18n? Do we need to pass it again?
+    docSetId, // docset provides language and docSetId to potentially query, and build structure
+    language: 'lat',
     dir: 'ltr',
     structure, // eventually generate structure from catalog
     i18n,
-    ready: startRender && catalogHook && catalogHook.catalog, // bool to allow render to run, don't run until true and all content is present
+    ready: startRender, // bool to allow render to run, don't run until true and all content is present
     // pagedJS, // is this a link or a local file?
     // css, // 
     // htmlFragment, // show full html or what's in the body
     verbose,
   });
+
+  useEffect(() => {
+    if (html) {
+      const wnd = window.open("about:blank", "", "_blank");
+      wnd.document.write(html);
+    };
+  }, [html]);
 
   return (
     <>
@@ -105,10 +102,6 @@ function Component () {
         src={catalogHook}
         theme='monokai'
         collapsed='5'
-      />
-      <div
-        style={{ border: '1px solid black', maxHeight: '250px' }}
-        dangerouslySetInnerHTML={{ __html: html }}
       />
     </>
   );
