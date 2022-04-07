@@ -46,7 +46,8 @@ export const parseChapterVerseMapInDocSets = ({ docSets: _docSets }) => {
       docSet.tagsKv.forEach(({ key, value }) => {
         tags[key] = value;
       });
-      docSet.tagsKv = tags;
+      delete document.tagsKv;
+      docSet.tags = tags;
     }
 
     docSet.documents.forEach((document) => {
