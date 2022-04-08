@@ -21,19 +21,16 @@ export default function useImport({
     setImportedCount(prev => prev + 1);
   }, [_onImport, newStateId]);
 
-  const runImport = useDeepCompareCallback(() => {
+  const runImport = useDeepCompareCallback(async () => {
     let _errors = [];
 
     if (proskomma) {
-      try {
-        importDocuments({
-          proskomma, documents, onImport, verbose,
-        });
-      } catch (e) {
-        _errors = [e];
-      };
+      const errors = await importDocuments({
+        proskomma, documents, onImport, verbose,
+      });
+      _errors = errors.filter(e => !!e);
     } else {
-      _errors = [`useImport({proskomma, documents, stateId, newStateId}): proskomma not provided`];
+      _errors.push(`useImport({proskomma, documents, stateId, newStateId}): proskomma not provided`);
     };
 
     setErrors(_errors);
@@ -71,8 +68,12 @@ useImport.propTypes = {
       }),
       /**  */
       bookCode: PropTypes.string,
-      /** USFM string for the book */
-      data: PropTypes.string.isRequired,
+      /** data string for the book */
+      data: PropTypes.string,
+      /** URL to download the book */
+      url: PropTypes.string,
+      /** type of file, ie. usfm, usx */
+      filetype: PropTypes.string,
     }),
   ),
   /** console success details */

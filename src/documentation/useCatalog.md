@@ -7,20 +7,39 @@ import ReactJson from 'react-json-view';
 import { loremIpsumBook } from 'lorem-ipsum-usfm';
 import { useDeepCompareMemo } from 'use-deep-compare';
 
-const document = ({bookCode, bookName, ...props}) => ({
+const ipsumDocument = ({bookCode, bookName, ...props}) => ({
   selectors: { org: 'unfoldingWord', lang: 'lat', abbr: 'lor' }, 
   data: loremIpsumBook({ bookCode, bookName, paragraphStartChapter: true, ...props }),
   bookCode, 
 });
 
+const urlDocument = ({ selectors, bookCode, bookName, filename, ...props}) => ({
+  selectors,
+  bookCode, 
+  url: `https://git.door43.org/${selectors.org}/${selectors.lang}_${selectors.abbr}/raw/branch/master/${filename}`,
+});
+
 const documents = [
-  document({ bookCode: 'mat', bookName: 'Matthew', chapterCount: 28 }),
-  document({ bookCode: 'mrk', bookName: 'Mark', chapterCount: 16 }),
-  document({ bookCode: 'luk', bookName: 'Luke', chapterCount: 24 }),
-  document({ bookCode: 'jhn', bookName: 'John', chapterCount: 21 }),
-  document({ bookCode: '1jn', bookName: '1 Jean', chapterCount: 5 }),
-  document({ bookCode: '2jn', bookName: '2 Jean', chapterCount: 1 }),
-  document({ bookCode: '3jn', bookName: '3 Jean', chapterCount: 1 }),
+  urlDocument({ 
+    selectors: { org: 'unfoldingWord', lang: 'en', abbr: 'ult' },
+    bookCode: 'mat', filename: '41-MAT.usfm',
+  }),
+  urlDocument({
+    selectors: { org: 'unfoldingWord', lang: 'en', abbr: 'ult' },
+    bookCode: 'mrk', filename: '42-MRK.usfm',
+  }),
+  urlDocument({
+    selectors: { org: 'unfoldingWord', lang: 'en', abbr: 'ult' },
+    bookCode: 'luk', filename: '43-LUK.usfm',
+  }),
+  urlDocument({
+    selectors: { org: 'unfoldingWord', lang: 'en', abbr: 'ult' },
+    bookCode: 'jhn', filename: '44-JHN.usfm',
+  }),
+  ipsumDocument({ bookCode: 'mat', bookName: 'Matthew', chapterCount: 28 }),
+  ipsumDocument({ bookCode: 'mrk', bookName: 'Mark', chapterCount: 16 }),
+  ipsumDocument({ bookCode: 'luk', bookName: 'Luke', chapterCount: 24 }),
+  ipsumDocument({ bookCode: 'jhn', bookName: 'John', chapterCount: 21 }),
 ];
 
 const verbose = false;

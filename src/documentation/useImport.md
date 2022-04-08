@@ -6,23 +6,30 @@ import { useProskomma, useImport } from 'proskomma-react-hooks';
 import ReactJson from 'react-json-view';
 import { loremIpsumBook } from 'lorem-ipsum-usfm';
 
-const document = ({bookCode, bookName, ...props}) => ({
+const ipsumDocument = ({bookCode, bookName, ...props}) => ({
   selectors: { org: 'unfoldingWord', lang: 'lat', abbr: 'lor' }, 
   data: loremIpsumBook({ bookCode, bookName, paragraphStartChapter: true, ...props }),
   bookCode, 
 });
 
+const urlDocument = ({ selectors, bookCode, bookName, filename, ...props}) => ({
+  selectors,
+  bookCode, 
+  url: `https://git.door43.org/${selectors.org}/${selectors.lang}_${selectors.abbr}/raw/branch/master/${filename}`,
+});
+
 const documents = [
-  document({ bookCode: 'mat', bookName: 'Matthew', chapterCount: 1, verseMax: 1 }),
-  document({ bookCode: 'mrk', bookName: 'Mark', chapterCount: 1, verseMax: 1 }),
-  document({ bookCode: 'luk', bookName: 'Luke', chapterCount: 1, verseMax: 1 }),
-  document({ bookCode: 'jhn', bookName: 'John', chapterCount: 1, verseMax: 1 }),
-  document({ bookCode: '1jn', bookName: '1 Jean', chapterCount: 1, verseMax: 1 }),
-  document({ bookCode: '2jn', bookName: '2 Jean', chapterCount: 1, verseMax: 1 }),
-  document({ bookCode: '3jn', bookName: '3 Jean', chapterCount: 1, verseMax: 1 }),
+  urlDocument({ bookCode: 'mat', filename: '41-MAT.usfm', selectors: { org: 'unfoldingWord', lang: 'en', abbr: 'ult' } }),
+  urlDocument({ bookCode: 'mrk', filename: '42-MRK.usfm', selectors: { org: 'unfoldingWord', lang: 'en', abbr: 'ult' } }),
+  urlDocument({ bookCode: 'luk', filename: '43-LUK.usfm', selectors: { org: 'unfoldingWord', lang: 'en', abbr: 'ult' } }),
+  urlDocument({ bookCode: 'jhn', filename: '44-JHN.usfm', selectors: { org: 'unfoldingWord', lang: 'en', abbr: 'ult' } }),
+  ipsumDocument({ bookCode: 'mat', bookName: 'Matthew', chapterCount: 1, verseMax: 1 }),
+  ipsumDocument({ bookCode: 'mrk', bookName: 'Mark', chapterCount: 1, verseMax: 1 }),
+  ipsumDocument({ bookCode: 'luk', bookName: 'Luke', chapterCount: 1, verseMax: 1 }),
+  ipsumDocument({ bookCode: 'jhn', bookName: 'John', chapterCount: 1, verseMax: 1 }),
 ];
 
-const verbose = false;
+const verbose = true;
 
 function Component() {
   const [startImport, setStartImport] = useState(false);
