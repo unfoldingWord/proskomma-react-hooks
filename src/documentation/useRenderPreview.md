@@ -46,6 +46,7 @@ const verbose = true;
 function Component () {
   const [startImport, setStartImport] = useState(false);
   const [startRender, setStartRender] = useState(false);
+  const _documents = startImport ? documents : [];
 
   const proskommaHook = useProskomma({
     verbose,
@@ -53,7 +54,7 @@ function Component () {
   
   const importHook = useImport({
     ...proskommaHook,
-    documents: documents,
+    documents: _documents,
     ready: startImport,
     verbose,
   });
