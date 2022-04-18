@@ -94,11 +94,13 @@ function Component () {
       script.src = 'https://unpkg.com/pagedjs/dist/paged.polyfill.js';
       newPage.document.head.appendChild(script);
       const style = newPage.document.createElement('style');
-      // body { background: light-grey; }
-      // .pagedjs_right_page { float: right; }
-      // .pagedjs_left_page { float: left; }
-      // .pagedjs_page { background: white; }
-      style.innerHTML = html.replace(/^[\s\S]*<style>/, "").replace(/<\/style>[\s\S]*/, "");
+      const newStyles = `
+      html { background: grey; }
+      .pagedjs_right_page { float: right; }
+      .pagedjs_left_page { float: left; }
+      .pagedjs_page { background: white; margin: 1em; }
+      `;
+      style.innerHTML = newStyles + html.replace(/^[\s\S]*<style>/, "").replace(/<\/style>[\s\S]*/, "");
       newPage.document.head.appendChild(style);
       newPage.document.body.innerHTML = html.replace(/^[\s\S]*<body>/, "").replace(/<\/body>[\s\S]*/, "");
     };
