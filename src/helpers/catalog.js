@@ -2,10 +2,8 @@ export const catalogQuery = ({ cv }) => `{
   nDocSets nDocuments
   docSets {
     id
-    selectors {
-      key
-      value
-    }
+    tagsKv { key value }
+    selectors { key value }
     hasMapping
     documents (
       sortedBy: "paratext"
@@ -40,7 +38,17 @@ export const parseChapterVerseMapInDocSets = ({ docSets: _docSets }) => {
         selectors[key] = value;
       });
       docSet.selectors = selectors;
-    };
+    }
+
+    if (docSet?.tagsKv?.forEach) {
+      const tags = {};
+
+      docSet.tagsKv.forEach(({ key, value }) => {
+        tags[key] = value;
+      });
+      delete docSet.tagsKv;
+      docSet.tags = tags;
+    }
 
     docSet.documents.forEach((document) => {
       if (document?.cvNumbers) {
@@ -57,7 +65,7 @@ export const parseChapterVerseMapInDocSets = ({ docSets: _docSets }) => {
 
         delete document.cvNumbers;
         document.versesByChapters = chaptersVersesObject;
-      };
+      }
     });
   });
 

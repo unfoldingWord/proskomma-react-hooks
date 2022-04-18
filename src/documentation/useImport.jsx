@@ -1,10 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 export default function useImport() {
-  return (<></>);
-};
-
+  return <></>;
+}
 
 useImport.propTypes = {
   /** Proskomma instance to query */
@@ -27,9 +26,13 @@ useImport.propTypes = {
       }),
       /**  */
       bookCode: PropTypes.string,
-      /** USFM string for the book */
-      data: PropTypes.string.isRequired,
-    }),
+      /** data string for the book */
+      data: PropTypes.string,
+      /** URL to download the book */
+      url: PropTypes.string,
+      /** type of file, ie. usfm, usx */
+      filetype: PropTypes.string,
+    })
   ),
   /** console success details */
   verbose: PropTypes.bool,
