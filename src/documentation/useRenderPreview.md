@@ -85,7 +85,7 @@ function Component () {
     verbose,
   });
 
-  //TODO: extract to another hook library
+  //TODO: Make this an action returned by hook. { state, actions: { renderPreview } }
   useEffect(() => {
     if (html) {
       const newPage = window.open('','','_window');
