@@ -1,7 +1,7 @@
 {
   "name": "proskomma-react-hooks",
   "description": "A collection of React Hooks that provide a way to simplify the implementation of Proskomma into your React projects.",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "private": false,
   "homepage": "https://proskomma-react-hooks.netlify.app/",
   "license": "MIT",
@@ -26,6 +26,7 @@
   "dependencies": {
     "deep-freeze": "^0.0.1",
     "lorem-ipsum": "^2.0.4",
+    "proskomma-render-pdf": "^0.6.8",
     "use-deep-compare": "^1.1.0"
   },
   "eslintConfig": {
