@@ -40,11 +40,11 @@ export async function renderHTML({ proskomma, language, textDirection, structure
   const _structure = testamentIds.map((testamentId) => {
     const testament = structure[testamentId];
 
-    const _testament = testament.map((bookId) => (
+    const testamentBookCodes = testament.map((bookId) => (
       ['bookCode', bookId.toUpperCase()]
     ));
-    return ['section', testamentId, _testament];
-  });
+    return ['section', testamentId, testamentBookCodes];
+  }).filter(section => section[2].length > 0);
 
   const config = {
     ...SINGLE_BOOK_CONFIG,

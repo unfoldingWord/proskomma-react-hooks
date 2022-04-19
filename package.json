@@ -26,7 +26,7 @@
   "dependencies": {
     "deep-freeze": "^0.0.1",
     "lorem-ipsum": "^2.0.4",
-    "proskomma-render-pdf": "^0.6.8",
+    "proskomma-render-pdf": "0.6.8",
     "use-deep-compare": "^1.1.0"
   },
   "eslintConfig": {
