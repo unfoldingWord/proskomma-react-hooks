@@ -35,14 +35,13 @@ function Component() {
   const [startImport, setStartImport] = useState(false);
   const _documents = startImport ? documents : [];
 
-  const proskommaHook = useProskomma({
-    verbose,
-  });
+  const { state: proskommaState } = useProskomma({ verbose });
 
   const onImport = (props) => console.log('Imported doc!', props);
 
-  const importHook = useImport({
-    ...proskommaHook,
+  const { state: importState, actions: { newStateId } } = useImport({
+    ...proskommaState,
+    newStateId,
     onImport,
     documents: _documents,
     verbose,
@@ -52,7 +51,7 @@ function Component() {
     <>
       <ReactJson
         style={{ maxHeight: '500px', overflow: 'scroll', whiteSpace: 'pre' }}
-        src={importHook}
+        src={importState}
         theme="monokai"
       />
       <button style={{margin: '1em'}} onClick={() => {setStartImport(true);}}>Import</button>

@@ -21,13 +21,16 @@ export default function useImport({
     setImportedCount(prev => prev + 1);
   }, [_onImport, newStateId]);
 
+  const _importDocuments = useDeepCompareCallback(async (props) => {
+    const _errors = await importDocuments({ proskomma, onImport, verbose, ...props });
+    return _errors;
+  }, [onImport, verbose]);
+
   const runImport = useDeepCompareCallback(async () => {
     let _errors = [];
 
     if (proskomma) {
-      const errors = await importDocuments({
-        proskomma, documents, onImport, verbose,
-      });
+      const errors = await _importDocuments({ documents });
       _errors = errors.filter(e => !!e);
     } else {
       _errors.push(`useImport({proskomma, documents, stateId, newStateId}): proskomma not provided`);
@@ -44,7 +47,16 @@ export default function useImport({
 
   const importing = useMemo(() => (importedCount < documentsCount), [importedCount, documentsCount]);
 
-  return { errors, importing };
+  const state = {
+    errors,
+    importing,
+  };
+
+  const actions = {
+    importDocuments: _importDocuments,
+  }
+
+  return { state, actions };
 };
 
 useImport.propTypes = {

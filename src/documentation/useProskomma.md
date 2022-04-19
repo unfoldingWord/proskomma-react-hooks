@@ -7,12 +7,12 @@ import ReactJson from 'react-json-view';
 const verbose = false;
 
 function Component() {
-  const proskommaHook = useProskomma({ verbose });
+  const { state, actions } = useProskomma({ verbose });
 
   return (
     <ReactJson
       style={{ maxHeight: '500px', overflow: 'scroll' }}
-      src={proskommaHook}
+      src={state}
       theme="monokai"
     />
   );

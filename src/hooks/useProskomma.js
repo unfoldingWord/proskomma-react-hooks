@@ -37,9 +37,22 @@ function useProskomma({ verbose, unfoldingWord = true, }) {
     return _proskomma;
   }, [newStateId, unfoldingWord]);
 
-  return {
-    proskomma, stateId, newStateId, errors,
+  const state = {
+    proskomma,
+    stateId,
+    errors,
   };
+
+  const actions = {
+    newStateId,
+    gqlQuery: proskomma?.gqlQuery,
+    gqlQuerySync: proskomma?.gqlQuerySync,
+    importDocuments: proskomma?.importDocuments,
+    loadSuccinctDocSet: proskomma?.loadSuccinctDocSet,
+    serializeSuccinct: proskomma?.serializeSuccinct,
+  };
+
+  return { state, actions };
 };
 
 useProskomma.propTypes = {
