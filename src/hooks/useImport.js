@@ -47,9 +47,12 @@ export default function useImport({
 
   const importing = useMemo(() => (importedCount < documentsCount), [importedCount, documentsCount]);
 
+  const done = useMemo(() => (!importing && importedCount > 0), [importing, importedCount]);
+
   const state = {
-    errors,
     importing,
+    done,
+    errors,
   };
 
   const actions = {
@@ -57,6 +60,7 @@ export default function useImport({
   }
 
   return { state, actions };
+
 };
 
 useImport.propTypes = {

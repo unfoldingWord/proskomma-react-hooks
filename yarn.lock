@@ -10926,7 +10926,7 @@ prop-types@^15.6.2, prop-types@^15.7.2:
     object-assign "^4.1.1"
     react-is "^16.8.1"
 
-proskomma-render-pdf@^0.6.8:
+proskomma-render-pdf@0.6.8:
   version "0.6.8"
   resolved "https://registry.yarnpkg.com/proskomma-render-pdf/-/proskomma-render-pdf-0.6.8.tgz#0fe5a558363371e9a3a310b5d12d1115ac705e6c"
   integrity sha512-FMY4N1XW7TUPbyHYjFR5Dt89O+EgQ9XJfS/M08TzigKJlRgQPHTM7dVmqQxfnNB8/Qp/V0yE3tlNJ35QJeiwbw==

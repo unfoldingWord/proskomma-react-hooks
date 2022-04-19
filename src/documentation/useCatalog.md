@@ -60,7 +60,7 @@ function Component () {
 
   const catalogHook = useCatalog({
     ...proskommaHook,
-    cv: !importHook.importing,
+    cv: importHook.done,
     verbose,
   });
 
