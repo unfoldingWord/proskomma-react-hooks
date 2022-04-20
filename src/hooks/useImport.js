@@ -40,24 +40,24 @@ export default function useImport({
   }, [documents, verbose]);
 
   useDeepCompareEffect(() => {
+    setImportedCount(0);
     runImport();
   }, [documents]);
 
   const documentsCount = documents.length;
 
-  const importing = useMemo(() => (importedCount < documentsCount), [importedCount, documentsCount]);
+  const progress = useMemo(() => (importedCount / documentsCount), [importedCount, documentsCount]);
 
-  const done = useMemo(() => (!importing && importedCount > 0), [importing, importedCount]);
+  const done = useMemo(() => (progress === 1 && importedCount > 0), [progress, importedCount]);
 
   const state = {
-    importing,
+    progress,
     done,
     errors,
   };
 
   const actions = {
-    importDocuments: _importDocuments,
-  }
+  };
 
   return { state, actions };
 

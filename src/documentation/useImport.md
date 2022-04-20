@@ -35,13 +35,12 @@ function Component() {
   const [startImport, setStartImport] = useState(false);
   const _documents = startImport ? documents : [];
 
-  const { state: proskommaState } = useProskomma({ verbose });
+  const { state: proskommaState, } = useProskomma({ verbose });
 
   const onImport = (props) => console.log('Imported doc!', props);
 
-  const { state: importState, actions: { newStateId } } = useImport({
+  const { state: importState } = useImport({
     ...proskommaState,
-    newStateId,
     onImport,
     documents: _documents,
     verbose,

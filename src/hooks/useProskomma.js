@@ -44,12 +44,6 @@ function useProskomma({ verbose, unfoldingWord = true, }) {
   };
 
   const actions = {
-    newStateId,
-    gqlQuery: proskomma?.gqlQuery,
-    gqlQuerySync: proskomma?.gqlQuerySync,
-    importDocuments: proskomma?.importDocuments,
-    loadSuccinctDocSet: proskomma?.loadSuccinctDocSet,
-    serializeSuccinct: proskomma?.serializeSuccinct,
   };
 
   return { state, actions };
