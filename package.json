@@ -3,6 +3,9 @@
   "description": "A collection of React Hooks that provide a way to simplify the implementation of Proskomma into your React projects.",
   "version": "2.3.2",
   "private": false,
+  "keywords": [
+    "scripture-open-components"
+  ],
   "homepage": "https://proskomma-react-hooks.netlify.app/",
   "license": "MIT",
   "repository": {
