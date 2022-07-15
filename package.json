@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "deep-freeze": "^0.0.1",
-    "proskomma": "^0.6.10",
+    "proskomma": "^0.7.7",
     "proskomma-render-pdf": "0.6.8",
     "use-deep-compare": "^1.1.0"
   },
