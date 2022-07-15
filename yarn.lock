@@ -9213,6 +9213,13 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
 
+lorem-ipsum-usfm@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/lorem-ipsum-usfm/-/lorem-ipsum-usfm-0.4.1.tgz#11ad6bf07770736e4a5339eeef5a6cbd2b5720e3"
+  integrity sha512-tSu+q+DvwfK3S1V79JuMnRMk1G1vwiFssCkqSkD3oc20MDLFhNLe0RnHxthdWMw6YOEyBkOnKrz/VegWNwwiEA==
+  dependencies:
+    lorem-ipsum "^2.0.4"
+
 lorem-ipsum@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/lorem-ipsum/-/lorem-ipsum-2.0.4.tgz#5feedb37a14e9cb96c3e994d4a2edd4cb0c299db"
