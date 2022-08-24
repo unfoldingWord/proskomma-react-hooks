@@ -1,7 +1,7 @@
 {
   "name": "proskomma-react-hooks",
   "description": "A collection of React Hooks that provide a way to simplify the implementation of Proskomma into your React projects.",
-  "version": "2.3.4",
+  "version": "2.4.0-rc.0",
   "private": false,
   "keywords": [
     "scripture-open-components"
@@ -15,9 +15,9 @@
   "scripts": {
     "start": "yarn && npx styleguidist server",
     "build-dev": "npx styleguidist build",
-    "build": "webpack --mode production --config webpack.prod.js",
-    "watch": "webpack --watch --mode development",
     "test": "react-scripts test",
+    "watch": "parcel watch",
+    "build": "parcel build",
     "prepublishOnly": "rm -fr ./build && yarn build"
   },
   "peerDependencies": {
@@ -63,6 +63,7 @@
     "eslint-plugin-test-selectors": "^2.0.3",
     "lodash": "^4.17.21",
     "lorem-ipsum-usfm": "^0.4.1",
+    "parcel": "^2.6.2",
     "prettier": "^2.5.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
@@ -70,14 +71,14 @@
     "react-dom": "^17.0.2",
     "react-json-view": "^1.21.3",
     "react-scripts": "^4.0.3",
-    "react-styleguidist": "^11.1.7",
-    "webpack-cli": "^3.3.9"
+    "react-styleguidist": "^11.1.7"
   },
   "browser": {
     "fs": false,
     "path": false,
     "child_process": false
   },
+  "source": "src/index.js",
   "main": "build/index.js",
   "files": [
     "build"
